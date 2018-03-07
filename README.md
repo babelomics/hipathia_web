@@ -1,2 +1,1 @@
-# hipathia_web
-Web interface to HiPathia
+# Hipathia-web
