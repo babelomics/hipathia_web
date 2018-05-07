@@ -115,8 +115,11 @@
                         <span id="tissueError" class="errmsg"></span>
                     </div>
 
-                    <br>
-                    <div>Variant file:
+                    <label class="stv-control">
+                            <input type="checkbox" name="variantData" on-change="handleVariantFile">
+                            <span>Genomic variation data</span>
+                        </label>
+                    <div hidden$="{{_checkValue('true', variantInputFile)}}">Variant file:
                         <span class="key">(Required when using expression database)</span> &nbsp;
                         <stv-file-origin id="variant_file" selection-mode="file" bioformats="{{variantBioformat}}" user-data="{{userData}}" on-ok-click="checkVariantFile" selected-file="{{variantFile}}">
                         </stv-file-origin>
@@ -253,13 +256,15 @@
                     </label>
                     <label class="stv-control">
                         <input type="checkbox" name="paired">
-                        <span>Paired <span class="key">(The Experimental design file must be ordered)</span> &nbsp;
+                        <span>Paired <span class="key"> <br> <strong>Attention: </strong> the order of the samples for control and case must be the same</span> &nbsp;
 </span>
 
                     </label>
                                         <label class="stv-control">
                         <input type="checkbox" name="unadjusted">
-                        <span>Unadjusted <span class="key">(Without using the FDR correction )</span> &nbsp;
+                        <span>Unadjusted <span class="key">
+                            <br>
+                         Plot pathway result without <strong>FDR correction</strong> </span> &nbsp;
 </span>
 
                     </label>
@@ -347,6 +352,7 @@
             ready: function() {
                 this.set('selectedTissueSet', this.ea);
                 this.set('exp_db', 'ea');
+                this.set('variantInputFile', "false");
                 // this.set('selectPathwaysSet', this.pathwaysHumanSet);
             },
             runExample: function() {
@@ -415,6 +421,7 @@
                 this.$.variant_file.reset();
 
                 this.set('designConditions', []);
+                this.$.form.elements['variantData'].checked = false;
                 this.$.condition1Select.selectedOptionText = '';
                 this.$.condition2Select.selectedOptionText = '';
 

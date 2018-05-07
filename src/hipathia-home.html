@@ -68,7 +68,7 @@
         }
 
         .paragraph {
-            text-align: justify;
+            text-align: center;
             padding: 10px 0;
         }
 
@@ -110,7 +110,7 @@
                 </div>
                 <div class="vertical layout center">
                     <div class="application">
-                        <span>hi</span><span style="font-weight:normal">P</span><span>athia</span>
+                        <span>hi</span><span style="font-weight:normal">P</span><span>athia 2</span>
                     </div>
                     <div class="description">
                         <b>
@@ -128,11 +128,15 @@
 
             <!-- <div class="title2">Overview:</div> -->
             <div class="paragraph">
-                hiPathia is a web tool for the interpretation of the consequences of the combined changes of gene expression levels and/or genomic mutations in the context of signalling pathways. hiPathia transforms uninformative gene expression and/or genomic variation
+            HiPathia 2 is a web tool for the interpretation of the consequences of the combined changes of gene expression levels and/or genomic mutations in the context of signalling pathways.<a on-click="seeMore" hidden="{{isShowed}}">[Read more]</a> 
+              <span hidden="{{!isShowed}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+               HiPathia transforms uninformative gene expression and/or genomic variation
                 data into signalling circuit activities, which carry information on the different cell functionalities triggered by them. Such signalling activities not only account for the underlying molecular mechanisms of diseases or the mode of action
                 of drugs but they can also be used as mechanistic features for the prediction of complex phenotypes.
+            <a on-click="seeMore"> [see less] </a>
+            </span>
+                
             </div>
-
             <div class="title2">Note:</div>
             <div class="paragraph2">
                 hiPathia web application makes an intensive use of the HTML5 standard and other cutting-edge web technologies such as Web Components, so only modern web browsers are fully supported.
@@ -152,10 +156,18 @@
                 isLogged: {
                     type: Boolean,
                     value: false
+                },
+                isShowed: {
+                    type: Boolean,
+                    value: false
                 }
+
             },
             handleStart: function() {
                 this.fire('start');
+            },
+            seeMore: function() {
+                this.isShowed=(!this.isShowed);
             }
         })
     </script>
