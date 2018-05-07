@@ -37,6 +37,10 @@
                 type: String,
                 value: 'matrix'
             },
+            variantData: {
+                type: String,
+                value: 'None'
+            },
             design_type: {
                 type: String,
                 value: 'categorical'
@@ -197,7 +201,14 @@
         _clearError: function(id) {
             this.$[id + 'Error'].innerHTML = '';
         },
-
+        handleVariantFile: function(e) {
+            console.log(e.currentTarget.checked)
+            if (e.currentTarget.checked === true) {
+                this.set('variantInputFile', "true");
+            } else {
+                this.set('variantInputFile', "false");
+            }
+        },
         handleSelectPW: function(e) {
             console.log(e.currentTarget.checked)
             if (e.currentTarget.checked === true) {
