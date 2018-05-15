@@ -1,4 +1,4 @@
-<script src="bower_components/stevia-elements/src/manager/stevia-manager.js"></script>
+<script src="bower_components/cba-elements/src/manager/cba-manager.js"></script>
 
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -7,20 +7,20 @@
 <script src="bower_components/crypto-js/core.js"></script>
 <script src="bower_components/crypto-js/sha1.js"></script>
 
-<link rel="import" href="bower_components/stevia-elements/src/stv-header.html">
-<link rel="import" href="bower_components/stevia-elements/src/stv-application-behavior.html">
-<link rel="import" href="bower_components/stevia-elements/src/stv-footer.html">
-<link rel="import" href="bower_components/stevia-elements/src/stv-select.html">
-<link rel="import" href="bower_components/stevia-elements/src/stv-select-box.html">
-<link rel="import" href="bower_components/stevia-elements/src/stv-panel.html">
-<link rel="import" href="bower_components/stevia-elements/src/dropdown/stv-dropdown.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-header.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-application-behavior.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-footer.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-select.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-select-box.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-panel.html">
+<link rel="import" href="bower_components/cba-elements/src/dropdown/elm-dropdown.html">
 
-<link rel="import" href="bower_components/stevia-elements/src/table/stv-table.html">
-<link rel="import" href="bower_components/stevia-elements/src/form/stv-file-origin.html">
-<link rel="import" href="bower_components/stevia-elements/src/file/stv-file-browser.html">
-<link rel="import" href="bower_components/stevia-elements/src/job/stv-job-browser.html">
-<link rel="import" href="bower_components/stevia-elements/src/stv-cluster-status.html">
-<link rel="import" href="bower_components/stevia-elements/src/report/stv-report.html">
+<link rel="import" href="bower_components/cba-elements/src/table/elm-table.html">
+<link rel="import" href="bower_components/cba-elements/src/form/elm-file-origin.html">
+<link rel="import" href="bower_components/cba-elements/src/file/elm-file-browser.html">
+<link rel="import" href="bower_components/cba-elements/src/job/elm-job-browser.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-cluster-status.html">
+<link rel="import" href="bower_components/cba-elements/src/report/elm-report.html">
 
 <link rel="import" href="src/hipathia-home.html">
 <link rel="import" href="src/hipathia-signaling-form.html">
@@ -39,12 +39,12 @@
             width: 100%;
         }
 
-        stv-header {
+        elm-header {
             position: absolute;
             top: 0;
         }
 
-        stv-footer {
+        elm-footer {
             position: absolute;
             bottom: 0;
         }
@@ -104,7 +104,7 @@
 
         hipathia-prediction-form,
         hipathia-signaling-form,
-        stv-report {
+        elm-report {
             height: calc(100vh - 50px);
             overflow-y: auto;
         }
@@ -116,24 +116,24 @@
         </div>
 
         <div id="jobContent" class="content" menu-option="job">
-            <stv-report id="report" hide-relaunch></stv-report>
+            <elm-report id="report" hide-relaunch></elm-report>
         </div>
 
         <div class="content" menu-option="home,job,signaling,prediction">
-            <stv-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
+            <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
                     <i class="fa fa-flask"></i>&nbsp; Browse my jobs
                 </div>
-                <stv-job-browser id="jobBrowser" class="container flex" on-jobselect="handleJobSelect" allowed-tools="{{allowedTools}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}" disable-relaunch="{{disableRelaunch}}" hide-status-filter="{{hideStatusFilter}}" hide-tool-filter="{{hideToolFilter}}">
-                </stv-job-browser>
-            </stv-panel>
-            <stv-panel id="fileBrowserPanel" hidden collapsible movable closable resizable on-hidden="handlePanelHidden">
+                <elm-job-browser id="jobBrowser" class="container flex" on-jobselect="handleJobSelect" allowed-tools="{{allowedTools}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}" disable-relaunch="{{disableRelaunch}}" hide-status-filter="{{hideStatusFilter}}" hide-tool-filter="{{hideToolFilter}}">
+                </elm-job-browser>
+            </elm-panel>
+            <elm-panel id="fileBrowserPanel" hidden collapsible movable closable resizable on-hidden="handlePanelHidden">
                 <div class="header">
                     <i class="fa fa-cloud"></i>&nbsp; Browse my data
                 </div>
-                <stv-file-browser id="fileBrowser" class="container flex" on-fileselect="handleFileSelect" bioformats="{{bioformats}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}">
-                </stv-file-browser>
-            </stv-panel>
+                <elm-file-browser id="fileBrowser" class="container flex" on-fileselect="handleFileSelect" bioformats="{{bioformats}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}">
+                </elm-file-browser>
+            </elm-panel>
         </div>
 
         <div class="content" menu-option="signaling">
@@ -144,7 +144,7 @@
             <hipathia-prediction-form id="predictionForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-prediction-form>
         </div>
 
-        <stv-header id="stvHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
+        <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div class="icon">
                 <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
             </div>
@@ -184,7 +184,7 @@
                 <!-- <div style="margin-left:2vw;"></div> -->
             </div>
 
-            <stv-dropdown dark class="helpmenu">
+            <elm-dropdown dark class="helpmenu">
                 <div data-button><i class="fa fa-question-circle"></i></div>
                 <ul data-menu>
                     <a href="http://hipathia.babelomics.org/doc" target="_blank">
@@ -214,11 +214,11 @@
                         </div>
                     </li>
                 </ul>
-            </stv-dropdown>
-            <stv-cluster-status id="clusterStatus" type="dark" class="cluster-status"></stv-cluster-status>
-        </stv-header>
+            </elm-dropdown>
+            <elm-cluster-status id="clusterStatus" type="dark" class="cluster-status"></elm-cluster-status>
+        </elm-header>
 
-		<stv-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
+		<elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
 			<div style="text-align:center;">
             hi<b>P</b>athia v<span>{{version}}</span>
             <br> Created by
@@ -226,13 +226,13 @@
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain
             <br> 2018
         	</div>
-        </stv-footer>
+        </elm-footer>
     </template>
 
     <script>
         Polymer({
             is: "hipathia-element",
-            behaviors: [StvApplicationBehavior],
+            behaviors: [elmApplicationBehavior],
             properties: {
                 bioformats: {
                     type: Array,
@@ -277,14 +277,14 @@
                     // while (this.$.jobContent.firstChild) {
                     //     this.$.jobContent.removeChild(this.$.jobContent.firstChild);
                     // }
-                    // var report = document.createElement('stv-report');
+                    // var report = document.createElement('elm-report');
                     // Polymer.dom(me.$.jobContent).appendChild(report);
                 }
             },
             handleJobLaunched: function() {
                 this.setMenu('home');
                 this.$.jobBrowserPanel.show();
-                this.$.stvHeader.getUserInfo(true);
+                this.$.elmHeader.getUserInfo(true);
             },
             handleLogin: function() {
                 if (Cookies('bioinfo_user').indexOf("anonymous___") != -1) {
@@ -308,18 +308,18 @@
                 this.checkShowMenuOnLogin();
             },
             handleUserNeedRefresh: function() {
-                this.$.stvHeader.getUserInfo(true);
+                this.$.elmHeader.getUserInfo(true);
             },
             handleHomeStart: function() {
-                if (this.$.stvHeader.isLogged != true) {
-                    this.$.stvHeader.anonymousSign();
+                if (this.$.elmHeader.isLogged != true) {
+                    this.$.elmHeader.anonymousSign();
                 }
             },
 
             handleExample: function(e) {
-                if (this.$.stvHeader.isLogged != true) {
+                if (this.$.elmHeader.isLogged != true) {
                     this._lastExampleRequest = e.currentTarget.dataset['exampleName'];
-                    this.$.stvHeader.anonymousSign();
+                    this.$.elmHeader.anonymousSign();
                 } else {
                     this.runExample(e.currentTarget.dataset['exampleName']);
                     this.$.jobBrowserPanel.show();

@@ -1,0 +1,29 @@
+{
+  "name": "network-viewer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "cba-elements": "https://github.com/kinzaR/cba-elements.git",
+    "d3": "^3.5.17",
+    "js-xlsx": "~0.7.11",
+    "highcharts-release": "^4.2.5",
+    "cytoscape": "~2.5.4",
+    "fabric.js": "fabric#^1.6.6"
+  },
+  "private": true,
+  "homepage": "https://github.com/babelomics/network-viewer",
+  "_release": "400248423e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "develop",
+    "commit": "400248423e4b79859b3aade92246ba67e0e422b3"
+  },
+  "_source": "https://github.com/babelomics/network-viewer.git",
+  "_target": "develop",
+  "_originalSource": "https://github.com/babelomics/network-viewer.git"
+}
