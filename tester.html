@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=0.6">
+        <link rel="import" href="bower_components/polymer/polymer-element.html">
+
+        <!--Web Components-->
+        <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+        <link rel="import" href="bower_components-1.x/cba-elements/src/elm-login.html">
+
+        <!--CSS-->
+        <!-- <link href='css/global.css' rel='stylesheet' type='text/css'>
+        <link href='css/form.css' rel='stylesheet' type='text/css'>
+        <link href='css/context.css' rel='stylesheet' type='text/css'> -->
+    </head>
+
+    <body unresolved class="fullbleed">
+            <style>
+                 :host {
+                    display: block;
+                    position: relative;
+                    cursor: default;
+                    font-size: 13px;
+                    background-color: var(--default-primary-color);
+                    height: 100%;
+                    width: 100%;
+                }
+        
+                elm-header {
+                    position: absolute;
+                    top: 0;
+                }
+        
+                elm-footer {
+                    position: absolute;
+                    bottom: 0;
+                    font: 900px;
+                }
+        
+                .content {
+                    position: absolute;
+                    width: 100%;
+                    top: 50px;
+                    /*height: calc(100vh - 60px);*/
+                    /*background-color: transparent;*/
+                }
+
+        
+                @media (max-width: 1100px) {
+                    .option-text {
+                        display: none;
+                    }
+                }
+        
+                .userid {
+                    color: var(--accent-color);
+                    font-size: 16px;
+                }
+        
+                #description {
+                    color: var(--accent-color);
+                    font-weight: normal;
+                }
+        
+                hipathia-home {
+                    height: calc(100vh - 100px);
+                    overflow-y: auto;
+                }
+        
+                hipathia-prediction-form,
+                hipathia-signaling-form,
+                elm-report {
+                    height: calc(100vh - 50px);
+                    overflow-y: auto;
+                }
+            </style>
+            <elm-login id="elmLogin"></elm-login>
+        <script>
+        </script>
+    </body>
+</html>
