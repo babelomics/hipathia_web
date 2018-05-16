@@ -8,10 +8,10 @@ HiPathia is a web tool for the interpretation of the consequences of the combine
 
     cd hipathia-web
 
-#### Install Polymer CLI.
+#### Install Polymer CLI
 
     npm install -g polymer-cli
-    
-#### Run the following command to install both sets of dependencies:
-    
-    polymer install --variants
+
+#### Run the following command to install both sets of dependencies
+
+     polymer install --variants
