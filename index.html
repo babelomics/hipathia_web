@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110341077-7"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110341077-7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-          gtag('config', 'UA-110341077-7');
-        </script>
+        gtag('config', 'UA-110341077-7');
+    </script>
 
-        <meta charset="utf-8">
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=0.6">
-        <title>Hipathia 2</title>
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6">
+    <title>Hipathia 2</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <!-- Chrome for Android theme color -->
-        <!--<meta name="theme-color" content="#303F9F">-->
-        <meta name="theme-color" content="#000000">
+    <!-- Chrome for Android theme color -->
+    <!--<meta name="theme-color" content="#303F9F">-->
+    <meta name="theme-color" content="#000000">
 
-        <!-- Web Application Manifest -->
-        <link rel="manifest" href="manifest.json">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
 
-        <!-- Windows Theme color -->
-        <meta name="msapplication-TileColor" content="#3372DF">
+    <!-- Windows Theme color -->
+    <meta name="msapplication-TileColor" content="#3372DF">
 
-        <!-- Add to homescreen for Chrome on Android -->
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="application-name" content="Hipathia">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Hipathia">
 
-        <!-- Add to homescreen for Safari on iOS -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <meta name="apple-mobile-web-app-title" content="Hipathia">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Hipathia">
 
-        <!-- Force Microsoft use latest web tech -->
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Force Microsoft use latest web tech -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-        <!-- END meta -->
+    <!-- END meta -->
 
-        <!--Config-->
-        <script src="conf/config.js"></script>
-        <script src="conf/bioformats.js"></script>
+    <!--Config-->
+    <script src="conf/config.js"></script>
+    <script src="conf/bioformats.js"></script>
 
-        <!--Fonts-->
-        <link href='bower_components-1.x/cba-elements/fonts/fonts.css' rel='stylesheet' type='text/css'>
-        <link href='bower_components/fontawesome/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+    <!--Fonts-->
+    <link href='bower_components-1.x/cba-elements/fonts/fonts.css' rel='stylesheet' type='text/css'>
+    <link href='bower_components/fontawesome/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
 
-        <!--CSS-->
-        <link href='bower_components-1.x/cba-elements/css/global.css' rel='stylesheet' type='text/css'>
-        <link href='bower_components-1.x/cba-elements/css/form.css' rel='stylesheet' type='text/css'>
-        <link href='bower_components-1.x/cba-elements/css/context.css' rel='stylesheet' type='text/css'>
+    <!--CSS-->
+    <link href='bower_components-1.x/cba-elements/css/global.css' rel='stylesheet' type='text/css'>
+    <link href='bower_components-1.x/cba-elements/css/form.css' rel='stylesheet' type='text/css'>
+    <link href='bower_components-1.x/cba-elements/css/context.css' rel='stylesheet' type='text/css'>
 
+    <!--Web Components-->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
-        <!--Web Components-->
-        <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="hipathia-element.html">
+    <link rel="import" href="conf/theme.html">
 
-        <link rel="import" href="hipathia-element.html">
+</head>
 
-        <link rel="import" href="conf/theme.html">
-
-    </head>
-
-    <body unresolved class="fullbleed">
-        <hipathia-element version="2.0.0"></hipathia-element>
-        <script>
-            var hipathia = document.querySelector('hipathia-element');
-        </script>
-    </body>
+<body unresolved class="fullbleed">
+    <hipathia-element version="2.0.0"></hipathia-element>
+    <script>
+        var hipathia = document.querySelector('hipathia-element');
+    </script>
+</body>
 
 </html>

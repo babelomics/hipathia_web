@@ -1,89 +1,66 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <script src="../bower_components-1.x/network-viewer/conf/config.js"></script>
 <link rel="import" href="../bower_components-1.x/network-viewer/network-viewer.html">
 
 <dom-module id="hipathia-result">
+    <template>
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
     <style>
-        :host {
-            display: block;
-            position: relative;
-            box-sizing: border-box;
-            background-color: #FFFFFF;
-            padding: 20px 40px;
+        :host{
+            display:block;
+            position:relative;
+            box-sizing:border-box;
+            background-color:#FFF;
+            padding:20px 40px
         }
-
-        .section:first-child {
-            margin: 0px 0 5px 0;
+        .section:first-child{
+            margin:0 0 5px
         }
-
-        .section {
-            font-size: 30px;
-            font-weight: lighter;
-            margin: 30px 0 5px 0;
-            color: var(--secondary-text-color);
-            border-bottom: 1px solid var(--divider-color);
+        .section{
+            font-size:30px;
+            font-weight:lighter;
+            margin:30px 0 5px;
+            color:var(--secondary-text-color);
+            border-bottom:1px solid var(--divider-color)
         }
-
-        .download,
-        .param,
-        .image,
-        .table,
-        .message {
-            font-size: 18px;
-            display: block;
+        .download,.image,.message,.param,.table{
+            font-size:18px;
+            display:block
         }
-
-        .download > a:hover,
-        .image > a:hover,
-        .table > a:hover {
-            text-decoration: underline;
+        .download>a:hover,.image>a:hover,.table>a:hover{
+            text-decoration:underline
         }
-
-        .download > a,
-        .image > a,
-        .table > a {
-            color: var(--secondary-text-color);
-            text-decoration: none;
+        .download>a,.image>a,.table>a{
+            color:var(--secondary-text-color);
+            text-decoration:none
         }
-
-        .download > i,
-        .image > i,
-        .table > i,
-        .message > i {
-            color: var(--accent-color);
-            margin-right: 10px;
+        .download>i,.image>i,.message>i,.table>i{
+            color:var(--accent-color);
+            margin-right:10px
         }
-
-        .param > .key {
-            color: var(--secondary-text-color);
-            margin-right: 5px;
+        .param>.key{
+            color:var(--secondary-text-color);
+            margin-right:5px
         }
-
-        .param > .val {
-            color: var(--accent-color);
+        .param>.val{
+            color:var(--accent-color)
         }
-
-        .image > img {
-            display: block;
-            margin-bottom: 30px;
+        .image>img{
+            display:block;
+            margin-bottom:30px
         }
-
-        .table > elm-table {
-            width: 1000px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-            border: 1px solid var(--divider-color);
-            height: 380px;
+        .table>elm-table{
+            width:1000px;
+            margin-top:10px;
+            margin-bottom:20px;
+            border:1px solid var(--divider-color);
+            height:380px
         }
-
-        .html {
-            color: var(--secondary-text-color);
+        .html{
+            color:var(--secondary-text-color)
         }
     </style>
-    <template>
     </template>
     <script>
         Polymer({

@@ -1,8 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <link rel="import" href="hipathia-form-behavior.html">
 <dom-module id="hipathia-signaling-form">
+    <template>
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
     <style>
         :host {
@@ -57,7 +57,6 @@
             color: var(--secondary-text-color);
         }
     </style>
-    <template>
         <form id="form">
             <p id="title">
                 <strong>Differential signaling form</strong>
@@ -174,7 +173,6 @@
                 </div>
             </div>
 
-
             <div class="elm-formbox">
                 <div class="elm-formtitle">
                     Species
@@ -194,7 +192,6 @@
                     </label>
                 </div>
             </div>
-
 
             <div hidden$="{{checkNullFile(variantFile)}}" class="elm-formbox">
                 <div class="elm-formtitle">
@@ -240,7 +237,6 @@
                 </div>
             </div>
 
-
             <div class="elm-formbox">
                 <div class="elm-formtitle">
                     Parameters
@@ -256,21 +252,14 @@
                     </label>
                     <label class="elm-control">
                         <input type="checkbox" name="paired">
-                        <span>Paired <span class="key"> <br> <strong>Attention: </strong> the order of the samples for control and case must be the same</span> &nbsp;
-</span>
-
+                        <span>Paired <span class="key"> <br> <strong>Attention: </strong> the order of the samples for control and case must be the same</span> &nbsp;</span>
                     </label>
-                                        <label class="elm-control">
+                    <label class="elm-control">
                         <input type="checkbox" name="unadjusted">
-                        <span>Unadjusted <span class="key">
-                            <br>
-                         Plot pathway result without <strong>FDR correction</strong> </span> &nbsp;
-</span>
-
+                        <span>Unadjusted <span class="key"><br>Plot pathway result without <strong>FDR correction</strong> </span> &nbsp;</span>
                     </label>
                 </div>
             </div>
-
 
             <div class="elm-formbox">
                 <div class="elm-formtitle">
@@ -287,7 +276,6 @@
                     </label>
                 </div>
             </div>
-
 
             <div class="elm-formbox">
                 <div class="elm-formtitle horizontal layout center">
@@ -332,8 +320,6 @@
             </div>
             <br>
         </form>
-
-
     </template>
 
     <script>
@@ -446,8 +432,6 @@
                 this.$.form.elements['difexp'].checked = false;
                 this.$.form.elements['paired'].checked = false;
                 this.$.form.elements['unadjusted'].checked = false;
-
-
 
                 this.$.jobName.value = 'Differential signaling job';
                 this.$.jobDescription.value = '';

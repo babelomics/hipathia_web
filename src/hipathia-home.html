@@ -1,108 +1,91 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <dom-module id="hipathia-home">
+    <template>
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
     <style>
-        :host {
-            display: block;
-            position: relative;
-            box-sizing: border-box;
-            font-size: 22px;
-            font-weight: 300;
-            padding-top: 2vh;
-            color: var(--text-primary-color);
+        :host{
+            display:block;
+            position:relative;
+            box-sizing:border-box;
+            font-size:22px;
+            font-weight:300;
+            padding-top:2vh;
+            color:var(--text-primary-color)
         }
-
-        #main {
-            margin: 0px auto 0px auto;
-            max-width: 785px;
-            padding: 2vh;
+        #button,.b{
+            font-weight:400
         }
-
-        #image {
-            width: 300px;
-            margin: 10px;
+        #main{
+            margin:0 auto;
+            max-width:785px;
+            padding:2vh
         }
-
-        #button {
-            font-weight: 400;
-            height: auto;
-            margin: 20px;
-            padding: 20px 30px;
-            font-size: 26px;
-            border-radius: 5px;
-            background-color: var(--dark-button-color);
+        #image{
+            width:300px;
+            margin:10px
         }
-
-        #button:hover {
-            background-color: var(--light-button-color);
+        #button{
+            height:auto;
+            margin:20px;
+            padding:20px 30px;
+            font-size:26px;
+            border-radius:5px;
+            background-color:var(--dark-button-color)
         }
-
-        .application {
-            font-size: 80px;
-            text-shadow: 3px 3px 5px var(--dark-primary-color);
+        #button:hover{
+            background-color:var(--light-button-color)
         }
-
-        .description {
-            font-size: 24px;
-            line-height: 40px;
-            padding-top: 30px;
-            padding-bottom: 10px;
-            text-transform: uppercase;
-            text-align: center;
+        .application{
+            font-size:80px;
+            text-shadow:3px 3px 5px var(--dark-primary-color)
         }
-
-        @media (max-width: 1100px) {
-            #image {
-                width: 230px;
+        .description{
+            font-size:24px;
+            line-height:40px;
+            padding-top:30px;
+            padding-bottom:10px;
+            text-transform:uppercase;
+            text-align:center
+        }
+        @media (max-width:1100px){
+            #image{
+                width:230px
             }
         }
-
-        @media (max-width: 800px) {
-            #image {
-                width: 150px;
+        @media (max-width:800px){
+            #image{
+                width:150px
             }
-            .megatitle {
-                font-size: 50px;
+            .megatitle{
+                font-size:50px
             }
         }
-
-        .paragraph {
-            text-align: center;
-            padding: 10px 0;
+        .paragraph{
+            text-align:center;
+            padding:10px 0
         }
-
-        .paragraph2 {
-            font-size: 14px;
-            padding: 0 0 10px 0;
+        .paragraph2{
+            font-size:14px;
+            padding:0 0 10px
         }
-
-        .title {
-            font-size: 40px;
-            padding-top: 30px;
-            padding-bottom: 10px;
+        .title,.title2{
+            padding-bottom:10px
         }
-
-        .title2 {
-            padding-top: 20px;
-            padding-bottom: 10px;
+        .title{
+            font-size:40px;
+            padding-top:30px
         }
-
-        .b {
-            font-weight: 400;
+        .title2{
+            padding-top:20px
         }
-
-        a,
-        a:visited {
-            text-decoration: none;
-            color: var(--accent-color);
+        a,a:visited{
+            text-decoration:none;
+            color:var(--accent-color)
         }
-
         .image-partner{
-            height:60px;
+            height:60px
         }
-    </style>
-    <template>
+     </style>
         <div id="main">
             <div class="horizontal layout center-justified center">
                 <div>
@@ -125,7 +108,6 @@
                 </div>
             </div>
 
-
             <!-- <div class="title2">Overview:</div> -->
             <div class="paragraph">
             HiPathia 2 is a web tool for the interpretation of the consequences of the combined changes of gene expression levels and/or genomic mutations in the context of signalling pathways.<a on-click="seeMore" hidden="{{isShowed}}">[Read more]</a> 
@@ -146,9 +128,8 @@
                 <!-- <img class="image-partner" src="../images/elixir.svg"> -->
             </div>
         </div>
-
-
     </template>
+
     <script>
         Polymer({
             is: 'hipathia-home',
