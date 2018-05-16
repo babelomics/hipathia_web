@@ -27,88 +27,67 @@
 
 <dom-module id="hipathia-element">
     <template>
-            <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
-    <style>
-         :host {
-            display: block;
-            position: relative;
-            cursor: default;
-            font-size: 13px;
-            background-color: var(--default-primary-color);
-            height: 100%;
-            width: 100%;
-        }
-
-        elm-header {
-            position: absolute;
-            top: 0;
-        }
-
-        elm-footer {
-            position: absolute;
-            bottom: 0;
-        }
-
-        .content {
-            position: absolute;
-            width: 100%;
-            top: 50px;
-            /*height: calc(100vh - 60px);*/
-            /*background-color: transparent;*/
-        }
-
-        #fileBrowserPanel {
-            position: absolute;
-            top: 0px;
-            left: 0;
-            width: 600px;
-            height: 400px;
-            min-width: 600px;
-            min-height: 400px;
-        }
-
-        #jobBrowserPanel {
-            position: absolute;
-            top: 0px;
-            right: 0;
-            width: 600px;
-            height: 400px;
-            min-width: 600px;
-            min-height: 400px;
-        }
-
-        #fileBrowser {}
-
-        #jobBrowser {}
-
-        @media (max-width: 1100px) {
-            .option-text {
-                display: none;
+        <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+        <style>
+            .content,elm-footer,elm-header{
+                position:absolute
             }
-        }
-
-        .userid {
-            color: var(--accent-color);
-            font-size: 16px;
-        }
-
-        #description {
-            color: var(--accent-color);
-            font-weight: normal;
-        }
-
-        hipathia-home {
-            height: calc(100vh - 100px);
-            overflow-y: auto;
-        }
-
-        hipathia-prediction-form,
-        hipathia-signaling-form,
-        elm-report {
-            height: calc(100vh - 50px);
-            overflow-y: auto;
-        }
-    </style>
+            #description,.userid{
+                color:var(--accent-color)
+            }
+            :host{
+                display:block;
+                position:relative;
+                cursor:default;
+                font-size:13px;
+                background-color:var(--default-primary-color);
+                height:100%;
+                width:100%
+            }
+            elm-header{
+                top:0
+            }
+            elm-footer{
+                bottom:0
+            }
+            .content{
+                width:100%;
+                top:50px
+            }
+            #fileBrowserPanel,#jobBrowserPanel{
+                position:absolute;
+                top:0;
+                width:600px;
+                height:400px;
+                min-width:600px;
+                min-height:400px
+            }
+            #fileBrowserPanel{
+                left:0
+            }
+            #jobBrowserPanel{
+                right:0
+            }
+            @media (max-width:1100px){
+                .option-text{
+                    display:none
+                }
+            }
+            .userid{
+                font-size:16px
+            }
+            #description{
+                font-weight:400
+            }
+            hipathia-home{
+                height:calc(100vh - 100px);
+                overflow-y:auto
+            }
+            elm-report,hipathia-prediction-form,hipathia-signaling-form{
+                height:calc(100vh - 50px);
+                overflow-y:auto
+            }
+        </style>
 
         <div class="content" menu-option="home">
             <hipathia-home id="home" on-start="handleHomeStart" isLogged="{{isLogged}}"></hipathia-home>
@@ -217,14 +196,14 @@
             <elm-cluster-status id="clusterStatus" type="dark" class="cluster-status"></elm-cluster-status>
         </elm-header>
 
-		<elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
-			<div style="text-align:center;">
+        <elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
+            <div style="text-align:center;">
             hi<b>P</b>athia v<span>{{version}}</span>
             <br> Created by
             <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain
             <br> 2018
-        	</div>
+            </div>
         </elm-footer>
     </template>
 
