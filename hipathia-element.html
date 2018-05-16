@@ -1,33 +1,35 @@
-<script src="bower_components/cba-elements/src/manager/cba-manager.js"></script>
+<script src="bower_components-1.x/cba-elements/src/manager/cba-manager.js"></script>
 
 <link rel="import" href="bower_components/polymer/polymer.html">
 <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
+<!--
 <script src="bower_components/cookies-js/dist/cookies.min.js"></script>
 <script src="bower_components/crypto-js/core.js"></script>
-<script src="bower_components/crypto-js/sha1.js"></script>
+<script src="bower_components/crypto-js/sha1.js"></script>-->
 
-<link rel="import" href="bower_components/cba-elements/src/elm-header.html">
-<link rel="import" href="bower_components/cba-elements/src/elm-application-behavior.html">
-<link rel="import" href="bower_components/cba-elements/src/elm-footer.html">
-<link rel="import" href="bower_components/cba-elements/src/elm-select.html">
-<link rel="import" href="bower_components/cba-elements/src/elm-select-box.html">
-<link rel="import" href="bower_components/cba-elements/src/elm-panel.html">
-<link rel="import" href="bower_components/cba-elements/src/dropdown/elm-dropdown.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-header.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-application-behavior.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-footer.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-select.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-select-box.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-panel.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/dropdown/elm-dropdown.html">
 
-<link rel="import" href="bower_components/cba-elements/src/table/elm-table.html">
-<link rel="import" href="bower_components/cba-elements/src/form/elm-file-origin.html">
-<link rel="import" href="bower_components/cba-elements/src/file/elm-file-browser.html">
-<link rel="import" href="bower_components/cba-elements/src/job/elm-job-browser.html">
-<link rel="import" href="bower_components/cba-elements/src/elm-cluster-status.html">
-<link rel="import" href="bower_components/cba-elements/src/report/elm-report.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/table/elm-table.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/form/elm-file-origin.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/file/elm-file-browser.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/job/elm-job-browser.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-cluster-status.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/report/elm-report.html">
 
 <link rel="import" href="src/hipathia-home.html">
 <link rel="import" href="src/hipathia-signaling-form.html">
 <link rel="import" href="src/hipathia-prediction-form.html">
 
 <dom-module id="hipathia-element">
-    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+
+    <template>
+            <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
     <style>
          :host {
             display: block;
@@ -109,7 +111,6 @@
             overflow-y: auto;
         }
     </style>
-    <template>
 
         <div class="content" menu-option="home">
             <hipathia-home id="home" on-start="handleHomeStart" isLogged="{{isLogged}}"></hipathia-home>

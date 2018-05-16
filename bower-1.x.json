@@ -1,0 +1,49 @@
+{
+  "name": "hipathia-web",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fontawesome": "4.7.0",
+    "polymer": "Polymer/polymer#1.8.1",
+    "cba-elements": "https://github.com/kinzaR/cba-elements.git",
+    "network-viewer": "https://github.com/babelomics/network-viewer.git#develop",
+    "pathway-viewer": "https://github.com/babelomics/pathway-viewer.git#develop"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "test-fixture": "PolymerElements/test-fixture#^1.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0",
+    "async": "^2.1.2",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0"
+  },
+  "variants": {
+    "1.x": {
+      "dependencies": {
+        "polymer": "Polymer/polymer#1.8.1",
+        "cba-elements": "https://github.com/kinzaR/cba-elements.git",
+        "network-viewer": "https://github.com/babelomics/network-viewer.git#develop",
+        "pathway-viewer": "https://github.com/babelomics/pathway-viewer.git#develop"
+      },
+      "devDependencies": {
+        "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+        "paper-styles": "PolymerElements/paper-styles#^1.0.0",
+        "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+        "test-fixture": "PolymerElements/test-fixture#^1.0.0",
+        "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+      },
+      "resolutions": {
+        "webcomponentsjs": "^0.7"
+      }
+    }
+  },
+  "resolutions": {
+    "webcomponentsjs": "^0.7"
+  },
+  "private": true
+}
