@@ -1,4 +1,4 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 <dom-module id="hipathia-home">
     <template>
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
@@ -131,25 +131,36 @@
     </template>
 
     <script>
-        Polymer({
-            is: 'hipathia-home',
-            properties: {
-                isLogged: {
-                    type: Boolean,
-                    value: false
-                },
-                isShowed: {
-                    type: Boolean,
-                    value: false
-                }
+        class hipathiaHome extends Polymer.Element {
 
-            },
-            handleStart: function() {
-                this.fire('start');
-            },
-            seeMore: function() {
-                this.isShowed=(!this.isShowed);
+            constructor() {
+                super();
             }
-        })
+
+            static get is() { return 'hipathia-home' }
+
+            static get properties() {
+                return {
+                    isLogged: {
+                        type: Boolean,
+                        value: false
+                    },
+                    isShowed: {
+                        type: Boolean,
+                        value: false
+                    }
+                }
+            }
+            _attachDom(dom) {
+                this.appendChild(dom);
+            }
+            handleStart() {
+                this.fire('start');
+            }
+            seeMore() {
+                this.isShowed = (!this.isShowed);
+            }
+        }
+        customElements.define(hipathiaHome.is, hipathiaHome);
     </script>
 </dom-module>
