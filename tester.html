@@ -5,20 +5,178 @@
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=0.6">
-        <link rel="import" href="bower_components/polymer/polymer-element.html">
+        <!-- <link rel="import" href="bower_components/polymer/polymer-element.html"> -->
 
         <!--Web Components-->
         <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <script src="bower_components-1.x/cba-elements/src/manager/cba-manager.js"></script>
+
+<!-- <link rel="import" href="bower_components/polymer/polymer.html"> -->
+<!--
+<script src="bower_components/cookies-js/dist/cookies.min.js"></script>
+<script src="bower_components/crypto-js/core.js"></script>
+<script src="bower_components/crypto-js/sha1.js"></script>-->
+
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-header.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-application-behavior.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-footer.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-select.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-select-box.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-panel.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/dropdown/elm-dropdown.html">
+
+<link rel="import" href="bower_components-1.x/cba-elements/src/table/elm-table.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/form/elm-file-origin.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/file/elm-file-browser.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/job/elm-job-browser.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/elm-cluster-status.html">
+<link rel="import" href="bower_components-1.x/cba-elements/src/report/elm-report.html">
 
         <link rel="import" href="bower_components-1.x/cba-elements/src/elm-login.html">
+        <link rel="import" href="my-new-view.html">
+        <link rel="import" href="src/hipathia-home.html">
 
         <!--CSS-->
         <!-- <link href='css/global.css' rel='stylesheet' type='text/css'>
         <link href='css/form.css' rel='stylesheet' type='text/css'>
         <link href='css/context.css' rel='stylesheet' type='text/css'> -->
+        <link href='bower_components-1.x/cba-elements/css/global.css' rel='stylesheet' type='text/css'>
+        <link href='bower_components-1.x/cba-elements/css/form.css' rel='stylesheet' type='text/css'>
+        <link href='bower_components-1.x/cba-elements/css/context.css' rel='stylesheet' type='text/css'>
+        <link rel="import" href="conf/theme.html">
+
+    <!--Config-->
+    <script src="conf/config.js"></script>
+    <script src="conf/bioformats.js"></script>
+
+    <!--Fonts-->
+    <link href='bower_components-1.x/cba-elements/fonts/fonts.css' rel='stylesheet' type='text/css'>
+    <link href='bower_components/fontawesome/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
     </head>
 
     <body unresolved class="fullbleed">
+            <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+            <style>
+                .content,elm-footer,elm-header{
+                    position:absolute
+                }
+                #description,.userid{
+                    color:var(--accent-color)
+                }
+                :host{
+                    display:block;
+                    position:relative;
+                    cursor:default;
+                    font-size:13px;
+                    background-color:var(--default-primary-color);
+                    height:100%;
+                    width:100%
+                }
+                elm-header{
+                    top:0
+                }
+                elm-footer{
+                    bottom:0
+                }
+                .content{
+                    width:100%;
+                    top:50px
+                }
+                #fileBrowserPanel,#jobBrowserPanel{
+                    position:absolute;
+                    top:0;
+                    width:600px;
+                    height:400px;
+                    min-width:600px;
+                    min-height:400px
+                }
+                #fileBrowserPanel{
+                    left:0
+                }
+                #jobBrowserPanel{
+                    right:0
+                }
+                @media (max-width:1100px){
+                    .option-text{
+                        display:none
+                    }
+                }
+                .userid{
+                    font-size:16px
+                }
+                #description{
+                    font-weight:400
+                }
+                hipathia-home{
+                    height:calc(100vh - 100px);
+                    overflow-y:auto
+                }
+                elm-report,hipathia-prediction-form,hipathia-signaling-form{
+                    height:calc(100vh - 50px);
+                    overflow-y:auto
+                }
+            </style>
+                    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+        <style>
+            .content,elm-footer,elm-header{
+                position:absolute
+            }
+            #description,.userid{
+                color:var(--accent-color)
+            }
+            :host{
+                display:block;
+                position:relative;
+                cursor:default;
+                font-size:13px;
+                background-color:var(--default-primary-color);
+                height:100%;
+                width:100%
+            }
+            elm-header{
+                top:0
+            }
+            elm-footer{
+                bottom:0
+            }
+            .content{
+                width:100%;
+                top:50px
+            }
+            #fileBrowserPanel,#jobBrowserPanel{
+                position:absolute;
+                top:0;
+                width:600px;
+                height:400px;
+                min-width:600px;
+                min-height:400px
+            }
+            #fileBrowserPanel{
+                left:0
+            }
+            #jobBrowserPanel{
+                right:0
+            }
+            @media (max-width:1100px){
+                .option-text{
+                    display:none
+                }
+            }
+            .userid{
+                font-size:16px
+            }
+            #description{
+                font-weight:400
+            }
+            hipathia-home{
+                height:calc(100vh - 100px);
+                overflow-y:auto
+            }
+            elm-report,hipathia-prediction-form,hipathia-signaling-form{
+                height:calc(100vh - 50px);
+                overflow-y:auto
+            }
+        </style>
             <style>
                  :host {
                     display: block;
@@ -78,8 +236,124 @@
                     overflow-y: auto;
                 }
             </style>
-            <elm-login id="elmLogin"></elm-login>
+ <div class="content" menu-option="home">
+        <hipathia-home id="home" on-start="handleHomeStart" isLogged="{{isLogged}}"></hipathia-home>
+    </div>
+
+    <div id="jobContent" class="content" menu-option="job">
+        <elm-report id="report" hide-relaunch></elm-report>
+    </div>
+
+    <div class="content" menu-option="home,job,signaling,prediction">
+        <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
+            <div class="header">
+                <i class="fa fa-flask"></i>&nbsp; Browse my jobs
+            </div>
+            <elm-job-browser id="jobBrowser" class="container flex" on-jobselect="handleJobSelect" allowed-tools="{{allowedTools}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}" disable-relaunch="{{disableRelaunch}}" hide-status-filter="{{hideStatusFilter}}" hide-tool-filter="{{hideToolFilter}}">
+            </elm-job-browser>
+        </elm-panel>
+        <elm-panel id="fileBrowserPanel" hidden collapsible movable closable resizable on-hidden="handlePanelHidden">
+            <div class="header">
+                <i class="fa fa-cloud"></i>&nbsp; Browse my data
+            </div>
+            <elm-file-browser id="fileBrowser" class="container flex" on-fileselect="handleFileSelect" bioformats="{{bioformats}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}">
+            </elm-file-browser>
+        </elm-panel>
+    </div>
+
+    <div class="content" menu-option="signaling">
+        <hipathia-signaling-form id="signalingForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-signaling-form>
+    </div>
+
+    <div class="content" menu-option="prediction">
+        <hipathia-prediction-form id="predictionForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-prediction-form>
+    </div>
+
+    <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
+        <div class="icon">
+            <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
+        </div>
+        <div class="title" style="margin-left:15px;">
+            <span>hi</span><span style="font-weight:normal">P</span><span>athia 2</span>
+        </div>
+        <span id="description" class="description">
+            Pathways analysis suite
+        </span>
+
+        <div id="menu" class="menu horizontal layout center flex">
+            <!-- <div class="flex"></div> -->
+            <div style="margin-left:4vw;"></div>
+            <div title="" class="option" on-click="handleMenuOption" data-option="home">
+                <i class="fa fa-home"></i>
+                <span class="option-text">Home</span>
+            </div>
+            <div style="margin-left:2vw;"></div>
+            <div title="Open differential signaling form" class="option" on-click="handleMenuOption" login-required data-option="signaling">
+                <i class="fa fa fa-usb fa-flip-vertical"></i>
+                <span class="option-text">Differential signaling</span>
+            </div>
+            <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction">
+                <i class="fa fa-magic"></i>
+                <span class="option-text">Prediction</span>
+            </div>
+
+            <div class="flex" style="margin-left:2vw;"></div>
+            <div title="Browse my data" class="option" on-click="handleMenuPanel" login-required login-visible data-panel="fileBrowserPanel">
+                <i class="fa fa-cloud"></i>
+                <span class="option-text">My data</span>
+            </div>
+            <div title="Browse my jobs" class="option" on-click="handleMenuPanel" login-required login-visible data-panel="jobBrowserPanel">
+                <i class="fa fa-flask"></i>
+                <span class="option-text">My jobs</span>
+            </div>
+            <!-- <div style="margin-left:2vw;"></div> -->
+        </div>
+
+        <elm-dropdown dark class="helpmenu">
+            <div data-button><i class="fa fa-question-circle"></i></div>
+            <ul data-menu>
+                <a href="http://hipathia.babelomics.org/doc" target="_blank">
+                    <li>
+                        <i class="fa fa-book"></i> &nbsp; Documentation
+                    </li>
+                </a>
+                <a href="http://hipathia.babelomics.org/doc/doku.php?id=how_to_cite_hipathia" target="_blank">
+                    <li>
+                        <i class="fa fa-pencil-square-o"></i> &nbsp; How to cite HiPathia
+                    </li>
+                </a>
+                <li data-divider></li>
+                <li>
+                    <div on-mousedown="handleExample" data-example-name="differential-signaling">
+                        <i class="fa fa-lightbulb-o"></i> &nbsp; Differential signaling example
+                    </div>
+                </li>
+                <li>
+                    <div on-mousedown="handleExample" data-example-name="prediction-train">
+                        <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction train example
+                    </div>
+                </li>
+                <li>
+                    <div on-mousedown="handleExample" data-example-name="prediction-test">
+                        <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction test example
+                    </div>
+                </li>
+            </ul>
+        </elm-dropdown>
+        <elm-cluster-status id="clusterStatus" type="dark" class="cluster-status"></elm-cluster-status>
+    </elm-header>
+
+    <elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
+        <div style="text-align:center;">
+        hi<b>P</b>athia v<span>{{version}}</span>
+        <br> Created by
+        <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
+        <br> Fundación Progreso y Salud (FPS), Sevilla, Spain
+        <br> 2018
+        </div>
+    </elm-footer>
         <script>
+
         </script>
     </body>
 </html>
