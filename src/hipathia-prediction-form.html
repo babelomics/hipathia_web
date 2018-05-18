@@ -364,46 +364,57 @@
     </template>
 
     <script>
-        Polymer({
-            is: 'hipathia-prediction-form',
-            behaviors: [HipathiaFormBehavior],
-            properties: {
-                type: {
-                    type: String,
-                    value: 'train'
-                },
-                predictionAllowedTool: {
-                    type: Array,
-                    value: ['hipathia.prediction-train']
-                },
-                modelJob: {
-                    type: Object
-                },
-                modelStats: {
-                    type: Array
-                },
-                modelDesignFile: {
-                    type: Object
-                },
-                modelFile: {
-                    type: Object
-                }
-            },
 
-            created: function () {
+        class hipathiaPredictionForm extends Polymer.mixinBehaviors([HipathiaFormBehavior], Polymer.Element) {
+
+            static get is() {
+                return 'hipathia-result'
+            }
+
+            constructor() {
+                super();
+            }
+
+            static get properties() {
+                return {
+                    type: {
+                        type: String,
+                        value: 'train'
+                    },
+                    predictionAllowedTool: {
+                        type: Array,
+                        value: ['hipathia.prediction-train']
+                    },
+                    modelJob: {
+                        type: Object
+                    },
+                    modelStats: {
+                        type: Array
+                    },
+                    modelDesignFile: {
+                        type: Object
+                    },
+                    modelFile: {
+                        type: Object
+                    }
+                }
+            }
+            created() {
                 this._loadPathwaysList();
-            },
-            ready: function () {
+            }
+
+            ready() {
+                super.ready();
                 this.set('selectedTissueSet', this.ea);
                 this.set('exp_db', 'ea');
                 // this.set('selectPathwaysSet', this.pathwaysHumanSet);
-            },
+            }
 
-            handleType: function (e) {
+            handleType(e) {
                 this.set('type', e.currentTarget.value);
                 this._clean();
-            },
-            handleModelJobSelect: function (e) {
+            }
+            handleModelJobSelect(e) {
                 var me = this;
                 this.modelJob = e.detail;
 
@@ -413,8 +424,8 @@
                         me.processResultFiles(files);
                     });
                 });
-            },
-            processResultFiles: function (files) {
+            }
+            processResultFiles(files) {
                 var me = this;
                 this.fileNameMap = {};
                 for (var i = 0; i < files.length; i++) {
@@ -426,8 +437,9 @@
                 CbaManager.getFileContent(this.fileNameMap['model_stats.txt']._id, function (textContent) {
                     me.processModelStats(textContent);
                 });
-            },
-            processModelStats: function (textContent) {
+            }
+
+            processModelStats(textContent) {
                 var modelStats = [];
                 var lines = textContent.split('\n');
                 var line, fields, field;
@@ -444,9 +456,9 @@
                     }
                 }
                 this.set('modelStats', modelStats);
-            },
+            }
 
-            runTrainExample: function () {
+            runTrainExample() {
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
@@ -499,8 +511,10 @@
                 };
 
                 this._createJob(query, args);
-            },
-            runTestExample: function () {
+            }
+
+
+            runTestExample() {
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
@@ -533,8 +547,10 @@
                 };
 
                 this._createJob(query, args);
-            },
-            _clean: function () {
+            }
+
+
+            _clean() {
                 this.errorMessage = '';
                 this.$.exp_file.reset();
                 this.$.design_file.reset();
@@ -588,8 +604,9 @@
                 this._clearError('model');
 
                 this.selectAllPw();
-            },
-            launchJob: function (e) {
+            }
+
+            launchJob(e) {
                 var me = this;
 
                 this.errorMessage = '';
@@ -809,8 +826,9 @@
                     // return;
                     me._createJob(query, args);
                 }
-            },
-            _createJob: function (query, args) {
+            }
+
+            _createJob(query, args) {
                 var me = this;
                 CbaManager.jobs.create({
                     query: query,
@@ -826,7 +844,7 @@
                                 // var job = response.response[0].result[0];
                                 // console.log(job);
                                 me._clean();
-                                me.fire('job-launched');
+                                me.dispatchEvent('job-launched');
                                 //                                    me.message = job.commandLine;
                             } else {
                                 me.message = response.response[0].errorMsg;
@@ -838,6 +856,9 @@
                     }
                 });
             }
-        });
+
+        }
+        customElements.define(hipathiaPredictionForm.is, hipathiaPredictionForm);
+
     </script>
 </dom-module>
