@@ -1,4 +1,4 @@
-<script src="bower_components-1.x/cba-elements/src/manager/cba-manager.js"></script>
+<script src="bower_components/cba-elements/src/manager/cba-manager.js"></script>
 
 <link rel="import" href="bower_components/polymer/polymer-element.html">
 <!--
@@ -6,20 +6,20 @@
 <script src="bower_components/crypto-js/core.js"></script>
 <script src="bower_components/crypto-js/sha1.js"></script>-->
 
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-header.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-application-behavior.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-footer.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-select.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-select-box.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-panel.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/dropdown/elm-dropdown.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-header.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-application-behavior.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-footer.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-select.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-select-box.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-panel.html">
+<link rel="import" href="bower_components/cba-elements/src/dropdown/elm-dropdown.html">
 
-<link rel="import" href="bower_components-1.x/cba-elements/src/table/elm-table.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/form/elm-file-origin.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/file/elm-file-browser.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/job/elm-job-browser.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/elm-cluster-status.html">
-<link rel="import" href="bower_components-1.x/cba-elements/src/report/elm-report.html">
+<link rel="import" href="bower_components/cba-elements/src/table/elm-table.html">
+<link rel="import" href="bower_components/cba-elements/src/form/elm-file-origin.html">
+<link rel="import" href="bower_components/cba-elements/src/file/elm-file-browser.html">
+<link rel="import" href="bower_components/cba-elements/src/job/elm-job-browser.html">
+<link rel="import" href="bower_components/cba-elements/src/elm-cluster-status.html">
+<link rel="import" href="bower_components/cba-elements/src/report/elm-report.html">
 
 <link rel="import" href="src/hipathia-home.html">
 <link rel="import" href="src/hipathia-signaling-form.html">
@@ -102,7 +102,7 @@
                 <div class="header">
                     <i class="fa fa-flask"></i>&nbsp; Browse my jobs
                 </div>
-                <elm-job-browser id="jobBrowser" class="container flex" on-jobselect="handleJobSelect" allowed-tools="{{allowedTools}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}" disable-relaunch="{{disableRelaunch}}" hide-status-filter="{{hideStatusFilter}}" hide-tool-filter="{{hideToolFilter}}">
+                <elm-job-browser id="jobBrowser" class="container flex" on-jobselect="handleJobSelect" allowed-tools="{{allowedTools}}" on-openjobfolder="handlehsh" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}" disable-relaunch="{{disableRelaunch}}" hide-status-filter="{{hideStatusFilter}}" hide-tool-filter="{{hideToolFilter}}">
                 </elm-job-browser>
             </elm-panel>
             <elm-panel id="fileBrowserPanel" hidden collapsible movable closable resizable on-hidden="handlePanelHidden">
