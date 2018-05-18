@@ -715,7 +715,7 @@
                                 // var job = response.response[0].result[0];
                                 // console.log(job);
                                 me._clean();
-                                me.fire('job-launched');
+                                me.dispatchEvent('job-launched');
                                 //      me.message = job.commandLine;
                             } else {
                                 me.message = response.response[0].errorMsg;
