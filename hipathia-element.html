@@ -208,10 +208,19 @@
     </template>
 
     <script>
-        Polymer({
-            is: "hipathia-element",
-            behaviors: [elmApplicationBehavior],
-            properties: {
+
+    class hipathiaElement extends Polymer.mixinBehaviors([elmApplicationBehavior], Polymer.Element) {
+
+        static get is() {
+            return 'hipathia-element'
+        }
+
+        constructor() {
+            super();
+        }
+
+        static get properties() {
+            return {
                 bioformats: {
                     type: Array,
                     notify: true,
@@ -219,101 +228,118 @@
                 },
                 allowedTools: {
                     type: Array,
-                    value: function() {
+                    value: function () {
                         return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'utils.report'];
                     }
-                },
-            },
-            listeners: {
-                'open-job-folder': 'handleOpenJobFolder'
-            },
-            selectedOptionChanged: function(neo, old) {
-                if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction') {
-                    this.$.fileBrowserPanel.hide();
-                    this.$.jobBrowserPanel.hide();
-                }
-            },
-            ready: function() {
-                var me = this;
-                this.selectedOption = "home";
-                this.checkShowMenuOnLogin();
-            },
-            handleOpenJobFolder: function(e) {
-                var job = e.detail;
-                this.$.fileBrowser.set('folder', job.folder);
-                this.$.fileBrowserPanel.show();
-            },
-            handleFileSelect: function(e) {},
-            handleJobSelect: function(e) {
-                var me = this;
-                var job = e.detail;
-                if (job && job.status === 'DONE') {
-                    this.set('selectedOption', 'job');
-                    this.$.report.hideJobInformation = true;
-                    this.$.report.set('job', job);
-                    //
-                    // while (this.$.jobContent.firstChild) {
-                    //     this.$.jobContent.removeChild(this.$.jobContent.firstChild);
-                    // }
-                    // var report = document.createElement('elm-report');
-                    // Polymer.dom(me.$.jobContent).appendChild(report);
-                }
-            },
-            handleJobLaunched: function() {
-                this.setMenu('home');
-                this.$.jobBrowserPanel.show();
-                this.$.elmHeader.getUserInfo(true);
-            },
-            handleLogin: function() {
-                if (Cookies('bioinfo_user').indexOf("anonymous___") != -1) {
-                    this.setMenu('signaling');
-                } else {
-                    this.selectedOption = "home";
-                }
-                if (this._lastLogedRequest) {
-                    this._lastLogedRequest = null;
-                }
-                if (this._lastExampleRequest) {
-                    this.runExample(this._lastExampleRequest);
-                    this._lastExampleRequest = null;
-                }
-                this.$.home.isLogged = true;
-                this.checkShowMenuOnLogin();
-            },
-            handleLogout: function() {
-                this.$.home.isLogged = false;
-                this.setMenu('home');
-                this.checkShowMenuOnLogin();
-            },
-            handleUserNeedRefresh: function() {
-                this.$.elmHeader.getUserInfo(true);
-            },
-            handleHomeStart: function() {
-                if (this.$.elmHeader.isLogged != true) {
-                    this.$.elmHeader.anonymousSign();
-                }
-            },
-
-            handleExample: function(e) {
-                if (this.$.elmHeader.isLogged != true) {
-                    this._lastExampleRequest = e.currentTarget.dataset['exampleName'];
-                    this.$.elmHeader.anonymousSign();
-                } else {
-                    this.runExample(e.currentTarget.dataset['exampleName']);
-                    this.$.jobBrowserPanel.show();
-                }
-            },
-            runExample: function(exname) {
-                if (exname === 'differential-signaling') {
-                    this.$.signalingForm.runExample();
-                }
-                if (exname === 'prediction-train') {
-                    this.$.predictionForm.runTrainExample();
-                }
-                if (exname === 'prediction-test') {
-                    this.$.predictionForm.runTestExample();
                 }
             }
-        });
+
+        }
+
+        // TODO listeners: polymer 2.x
+
+        // listeners: {
+        //     'open-job-folder': 'handleOpenJobFolder'
+        // }
+
+
+        created() {
+        }
+
+        selectedOptionChanged(neo, old) {
+            if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction') {
+                this.$.fileBrowserPanel.hide();
+                this.$.jobBrowserPanel.hide();
+            }
+        }
+
+        ready() {
+            super.ready();
+            var me = this;
+            this.selectedOption = "home";
+            this.checkShowMenuOnLogin();
+        }
+
+        handleOpenJobFolder(e) {
+            var job = e.detail;
+            this.$.fileBrowser.set('folder', job.folder);
+            this.$.fileBrowserPanel.show();
+        }
+        handleFileSelect(e) { }
+
+        handleJobSelect(e) {
+            var me = this;
+            var job = e.detail;
+            if (job && job.status === 'DONE') {
+                this.set('selectedOption', 'job');
+                this.$.report.hideJobInformation = true;
+                this.$.report.set('job', job);
+                //
+                // while (this.$.jobContent.firstChild) {
+                //     this.$.jobContent.removeChild(this.$.jobContent.firstChild);
+                // }
+                // var report = document.createElement('elm-report');
+                // Polymer.dom(me.$.jobContent).appendChild(report);
+            }
+        }
+
+        handleJobLaunched() {
+            this.setMenu('home');
+            this.$.jobBrowserPanel.show();
+            this.$.elmHeader.getUserInfo(true);
+        }
+
+        handleLogin() {
+            if (Cookies('bioinfo_user').indexOf("anonymous___") != -1) {
+                this.setMenu('signaling');
+            } else {
+                this.selectedOption = "home";
+            }
+            if (this._lastLogedRequest) {
+                this._lastLogedRequest = null;
+            }
+            if (this._lastExampleRequest) {
+                this.runExample(this._lastExampleRequest);
+                this._lastExampleRequest = null;
+            }
+            this.$.home.isLogged = true;
+            this.checkShowMenuOnLogin();
+        }
+
+        handleLogout() {
+            this.$.home.isLogged = false;
+            this.setMenu('home');
+            this.checkShowMenuOnLogin();
+        }
+        handleUserNeedRefresh() {
+            this.$.elmHeader.getUserInfo(true);
+        }
+        handleHomeStart() {
+            if (this.$.elmHeader.isLogged != true) {
+                this.$.elmHeader.anonymousSign();
+            }
+        }
+        handleExample(e) {
+            if (this.$.elmHeader.isLogged != true) {
+                this._lastExampleRequest = e.currentTarget.dataset['exampleName'];
+                this.$.elmHeader.anonymousSign();
+            } else {
+                this.runExample(e.currentTarget.dataset['exampleName']);
+                this.$.jobBrowserPanel.show();
+            }
+        }
+        runExample(exname) {
+            if (exname === 'differential-signaling') {
+                this.$.signalingForm.runExample();
+            }
+            if (exname === 'prediction-train') {
+                this.$.predictionForm.runTrainExample();
+            }
+            if (exname === 'prediction-test') {
+                this.$.predictionForm.runTestExample();
+            }
+        }
+    }
+    customElements.define(hipathiaElement.is, hipathiaElement);
     </script>
 </dom-module>
