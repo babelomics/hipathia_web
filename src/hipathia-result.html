@@ -1,66 +1,88 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 
 <script src="../bower_components-1.x/network-viewer/conf/config.js"></script>
 <link rel="import" href="../bower_components-1.x/network-viewer/network-viewer.html">
 
 <dom-module id="hipathia-result">
     <template>
-    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
-    <style>
-        :host{
-            display:block;
-            position:relative;
-            box-sizing:border-box;
-            background-color:#FFF;
-            padding:20px 40px
-        }
-        .section:first-child{
-            margin:0 0 5px
-        }
-        .section{
-            font-size:30px;
-            font-weight:lighter;
-            margin:30px 0 5px;
-            color:var(--secondary-text-color);
-            border-bottom:1px solid var(--divider-color)
-        }
-        .download,.image,.message,.param,.table{
-            font-size:18px;
-            display:block
-        }
-        .download>a:hover,.image>a:hover,.table>a:hover{
-            text-decoration:underline
-        }
-        .download>a,.image>a,.table>a{
-            color:var(--secondary-text-color);
-            text-decoration:none
-        }
-        .download>i,.image>i,.message>i,.table>i{
-            color:var(--accent-color);
-            margin-right:10px
-        }
-        .param>.key{
-            color:var(--secondary-text-color);
-            margin-right:5px
-        }
-        .param>.val{
-            color:var(--accent-color)
-        }
-        .image>img{
-            display:block;
-            margin-bottom:30px
-        }
-        .table>elm-table{
-            width:1000px;
-            margin-top:10px;
-            margin-bottom:20px;
-            border:1px solid var(--divider-color);
-            height:380px
-        }
-        .html{
-            color:var(--secondary-text-color)
-        }
-    </style>
+        <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                box-sizing: border-box;
+                background-color: #FFF;
+                padding: 20px 40px
+            }
+
+            .section:first-child {
+                margin: 0 0 5px
+            }
+
+            .section {
+                font-size: 30px;
+                font-weight: lighter;
+                margin: 30px 0 5px;
+                color: var(--secondary-text-color);
+                border-bottom: 1px solid var(--divider-color)
+            }
+
+            .download,
+            .image,
+            .message,
+            .param,
+            .table {
+                font-size: 18px;
+                display: block
+            }
+
+            .download>a:hover,
+            .image>a:hover,
+            .table>a:hover {
+                text-decoration: underline
+            }
+
+            .download>a,
+            .image>a,
+            .table>a {
+                color: var(--secondary-text-color);
+                text-decoration: none
+            }
+
+            .download>i,
+            .image>i,
+            .message>i,
+            .table>i {
+                color: var(--accent-color);
+                margin-right: 10px
+            }
+
+            .param>.key {
+                color: var(--secondary-text-color);
+                margin-right: 5px
+            }
+
+            .param>.val {
+                color: var(--accent-color)
+            }
+
+            .image>img {
+                display: block;
+                margin-bottom: 30px
+            }
+
+            .table>elm-table {
+                width: 1000px;
+                margin-top: 10px;
+                margin-bottom: 20px;
+                border: 1px solid var(--divider-color);
+                height: 380px
+            }
+
+            .html {
+                color: var(--secondary-text-color)
+            }
+        </style>
     </template>
     <script>
         Polymer({
@@ -74,17 +96,17 @@
                     type: Object
                 }
             },
-            ready: function() {},
-            jobChanged: function(neo, old) {
+            ready: function () { },
+            jobChanged: function (neo, old) {
                 var me = this;
                 if (neo) {
                     var files = [];
-                    CbaManager.getPlainFolderFiles(neo.folder._id, function(files1) {
+                    CbaManager.getPlainFolderFiles(neo.folder._id, function (files1) {
                         files = files.concat(files1);
-                        CbaManager.getPlainFolderFiles(neo.options["exp_file"].value, function(files2) {
+                        CbaManager.getPlainFolderFiles(neo.options["exp_file"].value, function (files2) {
                             files = files.concat(files2);
                             if (neo.options["design_file"] != null) {
-                                CbaManager.getPlainFolderFiles(neo.options["design_file"].value, function(files3) {
+                                CbaManager.getPlainFolderFiles(neo.options["design_file"].value, function (files3) {
                                     files = files.concat(files3);
                                     me.processResultFiles(files);
                                 });
@@ -95,18 +117,18 @@
                     });
                 }
             },
-            processResultFiles: function(files) {
+            processResultFiles: function (files) {
                 var me = this;
                 this.fileNameMap = {};
                 for (var i = 0; i < files.length; i++) {
                     var f = files[i];
                     this.fileNameMap[f.name] = f;
                 }
-                CbaManager.getFileContent(this.fileNameMap['report.xml']._id, function(content) {
+                CbaManager.getFileContent(this.fileNameMap['report.xml']._id, function (content) {
                     me.processReportFile(content);
                 });
             },
-            processReportFile: function(fileContent) {
+            processReportFile: function (fileContent) {
                 var parser = new DOMParser();
                 var reportXML = parser.parseFromString(fileContent, "text/xml");
                 var inputParamsEl = reportXML.querySelector('input-params');
@@ -135,16 +157,16 @@
                     }
                 }
             },
-            _addTag: function(el, outEl) {
+            _addTag: function (el, outEl) {
                 el.classList.add(outEl.tagName);
                 Polymer.dom(this.root).appendChild(el);
             },
-            _sectionTag: function(outEl) {
+            _sectionTag: function (outEl) {
                 var el = document.createElement('div');
                 el.innerHTML = outEl.getAttribute('title');
                 this._addTag(el, outEl);
             },
-            _downloadTag: function(outEl) {
+            _downloadTag: function (outEl) {
                 var name = outEl.getAttribute('file');
                 var el = document.createElement('div');
 
@@ -159,7 +181,7 @@
                 el.appendChild(a);
                 this._addTag(el, outEl);
             },
-            _paramTag: function(outEl) {
+            _paramTag: function (outEl) {
                 // <param key='Decomposed paths' value='FALSE'></param>
                 var el = document.createElement('div');
 
@@ -175,7 +197,7 @@
                 el.appendChild(valEl);
                 this._addTag(el, outEl);
             },
-            _messageTag: function(outEl) {
+            _messageTag: function (outEl) {
                 // <message text='...'></message>
                 var el = document.createElement('div');
 
@@ -190,7 +212,7 @@
 
                 this._addTag(el, outEl);
             },
-            _imageTag: function(outEl) {
+            _imageTag: function (outEl) {
                 // <image title='Heatmap' file='paths_heatmap.png'></image>
                 var name = outEl.getAttribute('file');
                 var el = document.createElement('div');
@@ -210,7 +232,7 @@
                 el.appendChild(img);
                 this._addTag(el, outEl);
             },
-            _tableTag: function(outEl) {
+            _tableTag: function (outEl) {
                 var me = this;
                 // <table title='Path significance' file='paths_comparison.txt'  page-size='10'></table>
                 var name = outEl.getAttribute('file');
@@ -227,7 +249,7 @@
                 table.setAttribute('enable-paging', '');
                 table.setAttribute('page-size', outEl.getAttribute('page-size'));
 
-                CbaManager.getFileContent(this.fileNameMap[name]._id, function(content) {
+                CbaManager.getFileContent(this.fileNameMap[name]._id, function (content) {
                     var parsedContent = me._parseTabularFile(content);
                     table.set('data', parsedContent.data);
                     table.set('columns', parsedContent.columns);
@@ -239,11 +261,11 @@
                 this._addTag(el, outEl);
             },
 
-            _htmlTag: function(outEl) {
+            _htmlTag: function (outEl) {
                 var me = this;
                 var name = outEl.getAttribute('file');
                 var el = document.createElement('div');
-                CbaManager.getFileContent(this.fileNameMap[name]._id, function(content) {
+                CbaManager.getFileContent(this.fileNameMap[name]._id, function (content) {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(content, "text/html");
                     me._processHTML(doc, el);
@@ -251,7 +273,7 @@
                 this._addTag(el, outEl);
             },
 
-            _processHTML: function(doc, outEl) {
+            _processHTML: function (doc, outEl) {
                 var indexStyle = doc.querySelector('style');
                 var indexScript = doc.querySelector('script[data-var]');
                 var contextVar = indexScript.dataset.var;
@@ -292,11 +314,11 @@
 
                 var moduleConfig = {
                     is: elname,
-                    ready: function() {
+                    ready: function () {
                         var me = this;
                         this.init(Polymer.dom(this.root));
                     },
-                    handlePathwayClick: function(e) {
+                    handlePathwayClick: function (e) {
                         this.loadPathway(e.currentTarget.dataset.pathway, e.currentTarget.dataset.pathwayname, Polymer.dom(this.root));
                     }
                 }
@@ -310,10 +332,10 @@
                 var res = document.createElement(elname);
                 outEl.appendChild(res);
             },
-            _createReportHTMLElement: function() {
+            _createReportHTMLElement: function () {
 
             },
-            _parseTabularFile: function(textContent) {
+            _parseTabularFile: function (textContent) {
                 var lines = textContent.split('\n');
                 if (lines.length > 0) {
                     var line, fields, field, data = [],

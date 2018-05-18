@@ -133,11 +133,11 @@
     <script>
         class hipathiaHome extends Polymer.Element {
 
+            static get is() { return 'hipathia-home' }
+
             constructor() {
                 super();
             }
-
-            static get is() { return 'hipathia-home' }
 
             static get properties() {
                 return {
@@ -155,7 +155,7 @@
                 this.appendChild(dom);
             }
             handleStart() {
-                this.fire('start');
+                this.dispatchEvent('start');
             }
             seeMore() {
                 this.isShowed = (!this.isShowed);

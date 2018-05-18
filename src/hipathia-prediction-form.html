@@ -1,68 +1,87 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
 
 <link rel="import" href="hipathia-form-behavior.html">
 <dom-module id="hipathia-prediction-form">
     <template>
-    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
-    <style>
-        #jobBrowser,#modelInfo,#pathwaysContent{
-            height:300px
-        }
-        #modelInfo,#tissue{
-            border:1px solid var(--divider-color);
-            padding:5px
-        }
-        :host{
-            display:block;
-            position:relative;
-            box-sizing:border-box
-        }
-        #form{
-            margin:0 auto;
-            max-width:1000px;
-            padding:15px 40px;
-            border:1px solid #c6d0da;
-            background-color:#FFF;
-            box-shadow:2px 6px 15px 8px rgba(0,0,0,.3)
-        }
-        #title{
-            text-align:center;
-            font-size:20px;
-            color:#666
-        }
-        #tissue{
-            overflow-y:scroll;
-            height:200px;
-            background-color:var(--light-primary-color)
-        }
-        .errmsg{
-            color:#8b0000;
-            margin-bottom:5px;
-            font-style:italic
-        }
-        elm-select-box{
-            width:300px;
-            height:80px
-        }
-        textarea{
-            resize:none
-        }
-        .key{
-            color:var(--secondary-text-color)
-        }
-        #jobBrowser{
-            width:600px;
-            border:1px solid var(--divider-color)
-        }
-        #modelBox{
-            width:350px;
-            margin-left:10px
-        }
-        #modelInfo{
-            box-sizing:border-box;
-            overflow-y:auto
-        }
-    </style>
+        <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+        <style>
+            #jobBrowser,
+            #modelInfo,
+            #tissue {
+                border: 1px solid var(--divider-color)
+            }
+
+            #jobBrowser,
+            #modelInfo,
+            #pathwaysContent {
+                height: 300px
+            }
+
+            #modelInfo,
+            #tissue {
+                padding: 5px
+            }
+
+            :host {
+                display: block;
+                position: relative;
+                box-sizing: border-box
+            }
+
+            #form {
+                margin: 0 auto;
+                max-width: 1000px;
+                padding: 15px 40px;
+                border: 1px solid #c6d0da;
+                background-color: #FFF;
+                box-shadow: 2px 6px 15px 8px rgba(0, 0, 0, .3)
+            }
+
+            #title {
+                text-align: center;
+                font-size: 20px;
+                color: #666
+            }
+
+            #tissue {
+                overflow-y: scroll;
+                height: 200px;
+                background-color: var(--light-primary-color)
+            }
+
+            .errmsg {
+                color: #8b0000;
+                margin-bottom: 5px;
+                font-style: italic
+            }
+
+            elm-select-box {
+                width: 300px;
+                height: 80px
+            }
+
+            textarea {
+                resize: none
+            }
+
+            .key {
+                color: var(--secondary-text-color)
+            }
+
+            #jobBrowser {
+                width: 600px
+            }
+
+            #modelBox {
+                width: 350px;
+                margin-left: 10px
+            }
+
+            #modelInfo {
+                box-sizing: border-box;
+                overflow-y: auto
+            }
+        </style>
         <form id="form">
             <p id="title">
                 <strong>Differential prediction form</strong>
@@ -89,7 +108,8 @@
                     <div hidden$="{{_checkValue('test',type)}}" class="horizontal layout wrap" style="margin-top:10px;">
                         <div>
                             <label class="elm">Existing models:</label>
-                            <elm-job-browser id="jobBrowser" on-jobselect="handleModelJobSelect" allowed-tools="{{predictionAllowedTool}}" user-data="{{userData}}" hide-status-filter hide-tool-filter disable-relaunch view="done"></elm-job-browser>
+                            <elm-job-browser id="jobBrowser" on-jobselect="handleModelJobSelect" allowed-tools="{{predictionAllowedTool}}" user-data="{{userData}}"
+                                hide-status-filter hide-tool-filter disable-relaunch view="done"></elm-job-browser>
                             <!-- <div id="models"> -->
                             <!-- <elm-select-box options="{{predictionJobs}}"></elm-select-box> -->
                             <!-- </div> -->
@@ -161,7 +181,8 @@
                     <div>Variant file:
                         <span class="key">(Required when using expression database)</span> &nbsp;
                         </elm-opencga-file-origin>
-                        <elm-file-origin id="variant_file" selection-mode="file" bioformats="{{variantBioformat}}" user-data="{{userData}}" on-ok-click="checkVariantFile" selected-file="{{variantFile}}">
+                        <elm-file-origin id="variant_file" selection-mode="file" bioformats="{{variantBioformat}}" user-data="{{userData}}" on-ok-click="checkVariantFile"
+                            selected-file="{{variantFile}}">
                         </elm-file-origin>
                         <span id="variant_fileError" class="errmsg"></span>
                     </div>
@@ -335,7 +356,8 @@
 
             <span class="errmsg">{{errorMessage}}</span>
             <div class="horizontal layout center-justified">
-                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="launchJob"><i class="fa fa-rocket"></i> &nbsp; Launch Job</div>
+                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="launchJob">
+                    <i class="fa fa-rocket"></i> &nbsp; Launch Job</div>
             </div>
             <br>
         </form>
@@ -368,31 +390,31 @@
                 }
             },
 
-            created: function() {
+            created: function () {
                 this._loadPathwaysList();
             },
-            ready: function() {
+            ready: function () {
                 this.set('selectedTissueSet', this.ea);
                 this.set('exp_db', 'ea');
                 // this.set('selectPathwaysSet', this.pathwaysHumanSet);
             },
 
-            handleType: function(e) {
+            handleType: function (e) {
                 this.set('type', e.currentTarget.value);
                 this._clean();
             },
-            handleModelJobSelect: function(e) {
+            handleModelJobSelect: function (e) {
                 var me = this;
                 this.modelJob = e.detail;
 
-                CbaManager.getPlainFolderFiles(this.modelJob.options.design_file.value, function(files2) {
+                CbaManager.getPlainFolderFiles(this.modelJob.options.design_file.value, function (files2) {
                     me.modelDesignFile = files2[0];
-                    CbaManager.getPlainFolderFiles(me.modelJob.folder._id, function(files) {
+                    CbaManager.getPlainFolderFiles(me.modelJob.folder._id, function (files) {
                         me.processResultFiles(files);
                     });
                 });
             },
-            processResultFiles: function(files) {
+            processResultFiles: function (files) {
                 var me = this;
                 this.fileNameMap = {};
                 for (var i = 0; i < files.length; i++) {
@@ -401,11 +423,11 @@
                 }
                 this.modelFile = this.fileNameMap['model.RData'];
 
-                CbaManager.getFileContent(this.fileNameMap['model_stats.txt']._id, function(textContent) {
+                CbaManager.getFileContent(this.fileNameMap['model_stats.txt']._id, function (textContent) {
                     me.processModelStats(textContent);
                 });
             },
-            processModelStats: function(textContent) {
+            processModelStats: function (textContent) {
                 var modelStats = [];
                 var lines = textContent.split('\n');
                 var line, fields, field;
@@ -424,7 +446,7 @@
                 this.set('modelStats', modelStats);
             },
 
-            runTrainExample: function() {
+            runTrainExample: function () {
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
@@ -478,7 +500,7 @@
 
                 this._createJob(query, args);
             },
-            runTestExample: function() {
+            runTestExample: function () {
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
@@ -512,7 +534,7 @@
 
                 this._createJob(query, args);
             },
-            _clean: function() {
+            _clean: function () {
                 this.errorMessage = '';
                 this.$.exp_file.reset();
                 this.$.design_file.reset();
@@ -567,7 +589,7 @@
 
                 this.selectAllPw();
             },
-            launchJob: function(e) {
+            launchJob: function (e) {
                 var me = this;
 
                 this.errorMessage = '';
@@ -788,7 +810,7 @@
                     me._createJob(query, args);
                 }
             },
-            _createJob: function(query, args) {
+            _createJob: function (query, args) {
                 var me = this;
                 CbaManager.jobs.create({
                     query: query,
@@ -798,7 +820,7 @@
                             "Content-Type": "application/json"
                         },
                         body: JSON.stringify(args),
-                        success: function(response) {
+                        success: function (response) {
                             if (response.response[0].error == null) {
                                 console.log(response);
                                 // var job = response.response[0].result[0];
@@ -810,7 +832,7 @@
                                 me.message = response.response[0].errorMsg;
                             }
                         },
-                        error: function() {
+                        error: function () {
                             me.message = 'Server error, try again later.';
                         }
                     }
