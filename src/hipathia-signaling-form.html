@@ -333,25 +333,37 @@
     </template>
 
     <script>
-        Polymer({
-            is: 'hipathia-signaling-form',
-            behaviors: [HipathiaFormBehavior],
-            properties: {
-                execution: {
-                    type: String,
-                    value: 'differential-signaling'
+        class hipathiaSignalingForm extends Polymer.mixinBehaviors([HipathiaFormBehavior], Polymer.Element) {
+            static get is() {
+                return 'hipathia-signaling-form'
+            }
+
+            constructor() {
+                super();
+            }
+
+            static get properties() {
+                return {
+                    execution: {
+                        type: String,
+                        value: 'differential-signaling'
+                    }
                 }
-            },
-            created: function () {
+            }
+
+            created() {
                 this._loadPathwaysList();
-            },
-            ready: function () {
+            }
+
+            ready() {
+                super.ready();
                 this.set('selectedTissueSet', this.ea);
                 this.set('exp_db', 'ea');
                 this.set('variantInputFile', "false");
                 // this.set('selectPathwaysSet', this.pathwaysHumanSet);
-            },
-            runExample: function () {
+            }
+
+            runExample() {
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
@@ -408,8 +420,8 @@
 
                 this._createJob(query, args);
 
-            },
-            _clean: function () {
+            }
+            _clean() {
                 this.errorMessage = '';
                 this.$.exp_file.reset();
                 this.$.design_file.reset();
@@ -462,8 +474,9 @@
                 this._clearError('pathways');
 
                 this.selectAllPw();
-            },
-            launchJob: function (e) {
+            }
+
+            launchJob(e) {
                 var me = this;
 
                 this.errorMessage = '';
@@ -685,8 +698,8 @@
                     // return;
                     this._createJob(query, args);
                 }
-            },
-            _createJob: function (query, args) {
+            }
+            _createJob(query, args) {
                 var me = this;
                 CbaManager.jobs.create({
                     query: query,
@@ -714,6 +727,8 @@
                     }
                 });
             }
-        });
+
+        }
+        customElements.define(hipathiaSignalingForm.is, hipathiaSignalingForm);
     </script>
 </dom-module>
