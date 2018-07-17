@@ -20,11 +20,11 @@
 <link rel="import" href="bower_components/cba-elements/src/file/elm-file-browser.html">
 <link rel="import" href="bower_components/cba-elements/src/job/elm-job-browser.html">
 <link rel="import" href="bower_components/cba-elements/src/elm-cluster-status.html">
-<link rel="import" href="bower_components/cba-elements/src/report/elm-report.html">
 
 <link rel="import" href="src/hipathia-home.html">
 <link rel="import" href="src/hipathia-signaling-form.html">
 <link rel="import" href="src/hipathia-prediction-form.html">
+<link rel="import" href="src/hipathia-result.html">
 
 <dom-module id="hipathia-element">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
@@ -104,7 +104,7 @@
 
         hipathia-prediction-form,
         hipathia-signaling-form,
-        elm-report {
+        hipathia-result {
             height: calc(100vh - 50px);
             overflow-y: auto;
         }
@@ -116,7 +116,7 @@
         </div>
 
         <div id="jobContent" class="content" menu-option="job">
-            <elm-report id="report" hide-relaunch></elm-report>
+            <hipathia-result id="report" hide-relaunch></hipathia-result>
         </div>
 
         <div class="content" menu-option="home,job,signaling,prediction">
@@ -273,12 +273,25 @@
                     this.set('selectedOption', 'job');
                     this.$.report.hideJobInformation = true;
                     this.$.report.set('job', job);
-                    //
+                    /*
+                    var table = document.getElementsByTagName("elm-table");
+                    console.log("table");
+                    console.log(table);
+                    */
                     // while (this.$.jobContent.firstChild) {
                     //     this.$.jobContent.removeChild(this.$.jobContent.firstChild);
                     // }
                     // var report = document.createElement('elm-report');
                     // Polymer.dom(me.$.jobContent).appendChild(report);
+
+                    /*table[0].addEventListener('click', function(e) {
+                        var rows = document.getElementsByClassName("table-row horizontal layout style-scope elm-table");
+                        console.log("rows");
+                        console.log(rows);
+                        console.log(Array.prototype.slice.call(rows));
+                        console.log(rows);
+                    });*/
+                    
                 }
             },
             handleJobLaunched: function() {
