@@ -35,7 +35,7 @@
             cursor: default;
             font-size: 13px;
             background-color: var(--default-primary-color);
-            height: 100%;
+            height: 99%;
             width: 100%;
         }
 
@@ -47,6 +47,7 @@
         elm-footer {
             position: absolute;
             bottom: 0;
+            height: 70px;
         }
 
         .content {
@@ -80,11 +81,17 @@
         #fileBrowser {}
 
         #jobBrowser {}
-
-        @media (max-width: 1100px) {
-            .option-text {
-                display: none;
+        
+        @media (max-width: 1260px)  {
+            .option-text{
+                /*display: none;*/
+                font-size: 16px;
             }
+            @media (max-width: 1100px)  {
+                .option-text{
+                    display: none;
+                }
+            }  
         }
 
         .userid {
@@ -95,6 +102,10 @@
         #description {
             color: var(--accent-color);
             font-weight: normal;
+            font-size: 16px;
+            margin-top: 0%;
+            padding-top: 0%;
+            padding-bottom: 5px;
         }
 
         hipathia-home {
@@ -148,12 +159,13 @@
             <div class="icon">
                 <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
             </div>
-            <div class="title" style="margin-left:15px;">
+            <div class="title" style="margin-left:15px;margin-bottom: 0px; padding-bottom: 0px">
                 <span>hi</span><span style="font-weight:normal">P</span><span>athia 2</span>
+                
+                <div id="description" class="description">
+                    Pathways analysis suite
+                </div>
             </div>
-            <span id="description" class="description">
-                Pathways analysis suite
-            </span>
 
             <div id="menu" class="menu horizontal layout center flex">
                 <!-- <div class="flex"></div> -->
@@ -244,6 +256,11 @@
                     value: function() {
                         return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'utils.report'];
                     }
+                },
+                disableRelaunch: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    value: false
                 },
             },
             listeners: {
