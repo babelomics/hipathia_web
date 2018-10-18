@@ -21,6 +21,12 @@
             pathwaysList: {
                 type: Array
             },
+            pathway_groupedList:{
+                type: Array
+            },
+            classes:{
+                type: Array
+            },
             variantBioformat: {
                 type: Array,
                 value: [BIOFORMATS["VARIANT"]]
@@ -78,20 +84,42 @@
             var request = new XMLHttpRequest();
             request.onload = function() {
                 var pathwaysList = [];
+                var classes=[];
+                var pathway_groupedList=[];
+                var tmp=[];
                 var pwMap = JSON.parse(this.responseText);
                 for (key in pwMap) {
-                    pathwaysList.push({
-                        name: pwMap[key],
-                        value: key,
-                        selected: true
-                    });
+                    for (ke in pwMap[key]) {
+                        for (k in pwMap[key][ke]) {
+                            tmp.push({
+                                name: pwMap[key][ke][k],
+                                value: k,
+                                selected: true
+                            });
+                        }
+                        classes.push({
+                            className: ke,
+                            pathwaysList: tmp,
+                            selected: true
+                            });
+                        tmp=[];
+                    }
+                    pathway_groupedList.push({
+                            groupName: key,
+                            classes: classes,
+                            selected: true
+                            });
+                    classes=[];                   
                 }
-                me.set('pathwaysList', pathwaysList);
+                me.set('pathway_groupedList', pathway_groupedList);
+                console.log(pathway_groupedList);
+                
             };
             request.onerror = function() {
                 console.log('Error loading pathway_list2.json');
             };
-            request.open("GET", './pathway_list2.json');
+            //request.open("GET", './pathway_list2.json');
+            request.open("GET", './pathway_groupedList.json');
             request.send();
         },
         checkNullFile: function(file) {
@@ -210,22 +238,162 @@
             }
         },
         handleSelectPW: function(e) {
-            console.log(e.currentTarget.checked)
+            console.log(e.currentTarget.checked);            
             if (e.currentTarget.checked === true) {
                 this.selectAllPw();
             } else {
                 this.deselectAllPw();
             }
         },
+        handleSelectClass: function(e) {
+            els=e.currentTarget.parentElement.parentElement.querySelectorAll('input[type=checkbox]');  
+            //var groupTgl=e.currentTarget.parentElement.parentElement.querySelector('paper-toggle-button');
+            //groupTgl.checked=!groupTgl.checked;
+            pathwaysContent=this.querySelectorAll('div[id=pathwaysContent]'); 
+            var allCheckBox=this.querySelectorAll('input[name=allPW]')[0];         
+            if (e.currentTarget.checked === true) {
+                this.selectAllClass(els);
+                if(e.currentTarget.parentElement.id == "pathwaysList"){
+                    var neighbourPaths=e.currentTarget.parentElement.parentElement.parentElement.querySelectorAll('input[type=checkbox]');
+                    var parentPath=e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement;
+                    for (var i = 0; i < neighbourPaths.length; i++) {
+                        if(!neighbourPaths[i].checked)
+                        {
+                            break;   
+                        } 
+                    }
+                    if(i==neighbourPaths.length){
+                        parentPath.querySelector('input[type=checkbox]').indeterminate=false;
+                        parentPath.querySelector('input[type=checkbox]').checked=true;
+                        parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').indeterminate=false;
+                        parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').checked=true;
+                    }else{
+                        parentPath.querySelector('input[type=checkbox]').indeterminate=true;
+                        parentPath.querySelector('input[type=checkbox]').checked=false;
+                        parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').indeterminate=true;
+                        parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').checked=false;
+                    }
+                }
+                if(e.currentTarget.parentElement.id == "classes"){
+                    var neighbourClasses= e.currentTarget.parentElement.parentElement.parentElement.parentElement.querySelectorAll('label[id=classes] > input[type=checkbox]');
+                    var parentClass =neighbourClasses[0].parentElement.parentElement.parentElement.parentElement;
+                    for (var i = 0; i <neighbourClasses.length; i++) {
+                        if(!neighbourClasses[i].checked)
+                        {
+                            break;   
+                        } 
+                    }
+                    if(i==neighbourClasses.length){
+                        parentClass.querySelector('input[type=checkbox]').indeterminate=false;
+                        parentClass.querySelector('input[type=checkbox]').checked=true;
+                    }else{
+                        parentClass.querySelector('input[type=checkbox]').indeterminate=true;
+                        parentClass.querySelector('input[type=checkbox]').checked=false;
+                    }
+                }
+                
+                
+            } else {
+                this.deselectAllClass(els);
+                //if the group deselected
+                if(e.currentTarget.parentElement.id == "pathway_groupedList"){
+                    allCheckBox.indeterminate=true;
+                }
+                if(e.currentTarget.parentElement.id == "pathwaysList"){
+                    var neighbourPaths=e.currentTarget.parentElement.parentElement.parentElement.querySelectorAll('input[type=checkbox]');
+                    var parentPath=e.currentTarget.parentElement.parentElement.parentElement.parentElement.parentElement;
+                    parentPath.querySelector('input[type=checkbox]').checked=false;
+                    parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').checked=false;
+                    allCheckBox.checked=false;
+                    parentPath.querySelector('input[type=checkbox]').indeterminate=true;
+                    parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').indeterminate=true;
+                    allCheckBox.indeterminate=true;
+                    for (var i = 0; i < neighbourPaths.length; i++) {
+                        if(neighbourPaths[i].checked)
+                        {
+                            break;   
+                        } 
+                    }
+                    if(i==neighbourPaths.length){
+                        parentPath.querySelector('input[type=checkbox]').indeterminate=false;
+                        parentPath.parentElement.parentElement.querySelector('input[type=checkbox]').indeterminate=false;
+                    }
+                            
+                }
+                if(e.currentTarget.parentElement.id == "classes"){
+                    var neighbourClasses= e.currentTarget.parentElement.parentElement.parentElement.parentElement.querySelectorAll('label[id=classes] > input[type=checkbox]');
+                    var parentClass =e.currentTarget.parentElement.parentElement.parentElement.parentElement;
+                    parentClass.querySelector('input[type=checkbox]').checked=false;
+                    allCheckBox.checked=false;
+                    parentClass.querySelector('input[type=checkbox]').indeterminate=true;
+                    allCheckBox.indeterminate=true;
+                    for (var i = 0; i <neighbourClasses.length; i++) {
+                        if(neighbourClasses[i].checked)
+                        {
+                            break;   
+                        } 
+                    }
+                    if(i==neighbourClasses.length){
+                        parentClass.querySelector('input[type=checkbox]').indeterminate=false;
+                        parentClass.querySelector('input[type=checkbox]').checked=false;
+                    }else{
+                        parentClass.querySelector('input[type=checkbox]').indeterminate=true;
+                        parentClass.querySelector('input[type=checkbox]').checked=false;
+                    }    
+                }
+                //var idtCheckBox=e.currentTarget.parentElement.parentElement.parentElement.parentElement.querySelectorAll('label[id=pathway_groupedList] > input[type=checkbox]')[0];
+                //idtCheckBox.indeterminate=true;
+            }
+            var checkedPaths=0;
+            var unCheckedPaths=0;
+            var allPaths=pathwaysContent[0].querySelectorAll('label[id=pathwaysList] > input[type=checkbox]');
+            for (var i = 0; i < allPaths.length; i++) {
+                    if(allPaths[i].checked)
+                    {
+                        checkedPaths= checkedPaths+1; 
+                    }else{
+                        unCheckedPaths=unCheckedPaths+1;
+                    }     
+                }
+                if(checkedPaths==allPaths.length){
+                    allCheckBox.indeterminate=false;
+                    allCheckBox.checked=true;
+                }
+                else{
+                    if(unCheckedPaths==allPaths.length){
+                        allCheckBox.indeterminate=false;
+                        allCheckBox.checked=false;
+                    }else{
+                        allCheckBox.indeterminate=true;
+                        allCheckBox.checked=false;
+                    } 
+                }
+        },
         selectAllPw: function(e) {
             var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
             for (var i = 0; i < els.length; i++) {
                 els[i].checked = true;
+                els[i].indeterminate=false;
             }
         },
 
         deselectAllPw: function(e) {
             var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
+            for (var i = 0; i < els.length; i++) {
+                els[i].checked = false;
+                els[i].indeterminate=false;
+            }
+        },
+        selectAllClass: function(els) {
+            var els = els;
+            for (var i = 0; i < els.length; i++) {
+                els[i].checked = true;
+                els[i].indeterminate=false;
+            }
+        },
+
+        deselectAllClass: function(els) {
+            var els = els;
             for (var i = 0; i < els.length; i++) {
                 els[i].checked = false;
             }
