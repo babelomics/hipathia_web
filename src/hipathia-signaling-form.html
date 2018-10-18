@@ -1,6 +1,13 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+
+
 <link rel="import" href="hipathia-form-behavior.html">
 <dom-module id="hipathia-signaling-form">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
@@ -56,11 +63,22 @@
         .key {
             color: var(--secondary-text-color);
         }
+        ul { 
+            list-style: none;
+        }
+        paper-toggle-button {
+            --paper-toggle-button-unchecked-button: {
+                
+            }
+            --paper-toggle-button-unchecked-bar: {
+                
+            }
+        }
     </style>
     <template>
         <form id="form">
             <p id="title">
-                <strong>Differential signaling form</strong>
+                <strong>Differential signaling</strong>
             </p>
             <!-- <div class="horizontal layout center-justified">
                 <div class="elm-btn elm-btn-shdw" on-click="_runExample"><i class="fa fa-rocket"></i> &nbsp; Run example</div>
@@ -246,14 +264,38 @@
                     Parameters
                 </div>
                 <div class="elm-formcontent">
-                    <label class="elm-control">
+                    <div class="horizontal layout">
+                        <label class="elm-control">
+                            <input type="radio" name="decompose" checked="true" value="FALSE">
+                            <span>All receptors to one effector circuits</span>
+                        </label>
+                        <label class="elm-control">
+                            <input type="radio" name="decompose" value="TRUE">
+                            <span>One receptor to one effector circuits</span>
+                        </label>
+                    </div>
+                    <!--<label class="elm-control">
                         <input type="checkbox" name="decompose">
                         <span>Decompose paths</span>
-                    </label>
-                    <label class="elm-control">
+                    </label>-->
+                    <label class="elm-control" hidden>
                         <input type="checkbox" name="difexp">
                         <span>Color nodes by differential expression</span>
                     </label>
+                    <div class="horizontal layout">
+                        <label class="elm-control">
+                            <input type="radio" name="difexp" checked="true" value="difexp">
+                            <span>Color nodes by differential expression</span>
+                        </label>
+                        <label class="elm-control">
+                            <input type="radio" name="difexp" value="difexpuni">
+                            <span>Color nodes with Uniprot grouping</span>
+                        </label>
+                        <label class="elm-control">
+                            <input type="radio" name="difexp" value="difexpgp">
+                            <span>Color nodes with genes grouping</span>
+                        </label>
+                    </div>
                     <label class="elm-control">
                         <input type="checkbox" name="paired">
                         <span>Paired <span class="key"> <br> <strong>Attention: </strong> the order of the samples for control and case must be the same</span> &nbsp;
@@ -261,10 +303,10 @@
 
                     </label>
                                         <label class="elm-control">
-                        <input type="checkbox" name="unadjusted">
-                        <span>Unadjusted <span class="key">
+                        <input type="checkbox" name="adjusted" checked="true">
+                        <span>FDR correction <span class="key">
                             <br>
-                         Plot pathway result without <strong>FDR correction</strong> </span> &nbsp;
+                         Plot pathway result with <strong>FDR correction</strong> </span> &nbsp;
 </span>
 
                     </label>
@@ -287,23 +329,50 @@
                     </label>
                 </div>
             </div>
-
-
             <div class="elm-formbox">
                 <div class="elm-formtitle horizontal layout center">
                     <div class="flex">Pathways</div>
                     <label class="elm-control">
-                        <input type="checkbox" checked on-change="handleSelectPW">
+                        <input type="checkbox" name="allPW" checked on-change="handleSelectPW">
                         <span style="font-size:13px;">All</span>
                     </label>
                 </div>
                 <span id="pathwaysError" class="errmsg"></span>
                 <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
-                    <template is="dom-repeat" items="{{pathwaysList}}">
-                        <label class="elm-control">
-                            <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}">
-                            <span>{{item.name}}</span>
-                        </label>
+
+      
+                    <template is="dom-repeat" items="{{pathway_groupedList}}" indexAs="index">
+                        <div class="treeview">
+                            <!--<paper-toggle-button checked = "{{item.selected}}" hidden></paper-toggle-button>-->
+                            <label class="elm-control" id="pathway_groupedList" >
+                                <input id="groupName" type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass" >
+                                <span>{{item.groupName}}</span>
+                            </label>
+                            <!--<iron-collapse id="firstChild" opened = "{{item.selected}}">{{item.selected}}-->
+                            <template is="dom-repeat" items="{{item.classes}}">
+                                <ul>
+                                    <li>
+                                        <label class="elm-control" id="classes">
+                                            <input type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                            <span>{{item.className}}</span>
+                                        </label>
+                                        <ul>
+                                            <li>
+                                                <template is="dom-repeat" items="{{item.pathwaysList}}">
+                                                    <div>
+                                                        <label class="elm-control" id="pathwaysList">
+                                                            <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                                            <span>{{item.name}}</span>
+                                                        </label>
+                                                    </div>
+                                                </template>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </template>
+                        <!--</iron-collapse>-->
+                        </div>
                     </template>
                 </div>
             </div>
@@ -401,7 +470,8 @@
                             "value": "Tumor"
                         },
                         "difexp": {
-                            "type": "flag"
+                            "type": "text",
+                            "value": "difexp"
                         },
                         "pathways_list": {
                             "type": "text",
@@ -442,10 +512,12 @@
 
                 this.$.form.elements['go'].checked = false;
                 this.$.form.elements['uniprot'].checked = false;
-                this.$.form.elements['decompose'].checked = false;
-                this.$.form.elements['difexp'].checked = false;
+                //this.$.form.elements['decompose'].checked = false;
+                this.$.form.elements['decompose'].value = 'FALSE';
+                //this.$.form.elements['difexp'].checked = true;
+                this.$.form.elements['difexp'].value = 'difexp';
                 this.$.form.elements['paired'].checked = false;
-                this.$.form.elements['unadjusted'].checked = false;
+                this.$.form.elements['adjusted'].checked = true;
 
 
 
@@ -466,7 +538,8 @@
                 this._clearError('condition2Select');
                 this._clearError('condition');
                 this._clearError('pathways');
-
+                
+                this.$.form.elements['allPW'].checked = true;
                 this.selectAllPw();
             },
             launchJob: function(e) {
@@ -501,9 +574,17 @@
                     type: 'text',
                     value: this.$.form.elements['species'].value
                 };
+                args.options['difexp'] = {
+                    type: 'text',
+                    value: this.$.form.elements['difexp'].value
+                };
                 args.options['design_type'] = {
                     type: 'text',
                     value: this.$.form.elements['design_type'].value
+                };
+                args.options['decompose'] = {
+                    type: 'text',
+                    value: this.$.form.elements['decompose'].value
                 };
 
                 if (this.expressionMode === 'matrix') {
@@ -642,27 +723,27 @@
                         type: 'flag'
                     };
                 }
-                if (this.$.form.elements['decompose'].checked) {
+                /*if (this.$.form.elements['decompose'].checked) {
                     args.options['decompose'] = {
                         type: 'flag'
                     };
-                } 
+                } */
 
                 if (this.$.form.elements['paired'].checked) {
                     args.options['paired'] = {
                         type: 'flag'
                     };
                 }
-                if (this.$.form.elements['unadjusted'].checked) {
-                    args.options['unadjusted'] = {
+                if (this.$.form.elements['adjusted'].checked) {
+                    args.options['adjusted'] = {
                         type: 'flag'
                     };
                 }
-                if (this.$.form.elements['difexp'].checked) {
+                /*if (this.$.form.elements['difexp'].checked) {
                     args.options['difexp'] = {
                         type: 'flag'
                     };
-                }
+                }*/
 
                 var pathways = [];
                 var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
