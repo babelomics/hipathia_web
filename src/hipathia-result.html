@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-progress/paper-progress.html">
 
 <script src="../bower_components/network-viewer/conf/config.js"></script>
 <link rel="import" href="../bower_components/network-viewer/network-viewer.html">
@@ -18,8 +19,10 @@
             box-sizing: border-box;
             background-color: #FFFFFF;
             /*padding:20px 40px;*/
-            padding: 0px 0px 40px 0px;
+            padding: 0px 0px 0px 0px;
             /*@apply(--layout-horizontal);*/
+            --paper-progress-height: 20px;
+            --paper-progress-width: 100%;
         }
 
          :host[toc-fixed]>#outline {
@@ -220,7 +223,7 @@
             background-color: #79AFA6;
             color: #FFFFFF;
             font-weight: lighter;
-            font-size: 30px;
+            font-size:20px;
 
             width: 100%;
             position: fixed;
@@ -237,7 +240,7 @@
             background-color: inherit;
         }
         #reportTab{
-            padding:20px 10px;
+            padding:20px 10px 0px;
         }
         iron-pages{
             margin-top: 30px;
@@ -317,40 +320,50 @@
                 opacity: 1;
             }
         }
+        .red {
+            --paper-progress-active-color: var(--paper-red-500);
+            --paper-progress-secondary-color: var(--paper-light-blue-500);   
+        } 
+        #title {
+            text-align: center;
+            font-size: 200%;
+            color: #666;
+        }
     </style>
     <template>
-            <paper-tabs selected={{selected}} scrollable fit-container align-bottom >
-                    <paper-tab >Result: Pathway viewer</paper-tab>
-                    <paper-tab>Job Information</paper-tab>
-                    
+            <paper-progress value="40" class="red" title="40" hidden > </paper-progress>
+            <paper-tabs selected={{selected}} scrollable fit-container align-bottom  style ="display:{{diffReport}}" >
+                    <paper-tab>Result: Pathway viewer</paper-tab>
                     <paper-tab>Pathways summary</paper-tab>
                     <paper-tab>Path significance</paper-tab>
                     <paper-tab>HeatMap & PCA</paper-tab>
-            </paper-tabs>
-            <iron-pages  selected={{selected}} id="reportTab">
-                    <div id="Pathway"></div>
-                <div id="Job_Information">
-                        <div>
-                                <div id="jobInfo" class="section">Job Information</div>
-                                <div style="margin-left:30px;">
-                                    <div class="param"><span class="key" on-click="handleRowClickb">Name :</span><span class="val">{{job.name}}</span></div>
-                                    <div class="param"><span class="key">Description:</span><span class="val">{{job.description}}</span></div>
-                                    <div class="param"><span class="key">Tool:</span><span class="val">{{job.tool}}</span></div>
-                                    <div class="param"><span class="key">Date:</span><span class="val">{{jobDate}}</span></div>
-                                </div>
-                                <div id="inputParamsHeader" class="section">Job Arguments</div>
-                                <div id="inputParams" style="margin-left: 30px;"></div>
-                                <br>
-                            </div>
+                    <paper-tab style="display: {{FunAnalysisTab}}"  >Function based analysis </paper-tab>
+                    <paper-tab>Job Information</paper-tab>                    
 
-                </div>
+            </paper-tabs>
+            <iron-pages  selected={{selected}} id="reportTab" style ="display:{{diffReport}}">
+                    <div id="Pathway"></div>
+
                 
                 <div id="Pathways_summary" ></div>
                 <div id="Path_significance" ></div>
                 <div id="HeatMapPCA" ></div>
-            </iron-pages>
+                <div id="FunAnalysis" ></div>
+                <div id="Job_Information"><div id="jobInfoDiv">
+                            <div id="jobInfo" class="section">Job Information</div>
+                            <div style="margin-left:30px;">
+                                <div class="param"><span class="key" on-click="handleRowClickb">Name :</span><span class="val">{{job.name}}</span></div>
+                                <div class="param"><span class="key">Description:</span><span class="val">{{job.description}}</span></div>
+                                <div class="param"><span class="key">Tool:</span><span class="val">{{job.tool}}</span></div>
+                                <div class="param"><span class="key">Date:</span><span class="val">{{jobDate}}</span></div>
+                            </div>
+                            <div id="inputParamsHeader" class="section">Job Arguments</div>
+                            <div id="inputParams" style="margin-left: 30px;"></div>
+                            <br>
+                    </div>
 
-            
+            </div>
+            </iron-pages>            
         <div id="outline" class="vertical layout" hidden>
             <div id="outlineContent" class="vertical layout"></div>
             <div id="outlineBottomBar" class="horizontal layout end-justified">
@@ -373,35 +386,12 @@
             <div id="inputParams" style="margin-left: 30px;"></div>
             <br>
         </div>-->
-
-              <!-- -->
-
-              <!--<paper-tabs selected="{{selected}}">
-                    <paper-tab>TAB 1</paper-tab>
-                    <paper-tab>TAB 2</paper-tab>
-                    <paper-tab>TAB 3</paper-tab>
-                    <paper-tab>TAB 4</paper-tab>
-                    <paper-tab>TAB 5</paper-tab>
-                    <paper-tab>TAB 6</paper-tab>
-                    <paper-tab>TAB 7</paper-tab>
-                    <paper-tab>TAB 8</paper-tab>
-                    <paper-tab>TAB 9</paper-tab>
-                    <paper-tab>TAB 10</paper-tab>
-                    <paper-tab>TAB 11</paper-tab>
-                    <paper-tab>TAB 12</paper-tab>
-                    <paper-tab>TAB 13</paper-tab>
-                    <paper-tab>TAB 14</paper-tab>
-                    <paper-tab>TAB 15</paper-tab>
-                    <paper-tab>TAB 16</paper-tab>
-                  </paper-tabs>-->
-                  <!--<iron-pages selected={{selected}}>
-                        <div>Page 1</div>
-                        <div>Page 2</div>
-                        <div>Page 3</div>
-                      </iron-pages>-->
         <!--  <iron-pages  selected={{selected}} id="main"></iron-pages>-->
         <!-- <div class="section">Results</div> -->
-        <div id="main" hidden></div>
+        <p id="title" style ="display:{{predReport}}">
+                <strong>Prediction report</strong>
+            </p>
+        <div id="main" style ="display:{{predReport}}; padding:1%"></div>
       
         
     </template>
@@ -429,7 +419,11 @@
             },
             ready: function() {
                 this.count = 0;
+                this.FunAnalysisTab = "none";
                 this.selected=0;
+                this.reportType="";
+                this.diffReport="";
+                this.predReport="";
                 this.iconMap = {
                     download: 'fa-download',
                     file: 'fa-file',
@@ -455,8 +449,79 @@
                 }
             },
             jobChanged: function(neo, old) {
+                console.log("hi new job");
+                this.reportType=neo.execution;
                 var me = this;
-                if (neo) {
+                if (neo && neo.execution =="differential-signaling") {
+                    this.diffReport="";
+                    this.predReport="none";
+                    /*for (var i=1; i < this.$.Job_Information.childElementCount; i++) {
+                        Polymer.dom(this.$.Job_Information).removeChild(this.$.Job_Information.children[i]);
+                        console.log(i);
+                        
+                    }*/
+                   while(this.$.Job_Information.children[1]){
+                        Polymer.dom(this.$.Job_Information).removeChild(this.$.Job_Information.children[1]);
+                        }/* */
+                    while(this.$.Pathway.firstChild ){
+                        Polymer.dom(this.$.Pathway).removeChild(this.$.Pathway.firstChild);
+                    }
+                    while(this.$.Pathways_summary.firstChild){
+                        Polymer.dom(this.$.Pathways_summary).removeChild(this.$.Pathways_summary.firstChild);
+                    }
+                    while(this.$.Path_significance.firstChild){
+                        Polymer.dom(this.$.Path_significance).removeChild(this.$.Path_significance.firstChild);
+                    }
+                    while(this.$.HeatMapPCA.firstChild){
+                        Polymer.dom(this.$.HeatMapPCA).removeChild(this.$.HeatMapPCA.firstChild);
+                    }
+                    while(this.$.FunAnalysis.firstChild){
+                        Polymer.dom(this.$.FunAnalysis).removeChild(this.$.FunAnalysis.firstChild);
+                    }
+                    /*
+                    console.log("this.$.reportTab");
+                    console.log(this.$.reportTab);
+                    console.log("this.$.main");
+                    console.log(this.$.main);
+                    console.log("this all");
+                    
+
+                    while (this.$.outlineContent.firstChild) {
+                        this.$.outlineContent.removeChild(this.$.outlineContent.firstChild);
+                    }
+*/
+                    while (this.$.inputParams.firstChild) {
+                        this.$.inputParams.removeChild(this.$.inputParams.firstChild);
+                    }
+                    //this.count = 0;
+                    //this.FunAnalysisTab = "none";
+                    this.selected=0;
+                    
+                    this.jobDate = new Date(Date.parse(me.job.createdAt)).toLocaleString();
+                    this.fileNameMap = {};
+
+                    var jobInfoElem = document.createElement('a');
+                    jobInfoElem.innerHTML = '<i class="fa fa-caret-right"></i><span>Job information</span>';
+                    jobInfoElem.style.fontWeight = "bold";
+                    jobInfoElem.href = "#jobInfo";
+                    jobInfoElem.classList.add('outline-line');
+                    Polymer.dom(this.$.outlineContent).appendChild(jobInfoElem);
+
+                    var inputParamsElem = document.createElement('a');
+                    inputParamsElem.innerHTML = '<i class="fa fa-caret-right"></i><span>Job Arguments</span>';
+                    inputParamsElem.style.fontWeight = "bold";
+                    inputParamsElem.href = "#inputParamsHeader";
+                    inputParamsElem.classList.add('outline-line');
+                    Polymer.dom(this.$.outlineContent).appendChild(inputParamsElem);
+
+                    var files = [];
+                    CbaManager.getPlainFolderFiles(me.job.folder._id, function(files) {
+                        me._createFilePathMap(files);
+                        me.processResultFiles();
+                    });
+                }else{
+                    this.diffReport="none";
+                    this.predReport="";
                     while (this.$.main.firstChild) {
                         this.$.main.removeChild(this.$.main.firstChild);
                     }
@@ -523,6 +588,12 @@
                 });
             },
             processReportFile: function(fileContent) {
+                console.log("this count i s : ");
+                
+                console.log(this.count);
+                this.count=0;
+                this.FunAnalysisTab = "none";
+
                 var parser = new DOMParser();
                 var reportXML = parser.parseFromString(fileContent, "text/xml");
 
@@ -569,31 +640,48 @@
 
             },
             _addTag: function(el, outEl, renderEl) {
-                el.setAttribute("id", "elmReportId_" + this.count);
-                el.setAttribute("style","display: elmReportId_"+ this.count+"_hide;");
-                el.classList.add(outEl.tagName);
+                
+                if(this.diffReport==""){
+                    el.setAttribute("id", "elmReportId_" + this.count);
+                    el.setAttribute("style","display: elmReportId_"+ this.count+"_hide;");
+                    el.classList.add(outEl.tagName);
 
-                var level = parseInt(outEl.getAttribute("level"));
-                level = (isNaN(level)) ? 0 : level;
-                el.style.marginLeft = level * 40 + "px";
-                Polymer.dom(renderEl).appendChild(el);
-                this._addOutlineEntry(outEl, "elmReportId_" + this.count);
+                    var level = parseInt(outEl.getAttribute("level"));
+                    level = (isNaN(level)) ? 0 : level;
+                    el.style.marginLeft = level * 40 + "px";
+                    Polymer.dom(renderEl).appendChild(el);
+                    this._addOutlineEntry(outEl, "elmReportId_" + this.count);
                 
                 //added by me 
-                if(this.count>=0 && this.count <=7  ){
-                    Polymer.dom(this.$.Job_Information).appendChild(el);
-                }
-                if(this.count==11  ){
-                    Polymer.dom(this.$.Pathway).appendChild(el);
-                }
-                if(this.count==12){
-                    Polymer.dom(this.$.Pathways_summary).appendChild(el);
-                }
-                if(this.count==13  ){
-                    Polymer.dom(this.$.Path_significance).appendChild(el);
-                }
-                if(this.count==14 || this.count ==15  ){
-                    Polymer.dom(this.$.HeatMapPCA).appendChild(el);
+                    if(this.count>=0 && this.count <=7  ){
+                        Polymer.dom(this.$.Job_Information).appendChild(el);
+                    }
+                    if(this.count==11  ){
+                        Polymer.dom(this.$.Pathway).appendChild(el);
+                    }
+                    if(this.count==12){
+                        Polymer.dom(this.$.Pathways_summary).appendChild(el);
+                    }
+                    if(this.count==13  ){
+                        Polymer.dom(this.$.Path_significance).appendChild(el);
+                    }
+                    if(this.count==14 || this.count ==15  ){
+                        Polymer.dom(this.$.HeatMapPCA).appendChild(el);
+                    }
+                    if(this.count>16){
+                        this.FunAnalysisTab="";
+                        Polymer.dom(this.$.FunAnalysis).appendChild(el);
+                    }
+                }else{
+                    el.setAttribute("id", "elmReportId_" + this.count);
+                    el.classList.add(outEl.tagName);
+
+                    var level = parseInt(outEl.getAttribute("level"));
+                    level = (isNaN(level)) ? 0 : level;
+                    el.style.marginLeft = level * 40 + "px";
+                    Polymer.dom(renderEl).appendChild(el);
+                    this._addOutlineEntry(outEl, "elmReportId_" + this.count);
+                    this.count++;
                 }
                 /*
                 if(this.count>=0 && this.count <=7 ){
@@ -1144,6 +1232,7 @@
                 var me = this;
                 // <table title='Path significance' file='paths_comparison.txt'  page-size='10'></table>
                 var name = outEl.getAttribute('file');
+                var originFile = outEl.getAttribute('originFile');
                 
                 var el = document.createElement('div');
                 var i = document.createElement('i');
@@ -1158,50 +1247,55 @@
                 table.setAttribute('enable-paging', '');
                 table.setAttribute('enable-loading', '');
                 table.setAttribute('enable-select', '');
+                //table.setAttribute('enable-resize', '');
+                //table.setAttribute('enable-remote', '');
                 table.setAttribute('page-size', outEl.getAttribute('page-size'));
 
                 
                 //add click to the table 
                  /* table.setAttribute('on-click', "handleRowClick");*/
                 if(outEl.getAttribute("title")=="Pathways summary"){
-                    table.style.width= 100 +"%";
-                    table.style.height=100  +"%";
+                a.setAttribute('href', CbaManager.getFileURL(this.getFileFromName(originFile)._id));
+                    //table.style.width= 100 +"%";
+                    //table.style.height=100  +"%";
                     table.style.maxHeight=700  +"px";
                     table.addEventListener('click', function(e) {
-                        var selectedPathId = e.currentTarget.selected[0].id_pathways;
-                        //var pv = Polymer.dom(renderEl).childNodes[11].firstChild;
-                        var pv =document.getElementsByTagName("pathway-viewer")[0];
-                        var category= pv._categoryDetailsFromID(selectedPathId);
-                        pv.set('selectedCategory', category);
-                        pv.selectCategory(category);
-                        document.getElementById("reportTab").selected=0;
+                        if(e.target.parentElement.className.search("table-field")>=0){
+                            var selectedPathId = e.currentTarget.selected[0].Pathway_id;
+                            selectedPathId =selectedPathId.substring(selectedPathId.indexOf(">")+1, selectedPathId.indexOf("</a>"));
+                            //var pv = Polymer.dom(renderEl).childNodes[11].firstChild;
+                            var pv =document.getElementsByTagName("pathway-viewer")[0];
+                            var category= pv._categoryDetailsFromID(selectedPathId);
+                            pv.set('selectedCategory', category);
+                            pv.selectCategory(category);
+                            document.getElementById("reportTab").selected=0;
+                        }
                         
-                        //pv.scrollIntoView({block: "end", behavior: "smooth"});
-                        //e.currentTarget._clearSelection()
                     });
                 }
 
                 if(outEl.getAttribute("title")=="Path significance"){
-                    table.style.height=700  +"px";
-                    table.addEventListener('click', function(e) {                                    
-                        var selectedCircuit = e.currentTarget.selected[0].path_names;
-                        //var pv = Polymer.dom(renderEl).childNodes[11].firstChild;
-                        var pv =document.getElementsByTagName("pathway-viewer")[0];
-                        pv.set('selectedCircuit', null);
-                        var circuit= pv._circuitDetailsFromName(selectedCircuit)[0].circuit;
-                        var category= pv._circuitDetailsFromName(selectedCircuit)[1].category;
-                        pv.set('selectedCategory', category);
-                        pv.selectCategory(category);
-                        //e.currentTarget._clearSelection()
+                    table.style.maxHeight=700  +"px";
+                    table.addEventListener('click', function(e) {  
+                        if(e.target.parentElement.className.search("table-field")>=0){
+                            var selectedCircuit = e.currentTarget.selected[0].path_names;
+                            //var pv = Polymer.dom(renderEl).childNodes[11].firstChild;
+                            var pv =document.getElementsByTagName("pathway-viewer")[0];
+                            pv.set('selectedCircuit', null);
+                            var circuit= pv._circuitDetailsFromName(selectedCircuit)[0].circuit;
+                            var category= pv._circuitDetailsFromName(selectedCircuit)[1].category;
+                            pv.set('selectedCategory', category);
+                            pv.selectCategory(category);
+                            //e.currentTarget._clearSelection()
 
-                        pv.addEventListener('select-category', function (e) {
-                            pv.selectCircuit(circuit);
-                            document.getElementById("reportTab").selected=0;
-                            //pv.scrollIntoView({block: "end", behavior: "smooth"});
-                            pv.handleCenterNetwork();
-                            circuit=null;
-                        });
-                        
+                            pv.addEventListener('select-category', function (e) {
+                                pv.selectCircuit(circuit);
+                                document.getElementById("reportTab").selected=0;
+                                //pv.scrollIntoView({block: "end", behavior: "smooth"});
+                                pv.handleCenterNetwork();
+                                circuit=null;
+                            });
+                        }  
                     });
                 }
                 CbaManager.getFileContent(this.getFileFromName(name)._id, function(content) {
@@ -1220,8 +1314,12 @@
             },
             _pathwayViewerTag: function(outEl) {
                 var el = document.createElement('div');
-
                 var pv = document.createElement('pathway-viewer');
+                pv.addEventListener("mouseleave", function(e) {
+                            // highlight the mouseleave target                            
+                            nodeTooltip.hideMenu();
+                            }, false);
+
                 var minHeight = 700;
                 var height = Math.max((window.innerHeight - 120), minHeight);
                 pv.style.height = height + 'px';
@@ -1252,7 +1350,7 @@
                     pv.set('categoryLabel', 'Pathways');
                     pv.set('circuitLabel', 'Modules');
                 }
-                /*Backward fix*/
+                /*Backward fix
                 nodeAttrMap = {
                     'strokeColor': 'exp',
                     'color': 'diff.exp',
@@ -1260,7 +1358,7 @@
                 }
                 edgeAttrMap = {
                     'shape': 'head'
-                }
+                }*/
                 pv.nodeAttributeMapping = nodeAttrMap;
                 pv.edgeAttributeMapping = edgeAttrMap;
 
@@ -1520,6 +1618,7 @@
                     for (var i = 0; i < fields.length; i++) {
                         field = fields[i];
                         field = field.trim();
+                        //var name = field.replace( '_', ' ');
                         var name = field.replace(/ /gi, '_');
                         var width = 150;
                         if (i === 0) {
@@ -1539,17 +1638,21 @@
                             if (line != '' && line.charAt(0) != '#') {
                                 fields = line.split('\t');
                                 obj = {};
-
                                 for (var j = 0; j < fields.length; j++) {
                                     field = fields[j].trim();
-                                    if (window.isNaN != null && !isNaN(field)) {
+                                    if (window.isNaN != null && !isNaN(field) && field % 1 != 0) {
                                         field = parseFloat(field).toFixed(3);
                                     }
                                     if (field.indexOf('http') == "0") {
                                         field = '<a target="_blank" href="' + field + '">' + field + '</a>'
                                     }
                                     column = columns[j];
+                                    if(column.name=="Pathway_id"){
+                                        field = '<a target="_blank" href="https://www.kegg.jp/dbget-bin/www_bget?' + field + '" title="'+field+'">' + field + '</a>'
+                                    }
+                                    
                                     obj[column.name] = field;
+                                    
 
                                 }
                                 data.push(obj);
