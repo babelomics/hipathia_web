@@ -80,7 +80,7 @@
     <template>
         <form id="form">
             <p id="title">
-                <strong>Differential prediction form</strong>
+                <strong>Differential prediction</strong>
             </p>
             <!-- <div class="horizontal layout center-justified">
                 <div class="elm-btn elm-btn-shdw"><i class="fa fa-rocket"></i> &nbsp; Run example</div>
@@ -98,7 +98,7 @@
                     </label>
                     <label class="elm-control">
                         <input type="radio" name="type" value="test" on-click="handleType">
-                        <span>Test existing model</span>
+                        <span>Predict with an existing model</span>
                     </label>
 
                     <div hidden$="{{_checkValue('test',type)}}" class="horizontal layout wrap" style="margin-top:10px;">
@@ -302,10 +302,20 @@
                         Parameters
                     </div>
                     <div class="elm-formcontent">
-                        <label class="elm-control">
+                        <div class="horizontal layout">
+                            <label class="elm-control">
+                                <input type="radio" name="decompose" checked="true" value="FALSE">
+                                <span>All receptors to one effector circuits</span>
+                            </label>
+                            <label class="elm-control">
+                                <input type="radio" name="decompose" value="TRUE">
+                                <span>One receptor to one effector circuits</span>
+                            </label>
+                        </div>
+                        <!--<label class="elm-control">
                             <input type="checkbox" name="decompose">
                             <span>Decompose paths</span>
-                        </label>
+                        </label>-->
                         <label class="elm-control" hidden="hidden">
                             <input type="checkbox" name="filter_paths">
                             <span>Filter subpaths</span>
@@ -456,7 +466,7 @@
                 var args = {
                     tool: this.toolId,
                     execution: 'prediction-train',
-                    executable: 'prediction-train.sh',
+                    executable: 'prediction-train2.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -559,7 +569,9 @@
                 this.$.form.elements['ref_genome'].value = 'hg19';
                 this.$.form.elements['inheritance_pattern'].value = 'recessive';
 
-                this.$.form.elements['decompose'].checked = false;
+                //this.$.form.elements['decompose'].checked = false;
+                this.$.form.elements['decompose'].value = 'FALSE';
+
                 this.$.form.elements['filter_paths'].checked = false;
 
                 this.$.jobName.value = '';
@@ -609,7 +621,7 @@
                 var args = {
                     tool: this.toolId,
                     execution: 'prediction-' + this.type,
-                    executable: 'prediction-' + this.type + '.sh',
+                    executable: 'prediction-' + this.type + '2.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -757,11 +769,15 @@
                         this._clearError('condition');
                     }
 
-                    if (this.$.form.elements['decompose'].checked) {
+                    /*if (this.$.form.elements['decompose'].checked) {
                         args.options['decompose'] = {
                             type: 'flag'
                         };
-                    }
+                    }*/
+                    args.options['decompose'] = {
+                        type: 'text',
+                        value: this.$.form.elements['decompose'].value
+                    };
                     if (this.$.form.elements['filter_paths'].checked) {
                         args.options['filter_paths'] = {
                             type: 'flag'
