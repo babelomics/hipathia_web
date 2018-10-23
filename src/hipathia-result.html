@@ -449,7 +449,6 @@
                 }
             },
             jobChanged: function(neo, old) {
-                console.log("hi new job");
                 this.reportType=neo.execution;
                 var me = this;
                 if (neo && neo.execution =="differential-signaling") {
@@ -588,9 +587,6 @@
                 });
             },
             processReportFile: function(fileContent) {
-                console.log("this count i s : ");
-                
-                console.log(this.count);
                 this.count=0;
                 this.FunAnalysisTab = "none";
 
@@ -760,10 +756,7 @@
                     // el.innerHTML = title;
                     el.href = "#" + id;
 
-                    el.classList.add('outline-line');
-
-                    console.log(el);
-                    
+                    el.classList.add('outline-line');                    
                     Polymer.dom(this.$.outlineContent).appendChild(el);
                 }
             },
@@ -1090,8 +1083,6 @@
 
                 var numberRows = rowNames.length;
                 for (var i = 0; i < orderedContent.length; i++) {
-                    //                    console.log(i)
-                    //                    console.log(orderedContent[i])
                     var lineData = orderedContent[i];
                     lineData = lineData.slice(1, lineData.length).map(Number);
                     var max = Math.max.apply(Math, lineData)
