@@ -76,6 +76,9 @@
             overflow-y: auto;
             padding: 5px;
         }
+        ul { 
+            list-style: none;
+        }
     </style>
     <template>
         <form id="form">
@@ -326,11 +329,11 @@
                     <div class="elm-formtitle horizontal layout center">
                         <div class="flex">Pathways</div>
                         <label class="elm-control">
-                            <input type="checkbox" checked on-change="handleSelectPW">
+                            <input type="checkbox" name="allPW" checked on-change="handleSelectPW">
                             <span style="font-size:13px;">All</span>
                         </label>
                     </div>
-                    <span id="pathwaysError" class="errmsg"></span>
+                    <span id="pathwaysError" class="errmsg"></span>                   
                     <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
                             <template is="dom-repeat" items="{{pathway_groupedList}}" indexAs="index">
                                 <div class="treeview">
@@ -366,6 +369,7 @@
                                 </div>
                             </template>
                         </div>
+                    
                 </div>
 
             </div>

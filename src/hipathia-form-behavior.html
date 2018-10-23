@@ -246,11 +246,11 @@
             }
         },
         handleSelectClass: function(e) {
+            var allCheckBox=this.querySelectorAll('input[name=allPW]')[0]; 
             els=e.currentTarget.parentElement.parentElement.querySelectorAll('input[type=checkbox]');  
             //var groupTgl=e.currentTarget.parentElement.parentElement.querySelector('paper-toggle-button');
             //groupTgl.checked=!groupTgl.checked;
-            pathwaysContent=this.querySelectorAll('div[id=pathwaysContent]'); 
-            var allCheckBox=this.querySelectorAll('input[name=allPW]')[0];         
+            pathwaysContent=this.querySelectorAll('div[id=pathwaysContent]');          
             if (e.currentTarget.checked === true) {
                 this.selectAllClass(els);
                 if(e.currentTarget.parentElement.id == "pathwaysList"){
