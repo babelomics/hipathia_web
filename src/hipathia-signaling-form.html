@@ -761,8 +761,7 @@
                         value: pathways.join(',')
                     };
                 }
-
-                console.log(query);
+                //console.log(query);
                 if (this.errorMessage === '' && this.$.form.checkValidity() && this.runTest === false) {
                     // console.log('TODO');
                     console.log(query);
@@ -783,7 +782,7 @@
                         body: JSON.stringify(args),
                         success: function(response) {
                             if (response.response[0].error == null) {
-                                console.log(response);
+                                //console.log(response);
                                 // var job = response.response[0].result[0];
                                 // console.log(job);
                                 me._clean();
