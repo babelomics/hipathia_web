@@ -332,13 +332,40 @@
                     </div>
                     <span id="pathwaysError" class="errmsg"></span>
                     <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
-                        <template is="dom-repeat" items="{{pathwaysList}}">
-                            <label class="elm-control">
-                                <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}">
-                                <span>{{item.name}}</span>
-                            </label>
-                        </template>
-                    </div>
+                            <template is="dom-repeat" items="{{pathway_groupedList}}" indexAs="index">
+                                <div class="treeview">
+                                    <!--<paper-toggle-button checked = "{{item.selected}}" hidden></paper-toggle-button>-->
+                                    <label class="elm-control" id="pathway_groupedList" >
+                                        <input id="groupName" type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass" >
+                                        <span>{{item.groupName}}</span>
+                                    </label>
+                                    <!--<iron-collapse id="firstChild" opened = "{{item.selected}}">{{item.selected}}-->
+                                    <template is="dom-repeat" items="{{item.classes}}">
+                                        <ul>
+                                            <li>
+                                                <label class="elm-control" id="classes">
+                                                    <input type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                                    <span>{{item.className}}</span>
+                                                </label>
+                                                <ul>
+                                                    <li>
+                                                        <template is="dom-repeat" items="{{item.pathwaysList}}">
+                                                            <div>
+                                                                <label class="elm-control" id="pathwaysList">
+                                                                    <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                                                    <span>{{item.name}}</span>
+                                                                </label>
+                                                            </div>
+                                                        </template>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </template>
+                                <!--</iron-collapse>-->
+                                </div>
+                            </template>
+                        </div>
                 </div>
 
             </div>
