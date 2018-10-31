@@ -21,10 +21,14 @@
 <link rel="import" href="bower_components/cba-elements/src/job/elm-job-browser.html">
 <link rel="import" href="bower_components/cba-elements/src/elm-cluster-status.html">
 
+<link rel="import" href="bower_components/pathway-viewer/pathway-drug-viewer.html">
+<link rel="import" href="bower_components/cba-elements/src/report/elm-report.html">
+
 <link rel="import" href="src/hipathia-home.html">
 <link rel="import" href="src/hipathia-signaling-form.html">
 <link rel="import" href="src/hipathia-prediction-form.html">
 <link rel="import" href="src/hipathia-result.html">
+<link rel="import" href="src/pathact-form.html">
 
 <dom-module id="hipathia-element">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
@@ -115,9 +119,38 @@
 
         hipathia-prediction-form,
         hipathia-signaling-form,
+        pathact-form,
         hipathia-result {
             height: calc(100vh - 50px);
             overflow-y: auto;
+        }
+        #viewer {
+            height: calc(100vh - 50px);
+            overflow-y: auto;
+        }
+        #reportPanel {
+            position: fixed;
+            height: 80%;
+            width: 80%;
+            top: 50px;
+            left: 0;
+        }
+
+        #reportPanelContainer {
+            box-sizing: border-box;
+            width: 100%;
+            background-color: #fff !important;
+            overflow-y: scroll;
+            overflow-x: none;
+        }
+
+        #reportButton {
+            background-color: var(--dark-button-color) !important;
+            color: var(--text-primary-color) !important;
+        }
+
+        #reportButton:hover {
+            background-color: var(--light-button-color) !important;
         }
     </style>
     <template>
@@ -130,7 +163,7 @@
             <hipathia-result id="report" hide-relaunch></hipathia-result>
         </div>
 
-        <div class="content" menu-option="home,job,signaling,prediction">
+        <div class="content" menu-option="home,job,signaling,prediction,pathact,viewer">
             <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
                     <i class="fa fa-flask"></i>&nbsp; Browse my jobs
@@ -145,6 +178,49 @@
                 <elm-file-browser id="fileBrowser" class="container flex" on-fileselect="handleFileSelect" bioformats="{{bioformats}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}">
                 </elm-file-browser>
             </elm-panel>
+            <!--pathact-->
+            <elm-panel hidden fixed modal closable id="configureDrugActionsPanel" on-hidden="handlePanelHidden">
+                <div class="header">
+                    <i class="fa fa-sliders"></i> Settings
+                </div>
+                <div id="drugActionList" class="container flex" style="width:650px; padding:7px;">
+                    <div class="horizontal layout">
+                        <div>
+                            <label class="elm">Configure fold change:</label>
+                            <br>
+                            <div style="width:200px">
+                                <input id="foldChangeInput" class="elm" type="number" step="0.1" min="0" value="{{foldChange::input}}" on-change="handleFoldChange">
+                            </div>
+                        </div>
+                        <div class="flex"></div>
+                        <div class="elm-btn elm-btn-shdw" on-click="handleResetDefaults">Reset defaults</div>
+                    </div>
+                    <br>
+                    <label class="elm">Configure drug action weight:</label>
+                    <br>
+                    <div class="list horizontal layout wrap">
+                        <template is="dom-repeat" items="{{drugActionList}}">
+                            <pdv-action-option style="width:315px" name="{{item.name}}" value="{{item.value}}" on-change="handleActionWeightChange"></pdv-action-option>
+                        </template>
+                    </div>
+                </div>
+            </elm-panel>
+        </div>
+        <div class="content" menu-option="viewer">
+                <pathway-drug-viewer id="viewer" path="sifs4CellMaps" init-path="sifs4CellMaps_init" valid-genes-file-name="valid_hgnc_signaling_genes.txt" drug-action-list="{{drugActionList}}" drug-action-map="{{drugActionMap}}" job-update-args="{{jobUpdateArgs}}" job-clear-args="{{jobClearArgs}}" fold-change="{{foldChange}}" on-goback="handleViewerGoBack" on-job-clear="handleJobClear" on-job-update="handleJobUpdate">
+                    <div id="reportButton" on-click="handleReportButton" class="left-label elm-btn elm-btn-shdw" style="margin:0 3px 0 0;"><i class="fa fa-file-text-o"></i> &nbsp; Show report</div>
+                </pathway-drug-viewer>
+                <elm-panel hidden closable fixed modal id="reportPanel">
+                    <div class="header">
+                        Report
+                    </div>
+                    <div id="reportPanelContainer" class="container">
+                        <elm-report id="reportP" hide-job-information></elm-report>
+                    </div>
+                    <div class="footer flex horizontal layout center-justified">
+                        <div class="elm-btn elm-btn-shdw" style="width:250px;" on-click="handleCloseReport">Close</div>
+                    </div>
+                </elm-panel>
         </div>
 
         <div class="content" menu-option="signaling">
@@ -154,7 +230,9 @@
         <div class="content" menu-option="prediction">
             <hipathia-prediction-form id="predictionForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-prediction-form>
         </div>
-
+        <div class="content" menu-option="pathact">
+            <pathact-form id="pathactForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh"></pathact-form>
+        </div>
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div class="icon">
                 <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
@@ -183,6 +261,10 @@
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Prediction</span>
                 </div>
+                <div title="Actionable Pathway Workshop" class="option" on-click="handleMenuOption" login-required data-option="pathact">
+                    <i class="fa fa-bolt"></i>
+                    <span class="option-text">PathAct</span>
+                </div>
 
                 <div class="flex" style="margin-left:2vw;"></div>
                 <div title="Browse my data" class="option" on-click="handleMenuPanel" login-required login-visible data-panel="fileBrowserPanel">
@@ -194,6 +276,10 @@
                     <span class="option-text">My jobs</span>
                 </div>
                 <!-- <div style="margin-left:2vw;"></div> -->
+                <div menu-option="pathact" title="Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required login-visible>
+                    <i class="fa fa-sliders"></i>
+                    <span class="option-text">Settings</span>
+                </div>
             </div>
 
             <elm-dropdown dark class="helpmenu">
@@ -225,6 +311,11 @@
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction test example
                         </div>
                     </li>
+                    <li>
+                        <div on-mousedown="handleExample" data-example-name="pathact-init">
+                            <i class="fa fa-lightbulb-o"></i> &nbsp; Actionable pathway example
+                        </div>
+                    </li>
                 </ul>
             </elm-dropdown>
             <elm-cluster-status id="clusterStatus" type="dark" class="cluster-status"></elm-cluster-status>
@@ -254,7 +345,7 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'utils.report'];
+                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'utils.report'];
                     }
                 },
                 disableRelaunch: {
@@ -262,20 +353,73 @@
                     reflectToAttribute: true,
                     value: false
                 },
+                drugActionList: {
+                    type: Array,
+                    notify: true
+                },
+                drugActionMap: {
+                    type: Object,
+                    notify: true
+                },
+                foldChange: {
+                    type: Number
+                },
+                jobItem: {
+                    type: Object
+                },
+                jobUpdateArgs: {
+                    type: Object
+                },
+                jobClearArgs: {
+                    type: Object
+                }
             },
             listeners: {
                 'open-job-folder': 'handleOpenJobFolder'
             },
             selectedOptionChanged: function(neo, old) {
-                if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction') {
+                if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction' || this.selectedOption == 'pathact') {
                     this.$.fileBrowserPanel.hide();
                     this.$.jobBrowserPanel.hide();
                 }
+                this.$.signalingForm._clean();
+                this.$.predictionForm._clean();
+                this.$.pathactForm.clean();
             },
             ready: function() {
                 var me = this;
                 this.selectedOption = "home";
                 this.checkShowMenuOnLogin();
+                //pathAct Start
+                var fc = localStorage.getItem("pathact_foldchange");
+                if (fc == null) {
+                    this.set('foldChange', 2);
+                    localStorage.setItem("pathact_foldchange", this.foldChange);
+                } else {
+                    this.set('foldChange', parseFloat(fc));
+                }
+
+                var localActions = localStorage.getItem("pathact_actions");
+                if (localActions == null) {
+                    this.loadDrugActions();
+                } else {
+                    var actions = JSON.parse(localActions);
+                    var actionsMap = JSON.parse(localStorage.getItem("pathact_actionsmap"));
+                    this.set('drugActionList', actions);
+                    this.set('drugActionMap', actionsMap);
+                }
+
+                this.set('jobUpdateArgs', {
+                    tool: 'hipathia',
+                    execution: 'pathact-update',
+                    executable: 'pathact-update.sh'
+                });
+                this.set('jobClearArgs', {
+                    tool: 'hipathia',
+                    execution: 'pathact-clear',
+                    executable: 'pathact-clear.sh'
+                });
+                //pathAct end
             },
             handleOpenJobFolder: function(e) {
                 var job = e.detail;
@@ -287,9 +431,27 @@
                 var me = this;
                 var job = e.detail;
                 if (job && job.status === 'DONE') {
-                    this.set('selectedOption', 'job');
-                    this.$.report.hideJobInformation = true;
-                    this.$.report.set('job', job);
+                    if (e.detail.execution=="pathact-init") {
+                        var jobFolder = job.folder;
+                        this.jobItem = job;
+                        if (this.$.viewer.jobFolder != null) {
+                            if (this.$.viewer.jobFolder._id != jobFolder._id) {
+                                this.$.viewer.reset();
+                                this.$.viewer.set('jobFolder', jobFolder);
+                            }
+                        } else {
+                            this.$.viewer.reset();
+                            this.$.viewer.set('jobFolder', jobFolder);
+                        }
+                        this.set('selectedOption', 'viewer');
+                        this._loadReport();
+
+                    }else{
+                        this.set('selectedOption', 'job');
+                        this.$.report.hideJobInformation = true;
+                        this.$.report.set('job', job);
+                    }
+                    
                     /*
                     var table = document.getElementsByTagName("elm-table");
                     console.log("table");
@@ -310,6 +472,26 @@
                     });*/
                     
                 }
+            },
+            handleJobClear: function(e) {
+                this._loadReport();
+            },
+            handleJobUpdate: function(e) {
+                this._loadReport();
+            },
+            _loadReport: function(job) {
+                this.$.reportP.set('job', null);
+                this.$.reportP.set('job', this.jobItem);
+            },
+            handleCloseReport: function() {
+                this.$.reportPanel.hide();
+            },
+            handleReportButton: function(e) {
+                var me = this;
+                this.$.reportPanel.show();
+            },
+            handleCloseJobResult: function(e) {
+                this.set('selectedOption', 'home');
             },
             handleJobLaunched: function() {
                 this.setMenu('home');
@@ -345,7 +527,9 @@
                     this.$.elmHeader.anonymousSign();
                 }
             },
-
+            handleViewerGoBack: function() {
+                this.setMenu('form');
+            },
             handleExample: function(e) {
                 if (this.$.elmHeader.isLogged != true) {
                     this._lastExampleRequest = e.currentTarget.dataset['exampleName'];
@@ -365,6 +549,71 @@
                 if (exname === 'prediction-test') {
                     this.$.predictionForm.runTestExample();
                 }
+                if (exname === 'pathact-init') {
+                    this.$.pathactForm.handleLoadExample();
+                }
+            },
+            _openRemoteFile: function(filepath, cb) {
+                var me = this;
+                var request = new XMLHttpRequest();
+                request.onload = function() {
+                    cb(this.responseText);
+                };
+                request.onerror = function() {
+                    console.log('Error loading remote file');
+                };
+                request.open("GET", filepath);
+                request.send();
+            },
+            handleResetDefaults: function(e) {
+                this.loadDrugActions();
+                this.set('foldChange', 2);
+                localStorage.setItem("pathact_foldchange", this.foldChange);
+            },
+            loadDrugActions: function() {
+                var me = this;
+                this._openRemoteFile('./conf/drug-actions.json', function(content) {
+                    var allActions = JSON.parse(content);
+                    var nameMap = {};
+                    var actions = [];
+                    var actionsMap = {};
+                    for (var i = 0; i < allActions.length; i++) {
+                        var a = allActions[i];
+                        var n = a.name.toLowerCase();
+                        if (nameMap[n] !== true) {
+                            nameMap[n] = true;
+                            var obj = {
+                                name: a.name,
+                                value: a.value
+                            };
+                            actions.push(obj);
+                            actionsMap[n] = obj;
+                        }
+                    }
+                    me.set('drugActionList', actions);
+                    me.set('drugActionMap', actionsMap);
+                    localStorage.setItem("pathact_actions", JSON.stringify(actions));
+                    localStorage.setItem("pathact_actionsmap", JSON.stringify(actionsMap));
+                });
+            },
+            handleActionWeightChange: function() {
+                localStorage.setItem("pathact_actions", JSON.stringify(this.drugActionList));
+                var actionsMap = {};
+                for (var i = 0; i < this.drugActionList.length; i++) {
+                    var a = this.drugActionList[i];
+                    actionsMap[a.name] = a;
+                }
+                localStorage.setItem("pathact_actionsmap", JSON.stringify(actionsMap));
+                this.set('drugActionMap', actionsMap);
+                this.$.viewer.$.geneSearch._processDrugRelatedGenes();
+            },
+            handleFoldChange: function() {
+                var fc = localStorage.setItem("pathact_foldchange", this.$.foldChangeInput.value);
+                this.set('foldChange', this.$.foldChangeInput.value);
+            },
+            handleFileSelect: function(e) {
+                // console.log("file");
+                // console.log(e.detail);
             }
         });
     </script>
