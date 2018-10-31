@@ -1258,7 +1258,8 @@
                 var pv = document.createElement('pathway-viewer');
                 pv.addEventListener("mouseleave", function(e) {
                             // highlight the mouseleave target                            
-                            nodeTooltip.hideMenu();
+                            //nodeTooltip.hideMenu();
+                            pv.querySelector('elm-dropdown[id=nodeTooltip]').hideMenu();
                             }, false);
 
                 var minHeight = 700;
