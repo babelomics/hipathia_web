@@ -10,10 +10,9 @@
 <link rel="import" href="../bower_components/pathway-viewer/pathway-viewer.html">
 <link rel="import" href="../bower_components/pathway-viewer/pathway-drug-viewer.html">
 
-
 <dom-module id="hipathia-result">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning">
-         :host {
+        :host {
             display: block;
             position: relative;
             box-sizing: border-box;
@@ -24,12 +23,10 @@
             --paper-progress-height: 20px;
             --paper-progress-width: 100%;
         }
-
-         :host[toc-fixed]>#outline {
+        :host[toc-fixed]>#outline {
             position: fixed;
             z-index: 1;
         }
-
         #outline {
             /*position: fixed;*/
             position: absolute;
@@ -43,34 +40,28 @@
             box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
             padding: 20px;
         }
-
         #up {
             position: fixed;
             box-sizing: border-box;
             margin-top: -10px;
             right: 20px;
         }
-
         .job-name,
         .job-desc,
         .job-tool {
             margin-left: 40px;
         }
-
         .outline-line {
             padding: 2px;
             text-transform: capitalize;
         }
-
         .outline-line>i {
             color: var(--accent-color);
             margin-right: 5px;
         }
-
         .section:first-child {
             margin: 0px 0 5px 0;
         }
-
         .section {
             font-size: 30px;
             font-weight: lighter;
@@ -78,7 +69,6 @@
             color: var(--secondary-text-color);
             border-bottom: 1px solid var(--divider-color);
         }
-
         .download,
         .param,
         .image,
@@ -91,7 +81,6 @@
             font-size: 18px;
             display: block;
         }
-
         .download>a:hover,
         .image>a:hover,
         .boxplot>a:hover,
@@ -101,7 +90,6 @@
         .redirection>a:hover {
             text-decoration: underline;
         }
-
         .download>a,
         .image>a,
         .boxplot>a,
@@ -112,7 +100,6 @@
             color: var(--secondary-text-color);
             text-decoration: none;
         }
-
         .download>i,
         .image>i,
         .table>i,
@@ -124,21 +111,17 @@
             color: var(--accent-color);
             margin-right: 10px;
         }
-
         .param>.key {
             color: var(--secondary-text-color);
             margin-right: 5px;
         }
-
         .param>.val {
             color: var(--accent-color);
         }
-
         .image>img {
             display: block;
             margin-bottom: 30px;
         }
-
         .table>elm-table {
             width: 1000px;
             margin-top: 10px;
@@ -146,74 +129,58 @@
             border: 1px solid var(--divider-color);
             height: 380px;
         }
-
         .html {
             color: var(--secondary-text-color);
         }
-
         .section>.name {
             color: var(--accent-color);
             margin-right: 10px;
         }
-
         .input-param {
             margin-left: 40px;
         }
-
         .download-icon {
             font-size: 10pt;
             margin-left: 5px;
             color: var(--accent-color);
         }
-
         .download-icon:hover {
             cursor: pointer;
         }
-
         .download-icon:hover {
             font-weight: bold;
         }
-
         .button {
             background-color: var(--dark-button-color) !important;
             color: var(--text-primary-color) !important;
         }
-
         .button:hover {
             background-color: var(--light-button-color) !important;
         }
-
         #outlineBottomBar {
             margin-top: 10px;
         }
-
         #outlineBottomBar>i {
             padding-left: 7px;
         }
-
         .delete-job,
         .download-job,
         .relaunch-job {
             cursor: pointer;
         }
-
         .delete-job:hover {
             color: #b30000 !important;
         }
-
         .relaunch-job:hover {
             color: #298c63 !important;
         }
-
         .download-job:hover {
             color: #0068cc !important;
         }
-
         .redirection-btn {
             margin: 10px;
             max-width: 500px;
         }
-
         .redirection-file {
             max-width: 300px;
             color: #0068cc;
@@ -234,8 +201,7 @@
             background-color: #FFFFFF;
             --paper-tabs-selection-bar-color : #f98c60;
             margin-top: 5px;
-            }
-
+        }
         pathway-drug-viewer {
             background-color: inherit;
         }
@@ -252,58 +218,48 @@
             -o-animation: fadeInFromNone 1s ease-out;
             animation: fadeInFromNone 1s ease-out;
         }
-
         @-webkit-keyframes fadeInFromNone {
             0% {
                 display: none;
                 opacity: 0;
             }
-
             1% {
                 display: block;
                 opacity: 0;
             }
-
             100% {
                 display: block;
                 opacity: 1;
             }
         }
-
         @-moz-keyframes fadeInFromNone {
             0% {
                 display: none;
                 opacity: 0;
             }
-
             1% {
                 display: block;
                 opacity: 0;
             }
-
             100% {
                 display: block;
                 opacity: 1;
             }
         }
-
         @-o-keyframes fadeInFromNone {
             0% {
                 display: none;
                 opacity: 0;
             }
-
             1% {
                 display: block;
                 opacity: 0;
             }
-
             100% {
                 display: block;
                 opacity: 1;
             }
         }
-
         @keyframes fadeInFromNone {
             0% {
                 display: none;
@@ -331,39 +287,36 @@
         }
     </style>
     <template>
-            <paper-progress value="40" class="red" title="40" hidden > </paper-progress>
-            <paper-tabs selected={{selected}} scrollable fit-container align-bottom  style ="display:{{diffReport}}" >
-                    <paper-tab>Result: Pathway viewer</paper-tab>
-                    <paper-tab>Pathways summary</paper-tab>
-                    <paper-tab>Path significance</paper-tab>
-                    <paper-tab>HeatMap & PCA</paper-tab>
-                    <paper-tab style="display: {{FunAnalysisTab}}"  >Function based analysis </paper-tab>
-                    <paper-tab>Job Information</paper-tab>                    
-
-            </paper-tabs>
-            <iron-pages  selected={{selected}} id="reportTab" style ="display:{{diffReport}}">
-                    <div id="Pathway"></div>
-
-                
-                <div id="Pathways_summary" ></div>
-                <div id="Path_significance" ></div>
-                <div id="HeatMapPCA" ></div>
-                <div id="FunAnalysis" ></div>
-                <div id="Job_Information"><div id="jobInfoDiv">
-                            <div id="jobInfo" class="section">Job Information</div>
-                            <div style="margin-left:30px;">
-                                <div class="param"><span class="key" on-click="handleRowClickb">Name :</span><span class="val">{{job.name}}</span></div>
-                                <div class="param"><span class="key">Description:</span><span class="val">{{job.description}}</span></div>
-                                <div class="param"><span class="key">Tool:</span><span class="val">{{job.tool}}</span></div>
-                                <div class="param"><span class="key">Date:</span><span class="val">{{jobDate}}</span></div>
-                            </div>
-                            <div id="inputParamsHeader" class="section">Job Arguments</div>
-                            <div id="inputParams" style="margin-left: 30px;"></div>
-                            <br>
+        <paper-progress value="40" class="red" title="40" hidden > </paper-progress>
+        <paper-tabs selected={{selected}} scrollable fit-container align-bottom  style ="display:{{diffReport}}" >
+            <paper-tab>Result: Pathway viewer</paper-tab>
+            <paper-tab>Pathways summary</paper-tab>
+            <paper-tab>Path significance</paper-tab>
+            <paper-tab>HeatMap & PCA</paper-tab>
+            <paper-tab style="display: {{FunAnalysisTab}}"  >Function based analysis </paper-tab>
+            <paper-tab>Job Information</paper-tab>
+        </paper-tabs>
+        <iron-pages  selected={{selected}} id="reportTab" style ="display:{{diffReport}}">
+            <div id="Pathway"></div>
+            <div id="Pathways_summary" ></div>
+            <div id="Path_significance" ></div>
+            <div id="HeatMapPCA" ></div>
+            <div id="FunAnalysis" ></div>
+            <div id="Job_Information">
+                <div id="jobInfoDiv">
+                    <div id="jobInfo" class="section">Job Information</div>
+                    <div style="margin-left:30px;">
+                        <div class="param"><span class="key" on-click="handleRowClickb">Name :</span><span class="val">{{job.name}}</span></div>
+                        <div class="param"><span class="key">Description:</span><span class="val">{{job.description}}</span></div>
+                        <div class="param"><span class="key">Tool:</span><span class="val">{{job.tool}}</span></div>
+                        <div class="param"><span class="key">Date:</span><span class="val">{{jobDate}}</span></div>
                     </div>
-
+                    <div id="inputParamsHeader" class="section">Job Arguments</div>
+                    <div id="inputParams" style="margin-left: 30px;"></div>
+                    <br>
+                </div>
             </div>
-            </iron-pages>            
+        </iron-pages>            
         <div id="outline" class="vertical layout" hidden>
             <div id="outlineContent" class="vertical layout"></div>
             <div id="outlineBottomBar" class="horizontal layout end-justified">
@@ -372,7 +325,6 @@
                 <i hidden$="{{hideRelaunch}}" class="fa fa-refresh relaunch-job" title="Relaunch Job" on-click="handleRelaunchJob"></i>
             </div>
         </div>
-
         <div id="up" on-click="handleUp" class="button elm-btn elm-btn-shdw" title="Go top" hidden><i class="fa fa-arrow-up" ></i></div>
         <!--<div>
             <div id="jobInfo" class="section">Job Information</div>
@@ -389,11 +341,9 @@
         <!--  <iron-pages  selected={{selected}} id="main"></iron-pages>-->
         <!-- <div class="section">Results</div> -->
         <p id="title" style ="display:{{predReport}}">
-                <strong>Prediction report</strong>
-            </p>
+            <strong>Prediction report</strong>
+        </p>
         <div id="main" style ="display:{{predReport}}; padding:1%"></div>
-      
-        
     </template>
     <script>
         Polymer({
@@ -1241,12 +1191,12 @@
                 //table.setAttribute('enable-resize', '');
                 //table.setAttribute('enable-remote', '');
                 table.setAttribute('page-size', outEl.getAttribute('page-size'));
-
+                
                 
                 //add click to the table 
                  /* table.setAttribute('on-click', "handleRowClick");*/
                 if(outEl.getAttribute("title")=="Pathways summary"){
-                a.setAttribute('href', CbaManager.getFileURL(this.getFileFromName(originFile)._id));
+                    a.setAttribute('href', CbaManager.getFileURL(this.getFileFromName(originFile)._id));
                     //table.style.width= 100 +"%";
                     //table.style.height=100  +"%";
                     table.style.maxHeight=700  +"px";
