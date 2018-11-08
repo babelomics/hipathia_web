@@ -71,7 +71,7 @@
             margin-bottom: 30px;
         }
 
-        .table > stv-table {
+        .table > elm-table {
             width: 1000px;
             margin-top: 10px;
             margin-bottom: 20px;
@@ -102,12 +102,12 @@
                 var me = this;
                 if (neo) {
                     var files = [];
-                    SteviaManager.getPlainFolderFiles(neo.folder._id, function(files1) {
+                    CbaManager.getPlainFolderFiles(neo.folder._id, function(files1) {
                         files = files.concat(files1);
-                        SteviaManager.getPlainFolderFiles(neo.options["exp_file"].value, function(files2) {
+                        CbaManager.getPlainFolderFiles(neo.options["exp_file"].value, function(files2) {
                             files = files.concat(files2);
                             if (neo.options["design_file"] != null) {
-                                SteviaManager.getPlainFolderFiles(neo.options["design_file"].value, function(files3) {
+                                CbaManager.getPlainFolderFiles(neo.options["design_file"].value, function(files3) {
                                     files = files.concat(files3);
                                     me.processResultFiles(files);
                                 });
@@ -125,7 +125,7 @@
                     var f = files[i];
                     this.fileNameMap[f.name] = f;
                 }
-                SteviaManager.getFileContent(this.fileNameMap['report.xml']._id, function(content) {
+                CbaManager.getFileContent(this.fileNameMap['report.xml']._id, function(content) {
                     me.processReportFile(content);
                 });
             },
@@ -176,7 +176,7 @@
 
                 var a = document.createElement('a');
                 a.innerHTML = outEl.getAttribute('title');
-                a.setAttribute('href', SteviaManager.getFileURL(this.fileNameMap[name]._id));
+                a.setAttribute('href', CbaManager.getFileURL(this.fileNameMap[name]._id));
 
                 el.appendChild(i);
                 el.appendChild(a);
@@ -223,10 +223,10 @@
 
                 var a = document.createElement('a');
                 a.innerHTML = outEl.getAttribute('title');
-                a.setAttribute('href', SteviaManager.getFileURL(this.fileNameMap[name]._id));
+                a.setAttribute('href', CbaManager.getFileURL(this.fileNameMap[name]._id));
 
                 var img = document.createElement('img');
-                img.setAttribute('src', SteviaManager.getFileURL(this.fileNameMap[name]._id));
+                img.setAttribute('src', CbaManager.getFileURL(this.fileNameMap[name]._id));
 
                 el.appendChild(i);
                 el.appendChild(a);
@@ -244,13 +244,13 @@
 
                 var a = document.createElement('a');
                 a.innerHTML = outEl.getAttribute('title');
-                a.setAttribute('href', SteviaManager.getFileURL(this.fileNameMap[name]._id));
+                a.setAttribute('href', CbaManager.getFileURL(this.fileNameMap[name]._id));
 
-                var table = document.createElement('stv-table');
+                var table = document.createElement('elm-table');
                 table.setAttribute('enable-paging', '');
                 table.setAttribute('page-size', outEl.getAttribute('page-size'));
 
-                SteviaManager.getFileContent(this.fileNameMap[name]._id, function(content) {
+                CbaManager.getFileContent(this.fileNameMap[name]._id, function(content) {
                     var parsedContent = me._parseTabularFile(content);
                     table.set('data', parsedContent.data);
                     table.set('columns', parsedContent.columns);
@@ -266,7 +266,7 @@
                 var me = this;
                 var name = outEl.getAttribute('file');
                 var el = document.createElement('div');
-                SteviaManager.getFileContent(this.fileNameMap[name]._id, function(content) {
+                CbaManager.getFileContent(this.fileNameMap[name]._id, function(content) {
                     var parser = new DOMParser();
                     var doc = parser.parseFromString(content, "text/html");
                     me._processHTML(doc, el);
@@ -292,7 +292,7 @@
                     var el = els[i];
                     var split = el.getAttribute('src').split('/');
                     var name = split[split.length - 1];
-                    el.setAttribute('src', SteviaManager.getFileURL(this.fileNameMap[name]._id));
+                    el.setAttribute('src', CbaManager.getFileURL(this.fileNameMap[name]._id));
                 }
 
                 var scriptTextContent = indexScript.textContent;
@@ -310,7 +310,7 @@
                 domModule.appendChild(template);
 
                 var rndstr = Math.floor(Math.random() * (1000 - 9999 + 1)) + 1000;
-                var elname = 'stv-hipathia-result-gen' + rndstr;
+                var elname = 'elm-hipathia-result-gen' + rndstr;
                 domModule.register(elname);
 
                 var moduleConfig = {
