@@ -110,15 +110,15 @@
         }
     </style>
     <template>
-
+        <!-- Home page call src/hipathia-home.html -->
         <div class="content" menu-option="home">
             <hipathia-home id="home" on-start="handleHomeStart" isLogged="{{isLogged}}"></hipathia-home>
         </div>
-
+        <!--Report page -->
         <div id="jobContent" class="content" menu-option="job">
             <elm-report id="report" hide-relaunch></elm-report>
         </div>
-
+        <!--Job and data browsers call cba-elements -->
         <div class="content" menu-option="home,job,signaling,prediction">
             <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
@@ -135,15 +135,15 @@
                 </elm-file-browser>
             </elm-panel>
         </div>
-
+        <!--Signaling form page call src/hipathia-signaling-form.html-->
         <div class="content" menu-option="signaling">
             <hipathia-signaling-form id="signalingForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-signaling-form>
         </div>
-
+        <!--Precdiction form page call src/hipathia-prediction-form.html-->
         <div class="content" menu-option="prediction">
             <hipathia-prediction-form id="predictionForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-prediction-form>
         </div>
-
+        <!-- Header call cba-elements/src/elm-header.html-->
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div class="icon">
                 <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
@@ -154,9 +154,9 @@
             <span id="description" class="description">
                 Pathways analysis suite
             </span>
-
+            <!--Menu-->
             <div id="menu" class="menu horizontal layout center flex">
-                <!-- <div class="flex"></div> -->
+                <!--left part of the menu bar-->
                 <div style="margin-left:4vw;"></div>
                 <div title="" class="option" on-click="handleMenuOption" data-option="home">
                     <i class="fa fa-home"></i>
@@ -171,7 +171,7 @@
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Prediction</span>
                 </div>
-
+                <!--right part of the menu bar-->
                 <div class="flex" style="margin-left:2vw;"></div>
                 <div title="Browse my data" class="option" on-click="handleMenuPanel" login-required login-visible data-panel="fileBrowserPanel">
                     <i class="fa fa-cloud"></i>
@@ -181,9 +181,8 @@
                     <i class="fa fa-flask"></i>
                     <span class="option-text">My jobs</span>
                 </div>
-                <!-- <div style="margin-left:2vw;"></div> -->
             </div>
-
+            <!--help icon-->
             <elm-dropdown dark class="helpmenu">
                 <div data-button><i class="fa fa-question-circle"></i></div>
                 <ul data-menu>
@@ -217,7 +216,7 @@
             </elm-dropdown>
             <elm-cluster-status id="clusterStatus" type="dark" class="cluster-status"></elm-cluster-status>
         </elm-header>
-
+        <!--Footer call cba-elements/src/elm-footer.html -->
         <elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
             <div style="text-align:center;">
             hi<b>P</b>athia v<span>{{version}}</span> by
@@ -271,12 +270,6 @@
                     this.set('selectedOption', 'job');
                     this.$.report.hideJobInformation = true;
                     this.$.report.set('job', job);
-                    //
-                    // while (this.$.jobContent.firstChild) {
-                    //     this.$.jobContent.removeChild(this.$.jobContent.firstChild);
-                    // }
-                    // var report = document.createElement('elm-report');
-                    // Polymer.dom(me.$.jobContent).appendChild(report);
                 }
             },
             handleJobLaunched: function() {
@@ -313,7 +306,6 @@
                     this.$.elmHeader.anonymousSign();
                 }
             },
-
             handleExample: function(e) {
                 if (this.$.elmHeader.isLogged != true) {
                     this._lastExampleRequest = e.currentTarget.dataset['exampleName'];
