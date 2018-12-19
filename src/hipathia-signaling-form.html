@@ -62,6 +62,10 @@
             <p id="title">
                 <strong>Differential signaling</strong>
             </p>
+            <div class="horizontal layout center-justified">
+                <div class="elm-btn elm-btn-shdw" on-click="runExample"><i class="fa fa-rocket"></i> &nbsp; Run example</div>
+            </div>
+            <br>
             <div class="elm-formbox">
                 <div class="elm-formtitle">
                     Input data
@@ -107,7 +111,7 @@
                         </elm-select-box>
                         <div id="condition1SelectError" class="errmsg"></div>
 
-                        <label class="elm">Condition 2:</label>
+                        <label class="elm">Condition 2: (Reference condition)</label>
                         <elm-select-box id="condition2Select" options="{{designConditions}}" title-attribute="name">
                         </elm-select-box>
                         <span id="condition2SelectError" class="errmsg"></span>
@@ -143,16 +147,6 @@
                     Parameters
                 </div>
                 <div class="elm-formcontent">
-                    <div class="horizontal layout">
-                        <label class="elm-control">
-                            <input type="radio" name="decompose" checked="true" value="FALSE">
-                            <span>All receptors to one effector circuits</span>
-                        </label>
-                        <label class="elm-control">
-                            <input type="radio" name="decompose" value="TRUE">
-                            <span>One receptor to one effector circuits</span>
-                        </label>
-                    </div>
                     <label class="elm-control" hidden="{{_checkValue('categorical', design_type)}}">
                         <input type="checkbox" name="paired">
                         <span>Paired <span class="key">(The Experimental design file must be ordered)</span> &nbsp;</span>
@@ -182,11 +176,10 @@
 
 
             <div class="elm-formbox">
-                <div class="elm-formtitle horizontal layout center">
-                    <div class="flex">Pathways</div>
+                <div class="elm-formtitle horizontal layout center" style="padding-left: 0px;">
                     <label class="elm-control">
                         <input name="AllPath" type="checkbox" checked on-change="handleSelectPW">
-                        <span style="font-size:13px;">All</span>
+                        <span class="flex">Pathways</span>
                     </label>
                 </div>
                 <span id="pathwaysError" class="errmsg"></span>
@@ -220,7 +213,7 @@
 
             <span class="errmsg">{{errorMessage}}</span>
             <div class="horizontal layout center-justified">
-                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="launchJob"><i class="fa fa-rocket"></i> &nbsp; Launch Job</div>
+                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="launchJob">Do analysis</div>
             </div>
             <br>
         </form>
@@ -317,7 +310,6 @@
 
                 this.$.form.elements['species'].value = 'hsa';
 
-                this.$.form.elements['decompose'].value = 'FALSE';
                 this.$.form.elements['paired'].checked = false;
                 this.$.form.elements['unadjusted'].checked = false;
                 
@@ -438,10 +430,6 @@
                         type: 'flag'
                     };
                 }
-                args.options['decompose'] = {
-                    type: 'text',
-                    value: this.$.form.elements['decompose'].value
-                };
                 if (this.$.form.elements['paired'].checked) {
                     args.options['paired'] = {
                         type: 'flag'

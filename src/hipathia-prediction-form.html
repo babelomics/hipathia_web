@@ -166,7 +166,7 @@
                             </elm-select-box>
                             <div id="condition1SelectError" class="errmsg"></div>
 
-                            <label class="elm">Condition 2:</label>
+                            <label class="elm">Condition 2: (Reference condition)</label>
                             <elm-select-box id="condition2Select" options="{{designConditions}}" title-attribute="name">
                             </elm-select-box>
                             <span id="condition2SelectError" class="errmsg"></span>
@@ -195,34 +195,25 @@
                         </label>
                     </div>
                 </div>
-
+                
                 <div class="elm-formbox">
-                    <div class="elm-formtitle">
-                        Parameters
-                    </div>
-                    <div class="elm-formcontent">
-                        <div class="horizontal layout">
+                        <div class="elm-formtitle">
+                            Parameters
+                        </div>
+                        <div class="elm-formcontent">
+
                             <label class="elm-control">
-                                <input type="radio" name="decompose" checked="true" value="FALSE">
-                                <span>All receptors to one effector circuits</span>
-                            </label>
-                            <label class="elm-control">
-                                <input type="radio" name="decompose" value="TRUE">
-                                <span>One receptor to one effector circuits</span>
+                                <input type="checkbox" name="filter_paths">
+                                <span>Filter subpaths</span>
                             </label>
                         </div>
-                        <label class="elm-control">
-                            <input type="checkbox" name="filter_paths">
-                            <span>Filter subpaths</span>
-                        </label>
                     </div>
-                </div>
                 <div class="elm-formbox">
-                    <div class="elm-formtitle horizontal layout center">
-                        <div class="flex">Pathways</div>
+                    <div class="elm-formtitle horizontal layout center" style="padding-left: 0px;">
+
                         <label class="elm-control">
                             <input name="AllPath" type="checkbox" checked on-change="handleSelectPW">
-                            <span style="font-size:13px;">All</span>
+                            <span class="flex">Pathways</span>
                         </label>
                     </div>
                     <span id="pathwaysError" class="errmsg"></span>
@@ -259,7 +250,7 @@
 
             <span class="errmsg">{{errorMessage}}</span>
             <div class="horizontal layout center-justified">
-                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="launchJob"><i class="fa fa-rocket"></i> &nbsp; Launch Job</div>
+                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="launchJob">Do analysis</div>
             </div>
             <br>
         </form>
@@ -450,8 +441,6 @@
                 this.$.form.elements['design_type'].value = 'categorical';
 
                 this.$.form.elements['species'].value = 'hsa';
-
-                this.$.form.elements['decompose'].value = 'FALSE';
                 this.$.form.elements['filter_paths'].checked = false;
 
                 this.$.jobName.value = '';
@@ -573,11 +562,6 @@
                     } else if (args.options['cond2'].value != null && args.options['cond1'].value != null) {
                         this._clearError('condition');
                     }
-
-                    args.options['decompose'] = {
-                        type: 'text',
-                        value: this.$.form.elements['decompose'].value
-                    };
                     if (this.$.form.elements['filter_paths'].checked) {
                         args.options['filter_paths'] = {
                             type: 'flag'
