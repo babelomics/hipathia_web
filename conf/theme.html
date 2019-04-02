@@ -59,5 +59,19 @@
 
     elm-header>.main {
         font-weight: 300;
+        --my-mixin: {
+            font-size: 13px;
+        }
     }
+    @media (max-width: 1260px)  {
+        .option-text{
+            /*display: none;*/
+            font-size: 16px;
+        }
+        @media (max-width: 1186px)  {
+            .option-text{
+                display: none;
+            }
+        }
+    }  
 </style>
