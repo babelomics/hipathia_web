@@ -138,7 +138,7 @@
         <div class="content" menu-option="home,job,signaling,prediction">
             <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
-                    <i class="fa fa-flask"></i>&nbsp; Browse my jobs
+                    <i class="fa fa-flask"></i>&nbsp; Browse my studies
                 </div>
                 <elm-job-browser id="jobBrowser" class="container flex" on-jobselect="handleJobSelect" allowed-tools="{{allowedTools}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}" disable-relaunch="{{disableRelaunch}}" hide-status-filter="{{hideStatusFilter}}" hide-tool-filter="{{hideToolFilter}}">
                 </elm-job-browser>
@@ -202,7 +202,7 @@
                 </div>
                 <div title="Browse my jobs" class="option" on-click="handleMenuPanel" login-required login-visible data-panel="jobBrowserPanel">
                     <i class="fa fa-flask"></i>
-                    <span class="option-text">My jobs</span>
+                    <span class="option-text">My studies</span>
                 </div>
             </div>
             <!--help icon-->

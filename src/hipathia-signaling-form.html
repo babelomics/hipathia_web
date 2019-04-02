@@ -195,7 +195,7 @@
 
             <div class="elm-formbox">
                 <div class="elm-formtitle">
-                    Job information
+                    Study information
                 </div>
                 <div class="elm-formcontent">
                     <div>Output folder: &nbsp;
@@ -204,8 +204,8 @@
                         <span id="output_folderError" class="errmsg"></span>
                     </div>
                     <br>
-                    <label class="elm">Job name:</label>
-                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Differential signaling job" />
+                    <label class="elm">Study name:</label>
+                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Differential signaling study" />
                     <label class="elm">Description:</label>
                     <textarea id="jobDescription" class="elm" style="width:200px;"></textarea>
                 </div>
@@ -316,7 +316,7 @@
                 this.$.form.elements['go'].checked = false;
                 this.$.form.elements['uniprot'].checked = false;
 
-                this.$.jobName.value = 'Differential signaling job';
+                this.$.jobName.value = 'Differential signaling study';
                 this.$.jobDescription.value = '';
 
                 this._clearError('output_folder');

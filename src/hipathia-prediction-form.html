@@ -232,7 +232,7 @@
 
             <div class="elm-formbox">
                 <div class="elm-formtitle">
-                    Job information
+                    Study information
                 </div>
                 <div class="elm-formcontent">
                     <div>Output folder: &nbsp;
@@ -241,7 +241,7 @@
                         <span id="output_folderError" class="errmsg"></span>
                     </div>
                     <br>
-                    <label class="elm">Job name:</label>
+                    <label class="elm">Study name:</label>
                     <input type="text" id="jobName" class="elm" style="width:200px;" value="" />
                     <label class="elm">Description:</label>
                     <textarea id="jobDescription" class="elm" style="width:200px;"></textarea>
@@ -479,7 +479,7 @@
                     query.outdirId = this.$.output_folder.selectedFile._id;
                 }
                 if (this.$.jobName.value == '') {
-                    query['name'] = 'Prediction ' + this.type + ' job'
+                    query['name'] = 'Prediction ' + this.type + ' study'
                 }
 
                 var args = {
