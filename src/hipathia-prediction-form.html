@@ -76,6 +76,9 @@
             overflow-y: auto;
             padding: 5px;
         }
+        ul { 
+            list-style: none;
+        }
     </style>
     <template>
         <form id="form">
@@ -212,11 +215,12 @@
                     <div class="elm-formtitle horizontal layout center" style="padding-left: 0px;">
 
                         <label class="elm-control">
-                            <input name="AllPath" type="checkbox" checked on-change="handleSelectPW">
+                            <input type="checkbox" name="allPW" checked on-change="handleSelectPW">
                             <span class="flex">Pathways</span>
                         </label>
                     </div>
                     <span id="pathwaysError" class="errmsg"></span>
+                    <!--
                     <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
                         <template is="dom-repeat" items="{{pathwaysList}}">
                             <label class="elm-control">
@@ -225,6 +229,43 @@
                             </label>
                         </template>
                     </div>
+                -->
+                <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
+                    <template is="dom-repeat" items="{{pathway_groupedList}}" indexAs="index">
+                        <div class="treeview">
+                                    <!--<paper-toggle-button checked = "{{item.selected}}" hidden></paper-toggle-button>-->
+                                    <label class="elm-control" id="pathway_groupedList" >
+                                        <input id="groupName" type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass" >
+                                        <span>{{item.groupName}}</span>
+                                    </label>
+                                    <!--<iron-collapse id="firstChild" opened = "{{item.selected}}">{{item.selected}}-->
+                                    <template is="dom-repeat" items="{{item.classes}}">
+                                        <ul>
+                                            <li>
+                                                <label class="elm-control" id="classes">
+                                                    <input type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                                    <span>{{item.className}}</span>
+                                                </label>
+                                                <ul>
+                                                    <li>
+                                                        <template is="dom-repeat" items="{{item.pathwaysList}}">
+                                                            <div>
+                                                                <label class="elm-control" id="pathwaysList">
+                                                                    <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                                                    <span>{{item.name}}</span>
+                                                                </label>
+                                                            </div>
+                                                        </template>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </template>
+                                <!--</iron-collapse>-->
+                                </div>
+                            </template>
+                        </div>
+                    
                 </div>
 
             </div>
@@ -460,9 +501,10 @@
                 this._clearError('pathways');
                 this._clearError('model');
 
+                this._loadPathwaysList("hsa");
+                this.$.form.elements['allPW'].checked=true;
+                this.$.form.elements['allPW'].indeterminate=false;
                 this.selectAllPw();
-                this.$.form.elements['AllPath'].checked=true;
-
             },
             launchJob: function(e) {
                 var me = this;
