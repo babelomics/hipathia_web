@@ -1,0 +1,680 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="hipathia-form-behavior.html">
+<dom-module id="pathact-form">
+    <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        #form {
+            margin: 0px auto 0px auto;
+            max-width: 1000px;
+            padding: 15px 40px;
+            border: 1px solid #c6d0da;
+            background-color: #FFFFFF;
+            box-shadow: 2px 6px 15px 8px rgba(0, 0, 0, 0.30);
+        }
+        #title {
+            text-align: center;
+            font-size: 20px;
+            color: #666;
+        }
+
+        #tissue {
+            overflow-y: scroll;
+            height: 200px;
+            border: 1px solid var(--divider-color);
+            background-color: var(--light-primary-color);
+            padding: 5px;
+        }
+        .errmsg {
+            color: #8b0000;
+            margin-bottom: 5px;
+            font-style: italic;
+        }
+        elm-select-box {
+            /*width: 300px;
+            height: 80px;
+
+            overflow-y: scroll;*/
+            height: 200px;
+            border: 1px solid var(--divider-color);
+            background-color: var(--light-primary-color);
+            padding: 5px;
+        }
+
+
+        #right {
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        #left {
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        #center {
+            margin: 5% 0;
+            border-right: solid 1px var(--divider-color);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--secondary-text-color);
+            font-weight: 300;
+            text-align: center;
+        }
+
+        #selectButton {
+            margin: 0 auto;
+            width: 50%;
+            max-width: 300px;
+        }
+
+        #exampleButton {
+            margin: 0 auto;
+            /*margin: 0 40px 0 auto;*/
+            width: 125px;
+            color: #666;
+        }
+
+        #sampleSelect {
+            /*margin: 0 auto;
+            width: 70%;
+            max-width: 300px;
+            height: 200px;*/
+        }
+
+        #nameInput {
+            margin: 0 auto;
+            width: 50%;
+            max-width: 300px;
+        }
+
+        #runButton {
+            height: auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 0 auto;
+            width: 200px;
+            background-color: var(--dark-button-color) !important;
+            color: var(--text-primary-color) !important;
+        }
+
+        #runButton:hover {
+            background-color: var(--light-button-color) !important;
+        }
+
+        #jobBrowser {
+            border: 1px solid var(--divider-color);
+            background-color: white;
+            /*margin: 30px 40px 15% 40px;*/
+            /*width: calc(100% - 80px);*/
+            /*max-height: 800px;*/
+            height: 600px;
+            width: 80%;
+            min-width: 380px;
+        }
+
+        #fileBrowserPanel {
+            width: 700px;
+            height: 450px;
+            min-width: 700px;
+            min-height: 450px;
+        }
+
+        #url {
+            text-decoration: none;
+            color: var(--dark-button-color);
+        }
+    </style>
+    <template>
+        <form id="form">
+            <p id="title">
+                <strong>Variant Functional Interpretation</strong>
+            </p>
+
+            <div class="elm-formbox">
+                <div class="elm-formtitle">
+                    Input data
+                </div>
+                <div class="elm-formcontent">
+                    <div>Expression matrix file: &nbsp;
+                        <elm-file-origin id="exp_file" selection-mode="file" bioformats="{{matrixBioformat}}" user-data="{{userData}}"  on-ok-click="handleBrowserOkClick">
+                        </elm-file-origin>
+                        <span id="exp_fileError" class="errmsg"></span>
+                    </div>
+                    <div>
+                        <label class="elm">Tissues databases:</label>
+                        <br>
+                        <div class="horizontal layout">
+                            <label class="elm-control">
+                                <input type="radio" name="exp_db" checked="true" value="ea" on-click="handleExpressionDatabase">
+                                <span>Expression atlas</span>
+                            </label>
+                            <label class="elm-control">
+                                <input type="radio" name="exp_db" value="hpa" on-click="handleExpressionDatabase">
+                                <span>Human protein atlas</span>
+                            </label>
+                        </div>
+                        <br>
+                        <label class="elm">Tissue names:</label>
+                        <br>
+                        <div id="tissue">
+                            <template is="dom-repeat" items="{{selectedTissueSet}}">
+                                <label class="elm-control">
+                                    <input type="radio" name$="{{exp_db}}" checked$="{{item.selected}}" value="{{item.name}}">
+                                    <span>{{item.name}}</span>
+                                </label>
+                            </template>
+                        </div>
+                        <span id="tissueError" class="errmsg"></span>
+                    </div>
+                    <br>
+                    <div >Gene List:
+                        <elm-file-origin id="variant_file" selection-mode="file" bioformats="{{variantBioformat}}" user-data="{{userData}}" on-ok-click="checkVariantFile" selected-file="{{variantFile}}">
+                        </elm-file-origin>
+                        <span id="variant_fileError" class="errmsg"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="elm-formbox">
+                <div class="elm-formtitle">
+                    Sample
+                </div>
+                <div class="elm-formcontent">
+
+                    <div> Select a sample from your expression matrix file.</div>
+                    <div> 
+                        <elm-select-box id="sampleSelect" options="{{inputSamples}}" title-attribute="name"></elm-select-box>
+                        <span id="design_fileError" class="errmsg"></span>
+                    </div>
+                    <div>
+                        <label class="elm-control">
+                            <input id="logarithmCheckbox" type="checkbox">
+                            <span>Log<sub>e</sub> transform data matrix</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="elm-formbox">
+                <div class="elm-formtitle">
+                    Study information
+                </div>
+                <div class="elm-formcontent">
+                    <div>Output folder: &nbsp;
+                        <elm-file-origin id="output_folder" selection-mode="folder" bioformats="{{bioformats}}" user-data="{{userData}}">
+                        </elm-file-origin>
+                        <span id="output_folderError" class="errmsg"></span>
+                    </div>
+                    <br>
+                    <label class="elm">Study name:</label>
+                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Differential signaling study" />
+                    <label class="elm">Description:</label>
+                    <textarea id="jobDescription" class="elm" style="width:200px;"></textarea>
+                </div>
+            </div>
+
+            <span class="errmsg">{{errorMessage}}</span>
+            <div class="horizontal layout center-justified">
+                <div class="elm-btn elm-btn-shdw elm-btn-big" on-click="handleRunButton">Run analysis</div>
+            </div>
+            <br>
+
+
+<!-- 
+                <div hidden id="inputFileError" class="elm-note elm-note-error" style="margin:10px 40px">
+                    No expression matrix file selected.
+                </div>
+                <div id="selectButton" class="elm-btn elm-btn-shdw" on-click="handleOpenBrowser">
+                    <i class="fa fa-cloud-upload"></i>&nbsp;Select a expression matrix file...
+                </div>
+                <br>
+                <div style="text-align:center">{{inputFile.name}}</div>
+                <br>
+                <br>
+
+                <div class="elm-note pathact-note" style="margin:10px 40px">
+                    2. Now select a sample from your expression matrix file.
+                </div>
+
+                <label style="text-align:center" class="elm-control">
+                    <input id="logarithmCheckbox" type="checkbox">
+                    <span>Log<sub>e</sub> transform data matrix</span>
+                </label>
+                <br>
+
+                <elm-select-box id="sampleSelect" options="{{inputSamples}}" title-attribute="name"></elm-select-box>
+                <br>
+                <br>
+                <br>
+
+                <div class="elm-note pathact-note" style="margin:10px 40px">
+                    3. To finish, set a name for your job, and press the run button.
+                </div>
+                <div hidden id="nameError" class="elm-note elm-note-error" style="margin:10px 40px">
+                    Job name is empty.
+                </div>
+                <div class="horizontal layout">
+                    <input id="nameInput" class="elm" type="text" placeholder="Job name">
+                </div>
+                <br>
+                <br>
+                <div id="runButton" class="elm-btn elm-btn-shdw" on-click="handleRunButton"><i class="fa fa-rocket"></i> Run</div>
+                <br>
+            </div>
+            <div id="center"></div>
+            <div id="right" class="flex vertical layout center">
+                <br>
+                <h1>Use an existing job</h1>
+                <br>
+                <elm-job-browser id="jobBrowser" allowed-tools="{{allowedTools}}" user-data="{{userData}}" hide-status-filter hide-tool-filter disable-relaunch></elm-job-browser>
+            </div>
+
+            <elm-panel hidden fixed modal closable id="fileBrowserPanel">
+                <div class="header">
+                    Select expression matrix file...
+                </div>
+                <elm-file-browser enable-select-ok id="fileBrowser" class="container flex" mode="file" on-fileselect="handleBrowserFileSelect" on-ok-click="handleBrowserOkClick" on-file-uploaded="handleBrowserFileUploaded" bioformats="{{bioformats}}" user-data="{{userData}}"></elm-file-browser>
+            </elm-panel>-->
+        </form>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'pathact-form',
+            behaviors: [HipathiaFormBehavior],
+            properties: {
+                inputFile: {
+                    type: Object,
+                    value: function() {
+                        return null;
+                    }
+                },
+                inputSamples: {
+                    type: Array
+                },
+                bioformats: {
+                    type: Array
+                },
+                userData: {
+                    type: Object,
+                },
+                allowedTools: {
+                    type: Array,
+                    value: ['hipathia.pathact-init']
+                },
+                loading: {
+                    type: Boolean,
+                    value: false
+                }
+            },
+            clean: function() {
+                this.errorMessage = '';
+                this.$.exp_file.reset();
+                this.set('inputSamples', []);
+
+                /*this.$.nameInput.value = '';
+                this.$.fileBrowser.reset();
+                this.set('inputFile', null);
+                this.set('inputSamples', []);
+                this.$.sampleSelect.selected = null;
+                this.$.logarithmCheckbox.checked = false;
+
+                this.$.inputFileError.setAttribute('hidden', '');
+                this.$.nameError.setAttribute('hidden', '');*/
+            },
+            /*
+            handleOpenBrowser: function() {
+                this.$.fileBrowserPanel.show();
+            },
+            handleBrowserOkClick: function(e) {
+                var file = e.currentTarget.selectedFile;
+                if (file.bioformat === "DATAMATRIX_EXPRESSION") {
+                    this.set('inputFile', file);
+                    this._getSamplesFromExpressionMatrixFile(file);
+                }
+                if (this.$.fileBrowser.selectedFile != null) {
+                    this.$.inputFileError.setAttribute('hidden', '');
+                } else {
+                    this.$.inputFileError.removeAttribute('hidden');
+                }
+            },
+            handleBrowserFileSelect: function(e) {
+                console.log(e.detail);
+            },
+            handleBrowserFileUploaded: function(e) {
+                var file = e.detail;
+                console.log(file)
+            },*/
+            handleBrowserOkClick: function(e) {
+            var file = e.currentTarget.selectedFile;
+            var bool = (file != null && file.bioformat == "DATAMATRIX_EXPRESSION");
+            if (bool) {
+                this.$.exp_fileError.innerHTML = '';
+                this.set('inputFile', file);
+                this._getSamplesFromExpressionMatrixFile(file);
+            } else {
+                this.$.exp_fileError.innerHTML = 'This file is not a matrix expression file';
+            }
+
+/*
+                var file = e.currentTarget.selectedFile;
+                if (file.bioformat === "DATAMATRIX_EXPRESSION") {
+                    this.set('inputFile', file);
+                    this._getSamplesFromExpressionMatrixFile(file);
+                }
+                if (this.$.fileBrowser.selectedFile != null) {
+                    this.$.inputFileError.setAttribute('hidden', '');
+                } else {
+                    this.$.inputFileError.removeAttribute('hidden');
+                }*/
+            },
+            _getSamplesFromExpressionMatrixFile: function(file) {
+                var me = this;
+                this.set('inputSamples', []);
+                CbaManager.getFileContent(file._id, function(content) {
+                    var samples = [];
+                    var line, fields, field;
+                    var lines = content.split(/\r\n|\r|\n/);
+                    if (lines.length > 0) {
+                        line = lines[0];
+                        if (line != '') {
+                            fields = line.split('\t');
+                            for (var i = 1; i < fields.length; i++) {
+                                var field = fields[i];
+                                samples.push({
+                                    name: field
+                                });
+                            }
+                            me.set('inputSamples', samples);
+                        }
+                    }
+                });
+            },
+            handleRunButton: function() {
+                var error = false;
+                if (this.inputFile != null) {
+                    //this.$.inputFileError.setAttribute('hidden', '');
+                    this.$.exp_fileError.innerHTML = '';
+                } else {
+                    //this.$.inputFileError.removeAttribute('hidden');
+                    this.$.exp_fileError.innerHTML = 'This file is not a matrix expression file'
+                    error = true;
+                }
+                /*
+                if (this.$.nameInput.value != '') {
+                    this.$.nameError.setAttribute('hidden', '');
+                } else {
+                    this.$.nameError.removeAttribute('hidden');
+                    error = true;
+                }*/
+                if (this.$.sampleSelect.selected == null) {
+                    error = true;
+                }
+                if (error === false) {
+                    this._launchInit(this.inputFile, this.$.jobName.value + '-' + this.inputFile.name);
+                }
+            },
+            _launchInit: function(file, jobName) {
+                var me = this;
+                var query = {
+                    sid: Cookies("bioinfo_sid"),
+                    name: jobName,
+                    description: '',
+                    outdirId: file.parent
+                };
+                var args = {
+                    tool: 'hipathia',
+                    execution: 'pathact-init',
+                    executable: 'pathact-init.sh',
+                    options: {
+                        "working_folder": {
+                            out: true,
+                        },
+                        "verbose": {
+                            type: 'flag'
+                        },
+                        "exp_file": {
+                            type: 'file',
+                            mode: 'id',
+                            value: file._id,
+                        }
+                    }
+                };
+                if (this.$.sampleSelect.selected != null) {
+                    args.options['sample'] = {
+                        type: 'text',
+                        value: this.$.sampleSelect.selected.name
+                    }
+                }
+                if (this.$.logarithmCheckbox.checked == true) {
+                    args.options['log'] = {
+                        type: 'flag'
+                    }
+                }
+                this._createJob(query, args);
+            },
+            _createJob: function(query, args) {
+                var me = this;
+                CbaManager.jobs.create({
+                    query: query,
+                    request: {
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(args),
+                        success: function(response) {
+                            if (response.response[0].error == null) {
+                                console.log(response);
+                                // var job = response.response[0].result[0];
+                                // console.log(job);
+                                me.clean();
+                                me.fire('job-launched');
+                                me.fire('need-refresh');
+                                //                                    me.message = job.commandLine;
+                            } else {
+                                console.log('PathAct form: Server error, try again later.');
+                            }
+                        },
+                        error: function() {
+                            console.log('PathAct form: Server error, try again later.');
+                        }
+                    }
+                });
+            },
+            handleLoadExample: function() {
+                var me = this;
+                var query = {
+                    name: 'Example',
+                    description: ''
+                };
+                var args = {
+                    tool: 'hipathia',
+                    execution: 'pathact-init',
+                    executable: 'pathact-init.sh',
+                    options: {
+                        "working_folder": {
+                            out: true,
+                        },
+                        "verbose": {
+                            type: 'flag'
+                        },
+                        "exp_file": {
+                            "type": "file",
+                            "mode": "example",
+                            "value": "brca_genes_vals_bn.txt"
+                        },
+                        "sample": {
+                            "type": "text",
+                            "value": "TCGA.EW.A1OV.01A.11R.A144.07"
+                        },
+                        "log": {
+                            "type": "flag"
+                        }
+                    }
+                };
+                this._createJob(query, args);
+            }
+        });
+    </script>
+</dom-module>
+
+
+<!-- DEPRECATED -->
+<!--
+<dom-module id="pathact-file-option">
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            box-sizing: border-box;
+            word-break: break-all;
+            cursor: pointer;
+        }
+
+        #main {
+            border: 1px solid var(--divider-color);
+            margin-bottom: 2px;
+        }
+
+        :host[data-checked] > #main {
+            border-color: var(--dark-button-color);
+            background-color: #fff3e7;
+        }
+
+        #main:hover {
+            margin-bottom: 2px;
+            background-color: var(--hover-color);
+        }
+
+        .name {
+            margin-right: 3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .icon {
+            padding: 0 5px 0 2px;
+        }
+
+        .action {
+            width: 80px;
+        }
+
+        .date {
+            color: var(--secondary-text-color);
+            font-size: 11px;
+        }
+
+        .ready {
+            color: #2D7481;
+        }
+
+        .preprocessing {
+            color: #ff8100;
+        }
+
+        .error {
+            color: #880000;
+        }
+
+        .delete {
+            color: var(--secondary-text-color);
+        }
+
+        .delete:hover {
+            color: #880000 !important;
+        }
+    </style>
+    <template>
+        <div id="main" title$="{{file.name}}">
+            <div class="horizontal layout center">
+                <div class="icon"><i class="fa fa-file-o"></i></div>
+                <div class="name flex">{{file.attributes.pathact.jobName}} {{file.name}}</div>
+            </div>
+            <div class="horizontal layout center ready">
+                <div class="icon"><i class$="{{computeStatusIcon(file.attributes.pathact.status)}}"></i></div>
+                <div class="date flex">{{computeDate(file)}}</div>
+                <div hidden$="{{computeDeleteHidden(file.attributes.pathact.status)}}" class="icon delete" on-click="handleDeleteFile"><i class="fa fa-trash-o"></i></div>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<script>
+    Polymer({
+        is: 'pathact-file-option',
+        properties: {
+            file: {
+                type: Object,
+                observer: 'fileChanged'
+            },
+            job: {
+                type: Object
+            }
+        },
+        computeStatusIcon: function(status) {
+            if (status == null) {
+                return '';
+            } else if (status === 'PREPROCESSING') {
+                return 'fa fa-refresh fa-spin preprocessing';
+            } else if (status === 'READY') {
+                return 'fa fa-check ready';
+            } else if (status === 'ERROR') {
+                return 'fa fa-times error';
+            }
+        },
+        computeDate: function(item) {
+            return Utils.parseDate(item.modificationDate);
+        },
+        computeDeleteHidden: function(status) {
+            return status === 'PREPROCESSING';
+        },
+        handleDeleteFile: function(e) {
+            e.stopPropagation();
+            var me = this;
+            if (this.file.attributes.pathact.status === 'READY' || this.file.attributes.pathact.status === 'ERROR') {
+                if (confirm('The file will be deleted, are you sure?')) {
+                    var fileId = this.file.id;
+                    var jobId = this.file.attributes.pathact.jobId;
+                    var folderId = this.file.attributes.pathact.folderId;
+                    var jobFolderId = this.file.attributes.pathact.jobFolderId;
+                    me._deleteFile(fileId, function(r2) {
+                        console.log(r2);
+                    });
+                    me._deleteJob(jobId, function(r) {
+                        console.log(r);
+                    }, false);
+                    me._deleteFile(jobFolderId, function(r2) {
+                        console.log(r2);
+                    });
+                }
+            }
+        },
+        fileChanged: function(neo, old) {
+            var me = this;
+            if (neo.attributes.pathact.status != 'READY') {
+                // console.log('pathact getting job info...');
+                this._getJobBean(neo.attributes.pathact.jobId, function(job) {
+                    me.set('job', job);
+                    if (job.status == 'READY' || job.status == 'ERROR') {
+                        neo.attributes.pathact.status = job.status;
+                        me._updateFileAttributes(neo.id, {
+                            pathact: neo.attributes.pathact
+                        }, function() {});
+                    }
+                });
+            }
+        }
+    });
+</script>-->
