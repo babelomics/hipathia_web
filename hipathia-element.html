@@ -221,7 +221,7 @@
         </div>
         <!--pathact form page call src/hipathia-pathact-form.html-->
         <div class="content" menu-option="VaFInter">
-            <pathact-form id="pathactForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh"></pathact-form>
+            <pathact-form id="pathactForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh" on-job-launched="handleJobLaunched"></pathact-form>
         </div>
         <!-- Header call cba-elements/src/elm-header.html-->
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
@@ -565,6 +565,26 @@
                 localStorage.setItem("pathact_actionsmap", JSON.stringify(actionsMap));
                 this.set('drugActionMap', actionsMap);
                 this.$.viewer.$.geneSearch._processDrugRelatedGenes();
+            },
+            handleJobClear: function(e) {
+                this._loadReport();
+            },
+            handleJobUpdate: function(e) {
+                this._loadReport();
+            },
+            _loadReport: function(job) {
+                this.$.reportP.set('job', null);
+                this.$.reportP.set('job', this.jobItem);
+            },
+            handleCloseReport: function() {
+                this.$.reportPanel.hide();
+            },
+            handleReportButton: function(e) {
+                var me = this;
+                this.$.reportPanel.show();
+            },
+            handleCloseJobResult: function(e) {
+                this.set('selectedOption', 'home');
             }
 
         });

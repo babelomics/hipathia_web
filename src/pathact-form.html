@@ -217,7 +217,7 @@
                     </div>
                     <br>
                     <label class="elm">Study name:</label>
-                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Differential signaling study" />
+                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Variant Functional Interpretation study" />
                     <label class="elm">Description:</label>
                     <textarea id="jobDescription" class="elm" style="width:200px;"></textarea>
                 </div>
@@ -317,11 +317,25 @@
                     value: false
                 }
             },
+            ready: function() {
+                this.set('selectedTissueSet', this.ea);
+                this.set('exp_db', 'ea');
+                //this.set('variantInputFile', "false");
+                // this.set('selectPathwaysSet', this.pathwaysHumanSet);
+            },
             clean: function() {
                 this.errorMessage = '';
                 this.$.exp_file.reset();
                 this.set('inputSamples', []);
 
+                this.$.jobName.value = 'Variant Functional Interpretation study';
+                this.$.jobDescription.value = '';
+
+                this._uncheckTissues();
+                this.set('selectedTissueSet', this.ea);
+                this.set('exp_db', 'ea');
+                this.$.form.elements['exp_db'].value = 'ea';
+                console.log("form cleaned!");
                 /*this.$.nameInput.value = '';
                 this.$.fileBrowser.reset();
                 this.set('inputFile', null);
@@ -481,7 +495,7 @@
                                 me.clean();
                                 me.fire('job-launched');
                                 me.fire('need-refresh');
-                                //                                    me.message = job.commandLine;
+                                //me.message = job.commandLine;
                             } else {
                                 console.log('PathAct form: Server error, try again later.');
                             }

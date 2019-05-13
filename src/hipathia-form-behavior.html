@@ -47,10 +47,47 @@
                 type: String,
                 value: 'categorical'
             },
-            
+            selectedTissueSet: {
+                type: Array,
+            },
+            ea: {
+                type: Array,
+                value: function() {
+                    return this.getExpressionSet();
+                }
+            },
+            hpa: {
+                type: Array,
+                value: function() {
+                    return this.getHumanSet();
+                }
+            },
+            exp_db: {
+                type: String
+            },
             runTest: {
                 type: Boolean,
                 value: false
+            }
+        },
+        
+        handleExpressionDatabase: function(e) {
+            this._uncheckTissues();
+            this.set('selectedTissueSet', this[e.currentTarget.value]);
+            this.exp_db = e.currentTarget.value;
+        },
+        _uncheckTissues: function() {
+            var eaRadio = this.$.tissue.querySelectorAll('input[type=radio][name=ea]');
+            var hpaRadio = this.$.tissue.querySelectorAll('input[type=radio][name=hpa]');
+            if (eaRadio != null) {
+                for (var i = 0; i < eaRadio.length; i++) {
+                    eaRadio[i].checked = false;
+                }
+            }
+            if (hpaRadio != null) {
+                for (var i = 0; i < hpaRadio.length; i++) {
+                    hpaRadio[i].checked = false;
+                }
             }
         },
         handlePathSource: function(e) {
