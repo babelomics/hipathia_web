@@ -28,6 +28,7 @@
 <link rel="import" href="src/hipathia-signaling-form.html">
 <link rel="import" href="src/hipathia-prediction-form.html">
 <link rel="import" href="src/pathact-form.html">
+<link rel="import" href="src/vafi-form.html">
 
 <dom-module id="hipathia-element">
     <style is="custom-style" include="iron-flex iron-flex-reverse iron-flex-alignment iron-flex-factors iron-positioning"></style>
@@ -136,6 +137,7 @@
         hipathia-prediction-form,
         hipathia-signaling-form,
         pathact-form,
+        vafi-form,
         elm-report{
             height: calc(100vh - 50px);
             overflow-y: auto;
@@ -168,7 +170,7 @@
                 </elm-panel>
         </div>
         <!--Job and data browsers call cba-elements -->
-        <div class="content" menu-option="home,job,signaling,prediction,VaFInter,viewer">
+        <div class="content" menu-option="home,job,signaling,prediction,pathact,VaFInter,viewer">
             <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
                     <i class="fa fa-flask"></i>&nbsp; Browse my studies
@@ -220,9 +222,13 @@
             <hipathia-prediction-form id="predictionForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-prediction-form>
         </div>
         <!--pathact form page call src/hipathia-pathact-form.html-->
-        <div class="content" menu-option="VaFInter">
+        <div class="content" menu-option="pathact">
             <pathact-form id="pathactForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh" on-job-launched="handleJobLaunched"></pathact-form>
         </div>
+        <div class="content" menu-option="VaFInter">
+            <vafi-form id="vafiForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh" on-job-launched="handleJobLaunched"></vafi-form>
+        </div>
+        
         <!-- Header call cba-elements/src/elm-header.html-->
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div class="icon">
@@ -258,6 +264,10 @@
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Prediction</span>
                 </div>
+                <div title=" Actionable pathway workshop" class="option" on-click="handleMenuOption" login-required data-option="pathact">
+                    <i class="fa fa-bolt"></i>
+                    <span class="option-text">pathact</span>
+                </div>
                 <div title="Variant Functional Interpretion" class="option" on-click="handleMenuOption" login-required data-option="VaFInter">
                     <i class="fa fa-bolt"></i>
                     <span class="option-text">VaF Interpretation</span>
@@ -273,9 +283,9 @@
                     <span class="option-text">My studies</span>
                 </div>
                 <!-- Options for VaF Int-->
-                <div menu-option="VaFInter" title="VaF Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required login-visible>
+                <div menu-option="pathact" title="pathAct Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required login-visible>
                     <i class="fa fa-sliders"></i>
-                    <span class="option-text">VaF-Int Settings</span>
+                    <span class="option-text">PathAct Settings</span>
                 </div>
             </div>
             </div>
@@ -376,7 +386,7 @@
                 'open-job-folder': 'handleOpenJobFolder'
             },
             selectedOptionChanged: function(neo, old) {
-                if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction'  || this.selectedOption == 'VaFInter') {
+                if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction'  || this.selectedOption == 'VaFInter'  || this.selectedOption == 'pathact') {
                     this.$.fileBrowserPanel.hide();
                     this.$.jobBrowserPanel.hide();
                 }
@@ -418,7 +428,7 @@
                     executable: 'pathact-clear.sh'
                 });
                 //pathAct end
-                console.log("fc is :"+ this.foldChange);
+               
             },
             handleOpenJobFolder: function(e) {
                 var job = e.detail;
