@@ -353,7 +353,7 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'utils.report'];
+                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
                 },
                 disableRelaunch: {
@@ -393,6 +393,7 @@
                 this.$.signalingForm._clean();
                 this.$.predictionForm._clean();
                 this.$.pathactForm.clean();
+                this.$.vafiForm.clean();
             },
             ready: function() {
                 var me = this;

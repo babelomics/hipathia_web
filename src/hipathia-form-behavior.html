@@ -50,6 +50,12 @@
             selectedTissueSet: {
                 type: Array,
             },
+            gtex: {
+                type: Array,
+                value: function () {
+                    return this.getGtexSet();
+                }
+            },
             ea: {
                 type: Array,
                 value: function() {
@@ -70,11 +76,18 @@
                 value: false
             }
         },
-        
+
         handleExpressionDatabase: function(e) {
             this._uncheckTissues();
             this.set('selectedTissueSet', this[e.currentTarget.value]);
             this.exp_db = e.currentTarget.value;
+        },
+        handleCustomFile: function(e) {
+            if (e.currentTarget.checked === true) {
+                this.set('customInputFile', "true");
+            } else {
+                this.set('customInputFile', "false");
+            }
         },
         _uncheckTissues: function() {
             var eaRadio = this.$.tissue.querySelectorAll('input[type=radio][name=ea]');
@@ -367,7 +380,12 @@
                 els[i].indeterminate=false;
             }
         },
-
+        deselectAllGTEx: function(e) {
+            var tissues = this.$.tissue.querySelectorAll('input[type=checkbox]');
+            for (var i = 0; i < tissues.length; i++) {
+                tissues[i].checked = false;
+            }
+        },
         deselectAllPw: function(e) {
             var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
             for (var i = 0; i < els.length; i++) {
@@ -388,6 +406,99 @@
             for (var i = 0; i < els.length; i++) {
                 els[i].checked = false;
             }
+        },
+        getGtexSet: function() {
+            return [{
+                name: "adipose tissue",
+                selected: false
+            }, {
+                name: "Adrenal Gland",
+                selected: false
+            }, {
+                name: "Bladder",
+                selected: false
+            }, {
+                name: "Blood",
+                selected: false
+            }, {
+                name: "Blood Vessel",
+                selected: false
+            }, {
+                name: "Brain",
+                selected: false
+            }, {
+                name: "Breast",
+                selected: false
+            }, {
+                name: "Cervix Uteri",
+                selected: false
+            }, {
+                name: "Colon",
+                selected: false
+            }, {
+                name: "Esophagus",
+                selected: false
+            }, {
+                name: "Fallopian Tube",
+                selected: false
+            }, {
+                name: "Heart",
+                selected: false
+            }, {
+                name: "Kidney",
+                selected: false
+            }, {
+                name: "Liver",
+                selected: false
+            }, {
+                name: "Lung",
+                selected: false
+            }, {
+                name: "Muscle",
+                selected: false
+            }, {
+                name: "Nerve",
+                selected: false
+            }, {
+                name: "Ovary",
+                selected: false
+            }, {
+                name: "Pancreas",
+                selected: false
+            }, {
+                name: "Pituitary",
+                selected: false
+            }, {
+                name: "Prostate",
+                selected: false
+            }, {
+                name: "Salivary Gland",
+                selected: false
+            }, {
+                name: "Skin",
+                selected: false
+            }, {
+                name: "Small Intestine",
+                selected: false
+            }, {
+                name: "Spleen",
+                selected: false
+            }, {
+                name: "Stomach",
+                selected: false
+            }, {
+                name: "Testis",
+                selected: false
+            }, {
+                name: "Thyroid",
+                selected: false
+            }, {
+                name: "Uterus",
+                selected: false
+            }, {
+                name: "Vagina",
+                selected: false
+            }];
         },
         getExpressionSet: function() {
             return [{
