@@ -324,6 +324,11 @@
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Actionable pathway example
                         </div>
                     </li>
+                    <li>
+                        <div on-mousedown="handleExample" data-example-name="vafi-init">
+                            <i class="fa fa-lightbulb-o"></i> &nbsp; VaFI example
+                        </div>
+                    </li>
                 </ul>
             </elm-dropdown>
             <elm-cluster-status id="clusterStatus" type="dark" class="cluster-status"></elm-cluster-status>
@@ -521,6 +526,9 @@
                 }
                 if (exname === 'pathact-init') {
                     this.$.pathactForm.handleLoadExample();
+                }
+                if (exname === 'vafi-init') {
+                    this.$.vafiForm.handleLoadExample();
                 }
             },
             //Path act Functions

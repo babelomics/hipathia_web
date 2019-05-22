@@ -140,7 +140,10 @@
             <p id="title">
                 <strong>Variant Functional Interpretation</strong>
             </p>
-
+            <div class="horizontal layout center-justified">
+                <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-rocket"></i> &nbsp; Run example</div>
+            </div>
+            <br>
             <div class="elm-formbox">
                 <div class="elm-formtitle">
                     Input data
@@ -294,7 +297,7 @@
                 var args = {
                     tool: this.toolId,
                     execution: this.execution,
-                    executable: 'vafiPath.sh',
+                    executable: 'vafi.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -398,34 +401,48 @@
             handleLoadExample: function() {
                 var me = this;
                 var query = {
-                    name: 'Example',
+                    sid: Cookies("bioinfo_sid"),
+                    name: 'VaFI example',
                     description: ''
                 };
                 var args = {
-                    tool: 'hipathia',
-                    execution: 'vafi-init',
-                    executable: 'pathact-init.sh',
+                    tool: this.toolId,
+                    execution: this.execution,
+                    executable: 'vafi.sh',
                     options: {
-                        "working_folder": {
+                        "output_folder": {
                             out: true,
                         },
                         "verbose": {
                             type: 'flag'
                         },
-                        "exp_file": {
+                        "species": {
+                            "type": "text",
+                            "value": "hsa"
+                        },
+                        "design_type": {
+                            "type": "text",
+                            "value": "categorical"
+                        },
+                        "difexp": {
+                            "type": "flag"
+                        },
+                        "pathways_list": {
+                            "type": "text",
+                            "value": "04014,04015"
+                        },
+                        "TissueList": {
+                            "type": "text",
+                            "value": "Bladder,Blood"
+                        },
+                        "variant_file" :{
                             "type": "file",
                             "mode": "example",
                             "value": "brca_genes_vals_bn.txt"
-                        },
-                        "sample": {
-                            "type": "text",
-                            "value": "TCGA.EW.A1OV.01A.11R.A144.07"
-                        },
-                        "log": {
-                            "type": "flag"
                         }
                     }
                 };
+
                 this._createJob(query, args);
             }
         });
