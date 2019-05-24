@@ -23,6 +23,7 @@
 
 <link rel="import" href="bower_components/cba-elements/src/report/elm-report.html">
 <link rel="import" href="bower_components/pathway-viewer/pathway-drug-viewer.html">
+<link rel="import" href="bower_components/pathway-viewer/pathway-tissue-viewer.html">
 
 <link rel="import" href="src/hipathia-home.html">
 <link rel="import" href="src/hipathia-signaling-form.html">
@@ -128,6 +129,11 @@
             height: calc(100vh - 50px);
             overflow-y: auto;
         }
+        #vafiViewer {
+            height: calc(100vh - 50px);
+            overflow-y: auto;
+        }
+
 
         hipathia-home {
             height: calc(100vh - 100px);
@@ -168,9 +174,23 @@
                         <div class="elm-btn elm-btn-shdw" style="width:250px;" on-click="handleCloseReport">Close</div>
                     </div>
                 </elm-panel>
+        </div>       
+        <!--Report page for Vafi-->
+        <div class="content" menu-option="vafiViewer">
+                <!--tissues/Blood/pathways-->
+                <pathway-tissue-viewer id="vafiViewer" path="tissues"  init-path="tissues/Blood/pathways">
+                </pathway-tissue-viewer>
+             <!--   <pathway-tissue-viewer  id="vafiViewer" class="container" path="tissues/Blood/pathways" path-type="session">
+                    <div class="right-label ">
+                        External box:
+                    </div>
+                    <div class="right-box" style="height:100px;"></div>
+                    <div class="left-label elm-btn elm-btn-shdw">!</div>
+                </pathway-tissue-viewer >-->
+
         </div>
         <!--Job and data browsers call cba-elements -->
-        <div class="content" menu-option="home,job,signaling,prediction,pathact,VaFInter,viewer">
+        <div class="content" menu-option="home,job,signaling,prediction,pathact,VaFInter,viewer,vafiViewer">
             <elm-panel id="jobBrowserPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
                     <i class="fa fa-flask"></i>&nbsp; Browse my studies
@@ -180,7 +200,7 @@
             </elm-panel>
             <elm-panel id="fileBrowserPanel" hidden collapsible movable closable resizable on-hidden="handlePanelHidden">
                 <div class="header">
-                    <i class="fa fa-cloud"></i>&nbsp; Browse my data lool
+                    <i class="fa fa-cloud"></i>&nbsp; Browse my data
                 </div>
                 <elm-file-browser id="fileBrowser" class="container flex" on-fileselect="handleFileSelect" bioformats="{{bioformats}}" on-need-refresh="handleUserNeedRefresh" user-data="{{userData}}">
                 </elm-file-browser>
@@ -278,12 +298,12 @@
                     <i class="fa fa-cloud"></i>
                     <span class="option-text">My data</span>
                 </div>
-                <div title="Browse my jobs" class="option" on-click="handleMenuPanel" login-required login-visible data-panel="jobBrowserPanel">
+                <div title="Browse my jobs"  class="option" on-click="handleMenuPanel" login-required login-visible data-panel="jobBrowserPanel">
                     <i class="fa fa-flask"></i>
                     <span class="option-text">My studies</span>
                 </div>
                 <!-- Options for VaF Int-->
-                <div menu-option="pathact" title="pathAct Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required login-visible>
+                <div menu-option="pathact" title="pathAct Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required  pathact-visible>
                     <i class="fa fa-sliders"></i>
                     <span class="option-text">PathAct Settings</span>
                 </div>
@@ -394,6 +414,7 @@
                 if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction'  || this.selectedOption == 'VaFInter'  || this.selectedOption == 'pathact') {
                     this.$.fileBrowserPanel.hide();
                     this.$.jobBrowserPanel.hide();
+                    this.$.configureDrugActionsPanel.hide();
                 }
                 this.$.signalingForm._clean();
                 this.$.predictionForm._clean();
@@ -433,6 +454,7 @@
                     execution: 'pathact-clear',
                     executable: 'pathact-clear.sh'
                 });
+                this.querySelectorAll("[pathact-visible]")[0].hidden = true;
                 //pathAct end
                
             },
@@ -462,9 +484,29 @@
                         this._loadReport();
 
                     }else{
-                        this.set('selectedOption', 'job');
-                        this.$.report.hideJobInformation = true;
-                        this.$.report.set('job', job);
+                        if (e.detail.execution=="vafi-init") {
+                            var jobFolder = job.folder;
+                            this.jobItem = job;
+                            if (this.$.vafiViewer.jobFolder != null) {
+                                if (this.$.vafiViewer.jobFolder._id != jobFolder._id) {
+                                    this.$.vafiViewer.reset();
+                                    this.$.vafiViewer.set('jobFolder', jobFolder);
+                                }
+                            } else {
+                                this.$.vafiViewer.reset();
+                                this.$.vafiViewer.set('jobFolder', jobFolder);
+                            }
+
+                           this.$.vafiViewer.set('showHipathiaLegend', true);
+                            this.set('selectedOption', 'vafiViewer');
+                            this._loadVafiReport();
+
+                        }else{
+                            this.set('selectedOption', 'job');
+                            this.$.report.hideJobInformation = true;
+                            this.$.report.set('job', job);   
+                        }
+
                     }
                 }
             },
@@ -589,11 +631,16 @@
                 this._loadReport();
             },
             handleJobUpdate: function(e) {
+                console.log("i am changing job ");
                 this._loadReport();
             },
             _loadReport: function(job) {
                 this.$.reportP.set('job', null);
                 this.$.reportP.set('job', this.jobItem);
+            },
+            _loadVafiReport: function(job) {
+                //console.log("i am changing job ");
+                //console.log(this.jobItem);
             },
             handleCloseReport: function() {
                 this.$.reportPanel.hide();

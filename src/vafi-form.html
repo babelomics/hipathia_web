@@ -236,6 +236,9 @@
                 this.errorMessage = '';
                 this.$.exp_file.reset();
                 this.$.variant_file.reset();
+                this.$.form.elements['custom'].checked = false;
+                this.set('selectedTissueSet', this.gtex);
+                this.set('customInputFile', "false");
 
                 this.$.jobName.value = 'Variant Functional Interpretation study';
                 this.$.jobDescription.value = '';
@@ -243,6 +246,7 @@
                 this._uncheckTissues();
                 this.set('selectedTissueSet', this.gtex);
                 this.deselectAllGTEx();
+
                 this._clearError('variant_file');
                 this._clearError('tissue');
                 this._clearError('exp_file');
