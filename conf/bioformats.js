@@ -19,5 +19,12 @@ BIOFORMATS = {
         validator: 'ExperimentalDesignValidator',
         hint: 'Experimental design is Tab-separated values file. This file has two columns, the first is the sample name and the second is the phenotype.',
         url: 'http://hipathia.babelomics.org/doc/doku.php?id=experimental_design_file_format'
+    },
+    "GENE_LIST":{
+        value: 'GENE_LIST',
+        text: 'Gene list',
+        validator: 'GeneListValidator',
+        hint: 'Gene List is Tab-separated values file. This file has just one column, that is the Entrez ID of genes (1 Entrez ID per line)',
+        url: 'http://hipathia.babelomics.org/doc/doku.php?id=gene_list_file_format'        
     }
 };

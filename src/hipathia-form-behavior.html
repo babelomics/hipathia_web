@@ -35,6 +35,10 @@
                 type: Array,
                 value: [BIOFORMATS["DATAMATRIX_EXPRESSION"]]
             },
+            geneListBioformat: {
+                type: Array,
+                value: [BIOFORMATS["GENE_LIST"]]
+            },
             designBioformat: {
                 type: Array,
                 value: [BIOFORMATS["EXPERIMENTAL_DESIGN"]]
@@ -190,7 +194,16 @@
             }
             return bool;
         },
-
+        checkGeneFile: function(e) {
+            var file = e.currentTarget.selectedFile;
+            var bool = (file != null && file.bioformat == "GENE_LIST");
+            if (bool) {
+                this.$.exp_fileError.innerHTML = '';
+            } else {
+                this.$.exp_fileError.innerHTML = 'This file is not a gene list file';
+            }
+            return bool;
+        },
         checkDesignFile: function(e) {
             var file = e.currentTarget.selectedFile;
             this._getConditionsFromDesignFile(file._id);

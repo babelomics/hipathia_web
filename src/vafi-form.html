@@ -150,7 +150,7 @@
                 </div>
                 <div class="elm-formcontent">
                     <div >Gene List: (Input the gene or genes to be evaluated in entrez)
-                        <elm-file-origin id="variant_file" selection-mode="file" bioformats="{{variantBioformat}}" user-data="{{userData}}" on-ok-click="checkVariantFile" selected-file="{{variantFile}}">
+                        <elm-file-origin id="variant_file" selection-mode="file" bioformats="{{geneListBioformat}}" user-data="{{userData}}" on-ok-click="checkGeneFile">
                         </elm-file-origin>
                         <span id="variant_fileError" class="errmsg"></span>
                     </div>
@@ -433,7 +433,7 @@
                         },
                         "pathways_list": {
                             "type": "text",
-                            "value": "04014,04015"
+                            "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
                         },
                         "TissueList": {
                             "type": "text",
@@ -442,7 +442,7 @@
                         "variant_file" :{
                             "type": "file",
                             "mode": "example",
-                            "value": "brca_genes_vals_bn.txt"
+                            "value": "gene_list.txt"
                         }
                     }
                 };
