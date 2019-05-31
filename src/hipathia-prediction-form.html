@@ -323,11 +323,15 @@
                 },
                 modelFile: {
                     type: Object
+                },
+                hipathia_source:{
+                    type: String,
+                    value: 'codeSource'                    
                 }
             },
 
             created: function() {
-                this._loadPathwaysList("hsa");
+                //this._loadPathwaysList("hsa",this.hipathia_source);
             },
             ready: function() {
             },
@@ -501,7 +505,6 @@
                 this._clearError('pathways');
                 this._clearError('model');
 
-                this._loadPathwaysList("hsa");
                 this.$.form.elements['allPW'].checked=true;
                 this.$.form.elements['allPW'].indeterminate=false;
                 this.selectAllPw();

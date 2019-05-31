@@ -270,10 +270,14 @@
                 execution: {
                     type: String,
                     value: 'differential-signaling'
+                },
+                hipathia_source:{
+                    type: String,
+                    value: 'codeSource'                    
                 }
             },
             created: function() {
-                this._loadPathwaysList("hsa");
+                //this._loadPathwaysList("hsa","this.hipathia_source");
             },
             ready: function() {
             },
@@ -368,8 +372,8 @@
                 this._clearError('condition');
                 this._clearError('pathways');
 
-                
                 this.$.form.elements['allPW'].checked=true;
+                this.$.form.elements['allPW'].indeterminate=false;
                 this.selectAllPw();
             },
             launchJob: function(e) {

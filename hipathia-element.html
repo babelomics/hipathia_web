@@ -289,8 +289,8 @@
                     <span class="option-text">pathact</span>
                 </div>
                 <div title="Variant Functional Interpretion" class="option" on-click="handleMenuOption" login-required data-option="VaFInter">
-                    <i class="fa fa-bolt"></i>
-                    <span class="option-text">VaF Interpretation</span>
+                    <i class="fa fa-asterisk"></i>
+                    <span class="option-text">VaFIn</span>
                 </div>
                 <!--right part of the menu bar-->
                 <div class="flex" style="margin-left:2vw;"></div>
@@ -415,6 +415,15 @@
                     this.$.fileBrowserPanel.hide();
                     this.$.jobBrowserPanel.hide();
                     this.$.configureDrugActionsPanel.hide();
+                    if(this.selectedOption == 'VaFInter'){
+                        this.$.vafiForm._loadPathwaysList("hsa","curated");
+                    }else{
+                        if (this.selectedOption == 'signaling' )
+                            this.$.signalingForm._loadPathwaysList("hsa","metaginfo");
+                        else if (this.selectedOption == 'prediction')
+                            this.$.predictionForm._loadPathwaysList("hsa","metaginfo");
+                    }
+                    //
                 }
                 this.$.signalingForm._clean();
                 this.$.predictionForm._clean();

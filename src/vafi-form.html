@@ -134,19 +134,29 @@
             text-decoration: none;
             color: var(--dark-button-color);
         }
+        #pathwaysContent {
+            height: 300px;
+        }
+        ul { 
+            list-style: none;
+        }
     </style>
     <template>
         <form id="form">
             <p id="title">
-                <strong>Variant Functional Interpretation</strong>
+                <strong>Variant Functional Interpreter</strong>
             </p>
             <div class="horizontal layout center-justified">
-                <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-rocket"></i> &nbsp; Run example</div>
+                <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
             </div>
             <br>
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Input data
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Input data</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Use the file browse button to upload a Gene List (Genes to KO), then choose the tissue or tissues to asses,if a custom tissue has been chosen, then you have to use the file browser to upload your custom expression matrix file." href="http://hipathia.babelomics.org/doc/doku.php?id=vafin"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div >Gene List: (Input the gene or genes to be evaluated in entrez)
@@ -158,7 +168,7 @@
                     <div>
                         <label class="elm">Tissues from GTEx: </label>
                         <br>
-                        Chose the tissue or tissues to assess
+                        Choose the tissue or tissues to assess
                         <div id="tissue">
                             <template is="dom-repeat" items="{{selectedTissueSet}}">
                                 <label class="elm-control">
@@ -185,10 +195,84 @@
 
                 </div>
             </div>
+            <div class="elm-formbox">
+
+                <div class="elm-formtitle horizontal layout" style="padding-left: 0px;">
+                    <span class="flex vertical layout">
+                        <label class="elm-control">
+                            <input name="allPW" type="checkbox" checked on-change="handleSelectPW">
+                            <span class="flex">Pathways</span>
+                        </label>
+                    </span>
+                        
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes the list of all available pathways in HiPathia. We can select the pathways with which the analysis will be performed. By default all available pathways are selected." href="http://hipathia.babelomics.org/doc/doku.php?id=pathways"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+                <span id="pathwaysError" class="errmsg"></span>
+
+
+                <!--<div class="elm-formtitle horizontal layout center" style="padding-left: 0px;">
+                    <label class="elm-control">
+                        <input name="allPW" type="checkbox" checked on-change="handleSelectPW">
+                        <span class="flex">Pathways</span>
+                    </label>
+                </div>
+                <span id="pathwaysError" class="errmsg"></span>
+                /*<div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
+                    <template is="dom-repeat" items="{{pathwaysList}}">
+                        <label class="elm-control">
+                            <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}">
+                            <span>{{item.name}}</span>
+                        </label>
+                    </template>
+                </div>*/-->
+                <!-- start all pathway list -->
+                <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
+                    <template is="dom-repeat" items="{{pathway_groupedList}}" indexAs="index">
+                        <div class="treeview">
+                            <!--<paper-toggle-button checked = "{{item.selected}}" hidden></paper-toggle-button>-->
+                            <label class="elm-control" id="pathway_groupedList" >
+                                <input id="groupName" type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass" >
+                                <span>{{item.groupName}}</span>
+                            </label>
+                            <!--<iron-collapse id="firstChild" opened = "{{item.selected}}">{{item.selected}}-->
+                            <template is="dom-repeat" items="{{item.classes}}">
+                                <ul>
+                                    <li>
+                                        <label class="elm-control" id="classes">
+                                            <input type="checkbox" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                            <span>{{item.className}}</span>
+                                        </label>
+                                        <ul>
+                                            <li>
+                                                <template is="dom-repeat" items="{{item.pathwaysList}}">
+                                                    <div>
+                                                        <label class="elm-control" id="pathwaysList">
+                                                            <input type="checkbox" value="{{item.value}}" checked$="{{item.selected}}" on-change="handleSelectClass">
+                                                            <span>{{item.name}}</span>
+                                                        </label>
+                                                    </div>
+                                                </template>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </template>
+                        <!--</iron-collapse>-->
+                        </div>
+                    </template>
+                </div>
+                <!-- end all pathway list -->
+            </div>
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Study information
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Study information</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes some parameters in order to identify and save our job." href="http://hipathia.babelomics.org/doc/doku.php?id=job_information"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div>Output folder: &nbsp;
@@ -198,7 +282,7 @@
                     </div>
                     <br>
                     <label class="elm">Study name:</label>
-                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Variant Functional Interpretation study" />
+                    <input type="text" id="jobName" class="elm" style="width:200px;" value="Variant Functional Interpreter study" />
                     <label class="elm">Description:</label>
                     <textarea id="jobDescription" class="elm" style="width:200px;"></textarea>
                 </div>
@@ -225,12 +309,15 @@
                 },
                 userData: {
                     type: Object,
+                },
+                hipathia_source:{
+                    type: String,
+                    value: 'curated'                    
                 }
             },
             ready: function() {
                 this.set('selectedTissueSet', this.gtex);
                 this.set('customInputFile', "false");
-                // this.set('selectPathwaysSet', this.pathwaysHumanSet);
             },
             clean: function() {
                 this.errorMessage = '';
@@ -240,7 +327,7 @@
                 this.set('selectedTissueSet', this.gtex);
                 this.set('customInputFile', "false");
 
-                this.$.jobName.value = 'Variant Functional Interpretation study';
+                this.$.jobName.value = 'Variant Functional Interpreter study';
                 this.$.jobDescription.value = '';
 
                 this._uncheckTissues();
@@ -251,6 +338,11 @@
                 this._clearError('tissue');
                 this._clearError('exp_file');
                 this._clearError('output_folder');
+                this._clearError('pathways');
+
+                this.$.form.elements['allPW'].checked=true;
+                this.$.form.elements['allPW'].indeterminate=false;
+                this.selectAllPw();
 
                 /*
                 this.$.nameError.setAttribute('hidden', '');*/
@@ -319,10 +411,6 @@
                         },
                         "difexp": {
                             "type": "flag"
-                        },
-                        "pathways_list": {
-                            "type": "text",
-                            "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
                         }
                     }
                 };
@@ -369,6 +457,25 @@
                         };
                     }
                 }
+                var pathways = [];
+                var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
+                for (var i = 0; i < els.length; i++) {
+                    var pathway = els[i];
+                    if (pathway.checked) {
+                        pathways.push(pathway.value);
+                    }
+                }
+                if (pathways.length < 1) {
+                    this._setError('pathways', 'Please select at least one Pathway');
+                } else {
+                    this._clearError('pathways');
+                    args.options['pathways_list'] = {
+                        type: 'text',
+                        value: pathways.join(',')
+                    };
+                }
+
+
                 if (this.errorMessage === '' && this.$.form.checkValidity() && this.runTest === false) {
                     this._createJob(query, args);
                 }
@@ -433,7 +540,7 @@
                         },
                         "pathways_list": {
                             "type": "text",
-                            "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
+                            "value": "03460,04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066"
                         },
                         "TissueList": {
                             "type": "text",
