@@ -185,7 +185,7 @@
                             <span>Search for custom tissue :</span>
                         </label>
                     <div hidden$="{{!_checkValue('false', customInputFile)}}">Expression matrix file:
-                        <span class="key">(Custom tissue expression)</span> &nbsp;
+                        <span class="key">(Normalized custom tissue expression)</span> &nbsp;
                         <elm-file-origin id="exp_file" selection-mode="file" bioformats="{{matrixBioformat}}" user-data="{{userData}}"  on-ok-click="handleBrowserOkClick">
                         </elm-file-origin>
                         <span id="exp_fileError" class="errmsg"></span>
