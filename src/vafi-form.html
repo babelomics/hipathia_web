@@ -302,7 +302,7 @@
             properties: {
                 execution: {
                     type: String,
-                    value: 'vafi-init'
+                    value: 'variant-interpreter'
                 },
                 bioformats: {
                     type: Array
@@ -378,6 +378,8 @@
                 }
                 if (error === false) {
                     this._launchInit(e);
+                }else{
+                    this.errorMessage = "There are errors in the form. Correct them before launching the job.";
                 }
             },
             _launchInit: function(e) {
@@ -544,7 +546,7 @@
                         },
                         "TissueList": {
                             "type": "text",
-                            "value": "Bladder,Blood"
+                            "value": "Bladder,Cervix Uteri,Fallopian Tube,Kidney"
                         },
                         "variant_file" :{
                             "type": "file",

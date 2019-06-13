@@ -208,7 +208,7 @@
                         <!--pathact   fixed modal -->
             <elm-panel id="configureDrugActionsPanel" hidden collapsible movable closable on-hidden="handlePanelHidden">
                 <div class="header">
-                    <i class="fa fa-sliders"></i> Settings
+                    <i class="fa fa-sliders"></i> Perturbation effect settings
                 </div>
                 <div id="drugActionList" class="container flex" style="width:650px; padding:7px;">
                     <div class="horizontal layout">
@@ -280,17 +280,17 @@
                     <i class="fa fa fa-usb fa-flip-vertical"></i>
                     <span class="option-text">Differential signaling</span>
                 </div>
-                <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction">
+                <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction" hidden>
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Prediction</span>
                 </div>
                 <div title=" Actionable pathway workshop" class="option" on-click="handleMenuOption" login-required data-option="pathact">
                     <i class="fa fa-bolt"></i>
-                    <span class="option-text">pathact</span>
+                    <span class="option-text">Perturbation effect</span>
                 </div>
                 <div title="Variant Functional Interpretion" class="option" on-click="handleMenuOption" login-required data-option="VaFInter">
                     <i class="fa fa-asterisk"></i>
-                    <span class="option-text">VaFIn</span>
+                    <span class="option-text">Variant interpreter</span>
                 </div>
                 <!--right part of the menu bar-->
                 <div class="flex" style="margin-left:2vw;"></div>
@@ -305,7 +305,7 @@
                 <!-- Options for VaF Int-->
                 <div menu-option="pathact" title="pathAct Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required  pathact-visible>
                     <i class="fa fa-sliders"></i>
-                    <span class="option-text">PathAct Settings</span>
+                    <span class="option-text">Settings</span>
                 </div>
             </div>
             </div>
@@ -329,24 +329,24 @@
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Differential signaling example
                         </div>
                     </li>
-                    <li>
+                    <li hidden>
                         <div on-mousedown="handleExample" data-example-name="prediction-train">
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction train example
                         </div>
                     </li>
-                    <li>
+                    <li hidden>
                         <div on-mousedown="handleExample" data-example-name="prediction-test">
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction test example
                         </div>
                     </li>
                     <li>
-                        <div on-mousedown="handleExample" data-example-name="pathact-init">
-                            <i class="fa fa-lightbulb-o"></i> &nbsp; Actionable pathway example
+                        <div on-mousedown="handleExample" data-example-name="perturbation-effect">
+                            <i class="fa fa-lightbulb-o"></i> &nbsp; Perturbation effect example
                         </div>
                     </li>
                     <li>
-                        <div on-mousedown="handleExample" data-example-name="vafi-init">
-                            <i class="fa fa-lightbulb-o"></i> &nbsp; VaFI example
+                        <div on-mousedown="handleExample" data-example-name="variant-interpreter">
+                            <i class="fa fa-lightbulb-o"></i> &nbsp; Variant interpreter example
                         </div>
                     </li>
                 </ul>
@@ -360,7 +360,7 @@
             <br> Created by
             <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain 
-            <br> 2018
+            <br> 2019
             </div>
         </elm-footer>
     </template>
@@ -378,7 +378,8 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
+                        return ['hipathia.differential-signaling', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
+                        //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
                 },
                 disableRelaunch: {
@@ -455,12 +456,12 @@
 
                 this.set('jobUpdateArgs', {
                     tool: 'hipathia',
-                    execution: 'pathact-update',
+                    execution: 'perturbation-effect-update',
                     executable: 'pathact-update.sh'
                 });
                 this.set('jobClearArgs', {
                     tool: 'hipathia',
-                    execution: 'pathact-clear',
+                    execution: 'perturbation-effect-clear',
                     executable: 'pathact-clear.sh'
                 });
                 this.querySelectorAll("[pathact-visible]")[0].hidden = true;
@@ -477,7 +478,7 @@
                 var me = this;
                 var job = e.detail;
                 if (job && job.status === 'DONE') {
-                    if (e.detail.execution=="pathact-init") {
+                    if (e.detail.execution=="perturbation-effect") {
                         var jobFolder = job.folder;
                         this.jobItem = job;
                         if (this.$.viewer.jobFolder != null) {
@@ -493,7 +494,7 @@
                         this._loadReport();
 
                     }else{
-                        if (e.detail.execution=="vafi-init") {
+                        if (e.detail.execution=="variant-interpreter") {
                             var jobFolder = job.folder;
                             this.jobItem = job;
                             if (this.$.vafiViewer.jobFolder != null) {
@@ -507,6 +508,7 @@
                             }
 
                            this.$.vafiViewer.set('showHipathiaLegend', true);
+                           this.$.vafiViewer.set('hideAltered', true);
                             this.set('selectedOption', 'vafiViewer');
                             this._loadVafiReport();
 
@@ -575,10 +577,10 @@
                 if (exname === 'prediction-test') {
                     this.$.predictionForm.runTestExample();
                 }
-                if (exname === 'pathact-init') {
+                if (exname === 'perturbation-effect') {
                     this.$.pathactForm.handleLoadExample();
                 }
-                if (exname === 'vafi-init') {
+                if (exname === 'variant-interpreter') {
                     this.$.vafiForm.handleLoadExample();
                 }
             },
@@ -640,7 +642,6 @@
                 this._loadReport();
             },
             handleJobUpdate: function(e) {
-                console.log("i am changing job ");
                 this._loadReport();
             },
             _loadReport: function(job) {
@@ -648,8 +649,6 @@
                 this.$.reportP.set('job', this.jobItem);
             },
             _loadVafiReport: function(job) {
-                //console.log("i am changing job ");
-                //console.log(this.jobItem);
             },
             handleCloseReport: function() {
                 this.$.reportPanel.hide();

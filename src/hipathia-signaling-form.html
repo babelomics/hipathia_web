@@ -25,15 +25,6 @@
             font-size: 20px;
             color: #666;
         }
-
-        #tissue {
-            overflow-y: scroll;
-            height: 200px;
-            border: 1px solid var(--divider-color);
-            background-color: var(--light-primary-color);
-            padding: 5px;
-        }
-
         .errmsg {
             color: #8b0000;
             margin-bottom: 5px;
@@ -70,8 +61,12 @@
             </div>
             <br>
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Input data
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Input data</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Use the file browse button to upload an expression matrix file." href="http://hipathia.babelomics.org/doc/doku.php?id=input_data"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div class="horizontal layout">
@@ -87,8 +82,12 @@
             </div>
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Design data
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Design data</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="The design data panel allows you to choose the kind of experiment you want to perform. You can choose between three kinds of experimental design" href="http://hipathia.babelomics.org/doc/doku.php?id=design_data"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div class="horizontal layout">
@@ -126,8 +125,12 @@
 
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Species
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Species</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Here we must choose the species of our experiment." href="http://hipathia.babelomics.org/doc/doku.php?id=species"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent ">
                     <label class="elm-control">
@@ -146,8 +149,12 @@
             </div>
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Parameters
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Parameters</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes further parameters necessary to run a study." href="http://hipathia.babelomics.org/doc/doku.php?id=parameters"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <label class="elm-control" hidden="{{_checkValue('categorical', design_type)}}">
@@ -163,8 +170,12 @@
 
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Function level analysis
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Function level analysis</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="If any of these checkboxes is selected, a functional analysis will be performed" href="http://hipathia.babelomics.org/doc/doku.php?id=function_level_analysis"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <label class="elm-control">
@@ -180,11 +191,17 @@
 
 
             <div class="elm-formbox">
-                <div class="elm-formtitle horizontal layout center" style="padding-left: 0px;">
-                    <label class="elm-control">
-                        <input name="allPW" type="checkbox" checked on-change="handleSelectPW">
-                        <span class="flex">Pathways</span>
-                    </label>
+                <div class="elm-formtitle horizontal layout" style="padding-left: 0px;">
+                    <span class="flex vertical layout">
+                        <label class="elm-control">
+                            <input name="allPW" type="checkbox" checked on-change="handleSelectPW">
+                            <span class="flex">Pathways</span>
+                        </label>
+                    </span>
+                        
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes the list of all available pathways in HiPathia. We can select the pathways with which the analysis will be performed. By default all available pathways are selected." href="http://hipathia.babelomics.org/doc/doku.php?id=pathways"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <span id="pathwaysError" class="errmsg"></span>
                 <!--/*<div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
@@ -235,8 +252,12 @@
             </div>
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Study information
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Study information</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes some parameters in order to identify and save our job." href="http://hipathia.babelomics.org/doc/doku.php?id=job_information"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div>Output folder: &nbsp;
