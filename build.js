@@ -49,8 +49,10 @@ async.waterfall([
         shell.cp('-r', path.join(__dirname, 'conf/'), bp);
         shell.cp('-r', path.join(__dirname, 'images/'), bp);
         shell.cp('-r', path.join(__dirname, 'hsa_pathway_list.json'), bp);
+        shell.cp('-r', path.join(__dirname, 'hsa_pathway_list_145.json'), bp);
         shell.cp('-r', path.join(__dirname, 'rno_pathway_list.json'), bp);
         shell.cp('-r', path.join(__dirname, 'mmu_pathway_list.json'), bp);
+        shell.cp('-r', path.join(__dirname, 'favicon.ico'), bp);
         shell.cp('-r', path.join(__dirname, 'bower_components', 'cba-elements', 'fonts'), bp);
         shell.cp('-r', path.join(__dirname, 'bower_components', 'cba-elements', 'css'), bp);
         shell.cp('-r', path.join(__dirname, 'bower_components', 'fontawesome', 'css'), path.join(bp, "fontawesome/"));
