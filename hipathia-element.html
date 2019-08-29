@@ -160,10 +160,10 @@
         </div>
         <!--Report page for path act-->
         <div class="content" menu-option="viewer">
-                <pathway-drug-viewer id="viewer" path="sifs4CellMaps" init-path="sifs4CellMaps_init" valid-genes-file-name="valid_hgnc_signaling_genes.txt" drug-action-list="{{drugActionList}}" drug-action-map="{{drugActionMap}}" job-update-args="{{jobUpdateArgs}}" job-clear-args="{{jobClearArgs}}" fold-change="{{foldChange}}" on-goback="handleViewerGoBack" on-job-clear="handleJobClear" on-job-update="handleJobUpdate">
+                <pathway-drug-viewer id="viewer" path="sifs4CellMaps" init-path="sifs4CellMaps_init" valid-genes-file-name="valid_hgnc_signaling_genes.txt" drug-action-list="{{drugActionList}}" drug-action-map="{{drugActionMap}}" job-update-args="{{jobUpdateArgs}}" job-clear-args="{{jobClearArgs}}" fold-change="{{foldChange}}" on-goback="handleViewerGoBack" on-job-clear="handleJobClear" on-job-update="handleJobUpdate" hideBackButton>
                     <div id="reportButton" on-click="handleReportButton" class="left-label elm-btn elm-btn-shdw" style="margin:0 3px 0 0;"><i class="fa fa-file-text-o"></i> &nbsp; Show report</div>
                 </pathway-drug-viewer>
-                <elm-panel hidden closable fixed modal id="reportPanel">
+                <elm-panel hidden movable closable fixed modal id="reportPanel">
                     <div class="header">
                         Report
                     </div>
@@ -178,6 +178,7 @@
         <!--Report page for Vafi-->
         <div class="content" menu-option="vafiViewer">
                 <!--tissues/Blood/pathways-->
+                <div id="mainVafiReport"></div>
                 <pathway-tissue-viewer id="vafiViewer" path="tissues"  init-path="tissues/Blood/pathways">
                 </pathway-tissue-viewer>
              <!--   <pathway-tissue-viewer  id="vafiViewer" class="container" path="tissues/Blood/pathways" path-type="session">
@@ -303,7 +304,7 @@
                     <span class="option-text">My studies</span>
                 </div>
                 <!-- Options for VaF Int-->
-                <div menu-option="pathact" title="pathAct Settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required  pathact-visible>
+                <div menu-option="pathact,viewer" title="Perturbation effect settings" class="option" on-click="handleMenuPanel" data-panel="configureDrugActionsPanel" login-required  pathact-visible>
                     <i class="fa fa-sliders"></i>
                     <span class="option-text">Settings</span>
                 </div>
@@ -373,7 +374,7 @@
                 bioformats: {
                     type: Array,
                     notify: true,
-                    value: [BIOFORMATS["DATAMATRIX_EXPRESSION"], BIOFORMATS["VARIANT"], BIOFORMATS["EXPERIMENTAL_DESIGN"]]
+                    value: [BIOFORMATS["DATAMATRIX_EXPRESSION"], BIOFORMATS["EXPERIMENTAL_DESIGN"], BIOFORMATS["GENE_LIST"]]
                 },
                 allowedTools: {
                     type: Array,
@@ -412,6 +413,7 @@
                 'open-job-folder': 'handleOpenJobFolder'
             },
             selectedOptionChanged: function(neo, old) {
+                //console.log("called from hipathia-element and neo is "+ neo); neo is selected option
                 if (this.selectedOption == 'signaling' || this.selectedOption == 'prediction'  || this.selectedOption == 'VaFInter'  || this.selectedOption == 'pathact') {
                     this.$.fileBrowserPanel.hide();
                     this.$.jobBrowserPanel.hide();
@@ -426,6 +428,7 @@
                     }
                     //
                 }
+
                 this.$.signalingForm._clean();
                 this.$.predictionForm._clean();
                 this.$.pathactForm.clean();
@@ -475,6 +478,7 @@
             },
             handleFileSelect: function(e) {},
             handleJobSelect: function(e) {
+                this.handleJobClearAll();
                 var me = this;
                 var job = e.detail;
                 if (job && job.status === 'DONE') {
@@ -490,27 +494,30 @@
                             this.$.viewer.reset();
                             this.$.viewer.set('jobFolder', jobFolder);
                         }
+                        this.$.viewer.set('hideBackButton', true);
                         this.set('selectedOption', 'viewer');
                         this._loadReport();
 
                     }else{
                         if (e.detail.execution=="variant-interpreter") {
+                            console.log("I am chossing : "+ e.detail.execution);
                             var jobFolder = job.folder;
                             this.jobItem = job;
-                            if (this.$.vafiViewer.jobFolder != null) {
+                            /*if (this.$.vafiViewer.jobFolder != null) {
                                 if (this.$.vafiViewer.jobFolder._id != jobFolder._id) {
                                     this.$.vafiViewer.reset();
                                     this.$.vafiViewer.set('jobFolder', jobFolder);
                                 }
-                            } else {
+                            } else {*/
                                 this.$.vafiViewer.reset();
                                 this.$.vafiViewer.set('jobFolder', jobFolder);
-                            }
+                            //}
 
                            this.$.vafiViewer.set('showHipathiaLegend', true);
                            this.$.vafiViewer.set('hideAltered', true);
-                            this.set('selectedOption', 'vafiViewer');
-                            this._loadVafiReport();
+                           this.$.vafiViewer.set('path',"tissues")
+                           this.set('selectedOption', 'vafiViewer');
+                           this._loadVafiReport();
 
                         }else{
                             this.set('selectedOption', 'job');
@@ -556,7 +563,7 @@
                 }
             },
             handleViewerGoBack: function() {
-                this.setMenu('form');
+                this.setMenu('home');
             },
             handleExample: function(e) {
                 if (this.$.elmHeader.isLogged != true) {
@@ -637,6 +644,15 @@
                 localStorage.setItem("pathact_actionsmap", JSON.stringify(actionsMap));
                 this.set('drugActionMap', actionsMap);
                 this.$.viewer.$.geneSearch._processDrugRelatedGenes();
+            },
+            handleJobClearAll: function(e) {
+                this.$.reportP.set('job', null);
+                this.$.report.set('job', null); 
+                this.$.viewer.reset();
+                this.$.vafiViewer.reset();
+                while (this.$.report.$.main.firstChild) {
+                        this.$.report.$.main.removeChild(this.$.report.$.main.firstChild);
+                    }
             },
             handleJobClear: function(e) {
                 this._loadReport();
