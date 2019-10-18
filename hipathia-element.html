@@ -319,7 +319,7 @@
                     <i class="fa fa fa-usb fa-flip-vertical"></i>
                     <span class="option-text">Differential signaling</span>
                 </div>
-                <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction" hidden>
+                <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction">
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Prediction</span>
                 </div>
@@ -368,12 +368,12 @@
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Differential signaling example
                         </div>
                     </li>
-                    <li hidden>
+                    <li>
                         <div on-mousedown="handleExample" data-example-name="prediction-train">
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction train example
                         </div>
                     </li>
-                    <li hidden>
+                    <li>
                         <div on-mousedown="handleExample" data-example-name="prediction-test">
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction test example
                         </div>
@@ -417,7 +417,7 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
+                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
                         //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
                 },
