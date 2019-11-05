@@ -42,6 +42,10 @@
             background-color: var(--light-primary-color);
             padding: 5px;
         }
+
+        .exampleBtn i{
+            color: var(--dark-button-color);
+        }
     </style>
     <template>
         <form id="form">
@@ -50,7 +54,7 @@
                 <br>
             <span id="titleDesc">Is an interactive working environment to simulate the effect of different interventions (e.g. knock-out, over-expression, etc.).</span>
             </p>
-            <div class="horizontal layout center-justified">
+            <div class="horizontal layout center-justified exampleBtn">
                 <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
             </div>
             <br>

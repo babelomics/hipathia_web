@@ -143,6 +143,10 @@
         ul { 
             list-style: none;
         }
+
+        .exampleBtn i{
+            color: var(--dark-button-color);
+        }
     </style>
     <template>
         <form id="form">
@@ -151,7 +155,7 @@
                 <br>
             <span id="titleDesc">Provides an estimation on the potential impact of genomic variation on cell signaling and ultimately on cell functionality.</span>
             </p>
-            <div class="horizontal layout center-justified">
+            <div class="horizontal layout center-justified exampleBtn">
                 <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
             </div>
             <br>

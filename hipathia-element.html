@@ -40,7 +40,7 @@
             cursor: default;
             font-size: 13px;
             background-color: var(--default-primary-color);
-            height: 99%;
+            height: 100%;
             width: 100%;
         }
 
@@ -99,52 +99,86 @@
                 display: none;
             }
         }*/
-        @media (max-width: 1496px)  {
-            #headerTitle{
-                display: none;
-            }
-            @media (max-width: 1300px)  {
-                .option-text{
+        @media (max-width: 1720px)  {
+            .option-text{
                     /*display: none;*/
                     font-size: 17px;
                 }
-                @media (max-width: 1260px)  {
+            #headerTitle {
+                font-size: 30/2px;
+            }
+            #description {
+                font-size: 16/2px;
+            }
+            @media (max-width: 1674px)  {
+                .option-text{
+                    /*display: none;*/
+                    font-size: 16px;
+                }
+                @media (max-width: 1650px)  {
                     .option-text{
-                        /*display: none;*/
-                        font-size: 16px;
-                    }
-                    @media (max-width: 1205px){
-                        .option-text{
                             /*display: none;*/
                             font-size: 15px;
                         }
-                        @media (max-width: 1167px)  {
-                            .option-text{
+                        #headerTitle {
+                            font-size: 30/2px;
+                        }
+                        #description {
+                            font-size: 16/2px;
+                        }
+                    @media (max-width: 1570px)  {
+                        #headerTitle{
+                                display: none;
+                            }
+                        .option-text{
                                 /*display: none;*/
                                 font-size: 14px;
                             }
-                            @media (max-width: 1127px)  {
+                        @media (max-width: 1496px)  {
+                            #headerTitle{
+                                display: none;
+                            }
+                            @media (max-width: 1342px)  {
                                 .option-text{
                                     /*display: none;*/
                                     font-size: 13px;
                                 }
-                                @media (max-width: 1087px)  {
+                                @media (max-width: 1294px)  {
                                     .option-text{
                                         /*display: none;*/
                                         font-size: 12px;
                                     }
-                                    @media (max-width: 1049px)  {
+                                    @media (max-width: 1229px){
                                         .option-text{
-                                            display: none;
+                                            /*display: none;*/
+                                            font-size: 11px;
                                         }
-                                        #headerTitle{
-                                            display: block;
+                                        @media (max-width: 1181px)  {
+                                            .option-text{
+                                                /*display: none;*/
+                                                font-size: 10px;
+                                            }
+                                            @media (max-width: 1133px)  {
+                                                .option-text{
+                                                    /*display: none;*/
+                                                    font-size: 9px;
+                                                }
+                                                @media (max-width: 1087px)  {
+                                                    .option-text{
+                                                        display: none;
+                                                    }
+                                                    #headerTitle{
+                                                        display: block;
+                                                    }
+                                                
+                                                }
+                                            }
                                         }
-                                    }
+                                    } 
                                 }
                             }
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -171,7 +205,11 @@
             height: calc(100vh - 50px);
             overflow-y: auto;
         }
-
+        #headerTitle{
+            margin-left:15px;
+            margin-bottom: 0px; 
+            padding-bottom: 0px
+        }
 
         hipathia-home {
             height: calc(100vh - 100px);
@@ -299,7 +337,7 @@
             <span id="description" class="description">
                 Pathways analysis suite
             </span>-->
-            <div id="headerTitle" class="title" style="margin-left:15px;margin-bottom: 0px; padding-bottom: 0px">
+            <div id="headerTitle" class="title">
                 <span>hi</span><span style="font-weight:normal">P</span><span>athia</span>
                 
                 <div id="description" class="description">
