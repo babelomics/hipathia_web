@@ -444,16 +444,9 @@
                         tissues.push(tissue.value);
                     }
                 }
-                if (tissues.length < 1 && !this.$.form.elements['custom'].checked) {
-                    this._setError('tissue', 'Please select at least one tissue or select a custom expression matrix');
-                } else {
-                    this._clearError('tissue');
-                    args.options['TissueList'] = {
-                        type: 'text',
-                        value: tissues.join(',')
-                    };
-                }
+                
                 if (this.$.form.elements['custom'].checked) {
+                    tissues.push("custom");
                     args.options['custom'] = {
                         type: 'flag'
                     };
@@ -467,6 +460,15 @@
                             value: this.$.exp_file.selectedFile._id
                         };
                     }
+                }
+                if (tissues.length < 1 && !this.$.form.elements['custom'].checked) {
+                    this._setError('tissue', 'Please select at least one tissue or select a custom expression matrix');
+                } else {
+                    this._clearError('tissue');
+                    args.options['TissueList'] = {
+                        type: 'text',
+                        value: tissues.join(',')
+                    };
                 }
                 var pathways = [];
                 var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
@@ -555,12 +557,24 @@
                         },
                         "TissueList": {
                             "type": "text",
-                            "value": "Bladder,Cervix Uteri,Fallopian Tube,Kidney"
+                            "value": "custom"
+                        },
+                        "exp_file": {
+                            "type": "file",
+                            "mode": "example",
+                            "value": "onlyCexpreset_hinorm.txt"
+                        },
+                        "custom": {
+                            "type": "flag"
+                        },
+                        "Tissue": {
+                            "type": "text",
+                            "value": "custom"
                         },
                         "variant_file" :{
                             "type": "file",
                             "mode": "example",
-                            "value": "gene_list.txt"
+                            "value": "listagenesKO_FA.txt"
                         }
                     }
                 };
