@@ -254,7 +254,7 @@
         <!--Report page for Vafi-->
         <div class="content" menu-option="vafiViewer">
                 <!--tissues/Blood/pathways-->
-                <div id="mainVafiReport"></div>
+                <!--<div id="mainVafiReport"></div>-->
                 <pathway-tissue-viewer id="vafiViewer" path="tissues"  init-path="tissues/Blood/pathways">
                 </pathway-tissue-viewer>
              <!--   <pathway-tissue-viewer  id="vafiViewer" class="container" path="tissues/Blood/pathways" path-type="session">
@@ -509,6 +509,8 @@
                 this.$.predictionForm._clean();
                 this.$.pathactForm.clean();
                 this.$.vafiForm.clean();
+                if(this.$.jobBrowser.querySelector("elm-job-item[selected]")!=null)
+                    this.$.jobBrowser.querySelector("elm-job-item[selected]").removeAttribute("selected");
             },
             ready: function() {
                 var me = this;

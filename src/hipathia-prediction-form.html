@@ -93,25 +93,29 @@
             </p>
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Type
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Type</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Choose the kind of prediction analysis you want to perform" href="http://hipathia.babelomics.org/doc/doku.php?id=prediction#prediction_form"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <label class="elm-control">
                         <input type="radio" name="type" value="train" checked="true" on-click="handleType">
-                        <span>Train new predictor</span>
+                        <span>Build new predictor</span>
                     </label>
                     <label class="elm-control">
                         <input type="radio" name="type" value="test" on-click="handleType">
-                        <span>Test existing predictor</span>
+                        <span>Use existing predictor</span>
                     </label>
 
                     <div hidden$="{{_checkValue('test',type)}}" class="horizontal layout wrap" style="margin-top:10px;">
                         <div>
                             <label class="elm">Existing predictors:</label>
-                            <elm-job-browser id="jobBrowser" on-jobselect="handleModelJobSelect" allowed-tools="{{predictionAllowedTool}}" user-data="{{userData}}" hide-status-filter hide-tool-filter disable-relaunch view="done"></elm-job-browser>
+                            <elm-job-browser id="jobBrowser" on-jobselect="handleModelJobSelect" allowed-tools="{{predictionAllowedTool}}" user-data="{{userData}}" hide-status-filter hide-tool-filter hide-notification-control disable-relaunch view="done"></elm-job-browser>
                         </div>
-                        <div id="modelBox">
+                        <div id="modelBox" hidden$="{{!modelDesignFileSelected}}">
                             <label class="elm">Selected predictor information:</label>
                             <div id="modelInfo">
                                 <span class="key">Design file: </span>{{modelDesignFile.name}}
@@ -128,8 +132,12 @@
                 </div>
             </div>
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Input data
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Input data</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Use the file browse button to upload an expression matrix file." href="http://hipathia.babelomics.org/doc/doku.php?id=prediction#prediction_form"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div class="horizontal layout">
@@ -148,9 +156,13 @@
 
             <div hidden$="{{_checkValue('train',type)}}">
                 <div class="elm-formbox">
-                    <div class="elm-formtitle">
-                        Design data
-                    </div>
+                    <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Design data</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="The design data panel allows you to choose the kind of experiment you want to perform. You can choose between three kinds of experimental design" href="http://hipathia.babelomics.org/doc/doku.php?id=prediction#prediction_form"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
+                </div>
                     <div class="elm-formcontent">
                         <div class="horizontal layout">
                             <label class="elm-control">
@@ -184,10 +196,13 @@
 
                     </div>
                 </div>
-
                 <div class="elm-formbox">
-                    <div class="elm-formtitle">
-                        Species
+                    <div class="elm-formtitle horizontal layout">
+                        <span class="flex vertical layout">Species</span>
+                        
+                        <span class="flex vertical layout right" style="text-align: right">
+                        <a title="Here we must choose the species of our experiment." href="http://hipathia.babelomics.org/doc/doku.php?id=prediction#prediction_form"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                        </span>
                     </div>
                     <div class="elm-formcontent ">
                         <label class="elm-control">
@@ -206,25 +221,34 @@
                 </div>
                 
                 <div class="elm-formbox">
-                        <div class="elm-formtitle">
-                            Parameters
-                        </div>
+                    <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Parameters</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes further parameters necessary to run a study." href="http://hipathia.babelomics.org/doc/doku.php?id=prediction#prediction_form"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
+                </div>
                         <div class="elm-formcontent">
 
                             <label class="elm-control">
                                 <input type="checkbox" name="filter_paths">
-                                <span>Filter subpaths</span>
+                                <span>Filter circuits</span>
                             </label>
                         </div>
                     </div>
                 <div class="elm-formbox">
-                    <div class="elm-formtitle horizontal layout center" style="padding-left: 0px;">
-
+                    <div class="elm-formtitle horizontal layout" style="padding-left: 0px;">
+                    <span class="flex vertical layout">
                         <label class="elm-control">
-                            <input type="checkbox" name="allPW" checked on-change="handleSelectPW">
+                            <input name="allPW" type="checkbox" checked on-change="handleSelectPW">
                             <span class="flex">Pathways</span>
                         </label>
-                    </div>
+                    </span>
+                        
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes the list of all available pathways in HiPathia. We can select the pathways with which the analysis will be performed. By default all available pathways are selected." href="http://hipathia.babelomics.org/doc/doku.php?id=prediction#prediction_form"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
+                </div>
                     <span id="pathwaysError" class="errmsg"></span>
                     <!--
                     <div id="pathwaysContent" class="elm-formcontent" style="overflow-y:scroll;">
@@ -278,8 +302,12 @@
 
 
             <div class="elm-formbox">
-                <div class="elm-formtitle">
-                    Study information
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Study information</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="This panel includes some parameters in order to identify and save our job." href="http://hipathia.babelomics.org/doc/doku.php?id=job_information"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
                 </div>
                 <div class="elm-formcontent">
                     <div>Output folder: &nbsp;
@@ -327,6 +355,11 @@
                 modelDesignFile: {
                     type: Object
                 },
+                modelDesignFileSelected: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    value: false
+                },
                 modelFile: {
                     type: Object
                 },
@@ -345,6 +378,8 @@
             handleType: function(e) {
                 this.set('type', e.currentTarget.value);
                 this._clean();
+                if(this.$.jobBrowser.querySelector("elm-job-item[selected]")!=null)
+                    this.$.jobBrowser.querySelector("elm-job-item[selected]").removeAttribute("selected");
             },
             handleModelJobSelect: function(e) {
                 var me = this;
@@ -352,6 +387,7 @@
 
                 CbaManager.getPlainFolderFiles(this.modelJob.options.design_file.value, function(files2) {
                     me.modelDesignFile = files2[0];
+                    me.modelDesignFileSelected = true;
                     CbaManager.getPlainFolderFiles(me.modelJob.folder._id, function(files) {
                         me.processResultFiles(files);
                     });
@@ -419,20 +455,20 @@
                         "exp_file": {
                             "type": "file",
                             "mode": "example",
-                            "value": "brca_genes_vals_bn.txt"
+                            "value": "brca_sub_class/brca_sub_class_exp_train.txt"
                         },
                         "design_file": {
                             "type": "file",
                             "mode": "example",
-                            "value": "brca_normal-basal_ed.txt"
+                            "value": "brca_sub_class/brca_sub_class_des_train.txt"
                         },
                         "cond1": {
                             "type": "text",
-                            "value": "Tumor"
+                            "value": "LumB"
                         },
                         "cond2": {
                             "type": "text",
-                            "value": "Normal"
+                            "value": "LumA"
                         },
                         "pathways_list": {
                             "type": "text",
@@ -465,12 +501,12 @@
                         "exp_file": {
                             "type": "file",
                             "mode": "example",
-                            "value": "brca_genes_vals_bn_test.txt"
+                            "value": "brca_sub_class/brca_sub_class_exp_test.txt"
                         },
                         "model_file": {
                             "type": "file",
                             "mode": "example",
-                            "value": "model.RData"
+                            "value": "brca_sub_class/model.RData"
                         }
                     }
                 };
@@ -479,6 +515,7 @@
             },
             _clean: function() {
                 this.errorMessage = '';
+                this.$.jobBrowser.set('selected', null);
                 this.$.exp_file.reset();
                 this.$.design_file.reset();
                 this.$.output_folder.reset();
@@ -500,6 +537,7 @@
                 this.set('modelJob', null);
                 this.set('modelStats', []);
                 this.set('modelDesignFile', null);
+                this.set('modelDesignFileSelected', false);
                 this.set('modelFile', null);
 
                 this._clearError('output_folder');
