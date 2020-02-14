@@ -231,8 +231,8 @@
                         <div class="elm-formcontent">
 
                             <label class="elm-control">
-                                <input type="checkbox" name="filter_paths">
-                                <span>Filter circuits</span>
+                                <input type="checkbox" name="filter_paths" checked>
+                                <span>Rank and filter circuits</span>
                             </label>
                         </div>
                     </div>
@@ -469,6 +469,9 @@
                         "cond2": {
                             "type": "text",
                             "value": "LumA"
+                        },
+                        "filter_paths":{
+                            type: 'flag'
                         },
                         "pathways_list": {
                             "type": "text",
