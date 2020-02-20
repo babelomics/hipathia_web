@@ -71,6 +71,8 @@
                         <span class="key">Normalized expression matrix </span> &nbsp;
                         <elm-file-origin id="exp_file" selection-mode="file" bioformats="{{matrixBioformat}}" user-data="{{userData}}"  on-ok-click="handleBrowserOkClick">
                         </elm-file-origin>
+                        <div hidden$="{{!checkSampleCount(expFileSampleCount)}}"> Number of samples: <span style="font-size:1.1em;">{{expFileSampleCount}}</span>
+                        </div>
                         <span id="exp_fileError" class="errmsg"></span>
                     </div>
                 </div>
@@ -156,7 +158,40 @@
                 loading: {
                     type: Boolean,
                     value: false
+                },
+                expFileSampleCount: {
+                    type: Number,
+                    value: -1
                 }
+            },
+            checkSampleCount: function(count) {
+                return count > -1;
+            },
+            checkExpFile: function(file) {
+                this._checkSamplesFromExpFile(file._id);
+            },
+            _checkSamplesFromExpFile: function(fileId) {
+                var me = this;
+                CbaManager.files.content({
+                    id: fileId,
+                    query: {
+                        start: 0,
+                        limit: 1
+                    },
+                    request: {
+                        success: function(content, req) {
+                            var line, fields, field, sample, condition;
+                            var lines = content.split('\n');
+                            if (lines.length > 0) {
+                                line = lines[0];
+                                if (line != '') {
+                                    fields = line.split('\t');
+                                    me.set('expFileSampleCount', fields.length - 1);
+                                }
+                            }
+                        }
+                    }
+                });
             },
             ready: function() {
                 //this.set('variantInputFile', "false");
@@ -209,6 +244,7 @@
                 this.$.exp_fileError.innerHTML = '';
                 this.set('inputFile', file);
                 this._getSamplesFromExpressionMatrixFile(file);
+                this.checkExpFile(file);
             } else {
                 this.$.exp_fileError.innerHTML = 'This file is not a matrix expression file';
             }
