@@ -654,7 +654,7 @@
                 }
             },
             runExample: function(exname) {
-                if (exname === 'differential-signaling') {
+                /*if (exname === 'differential-signaling') {
                     this.$.signalingForm.runExample();
                 }
                 if (exname === 'prediction-train') {
@@ -668,7 +668,47 @@
                 }
                 if (exname === 'variant-interpreter') {
                     this.$.vafiForm.handleLoadExample();
+                }*/
+                var me = this;
+                var folderName;
+                switch (exname) {
+                    case 'differential-signaling':
+                        folderName = 'Differential_signaling_BRCA';
+                        execution = "differential-signaling";
+                        break;
+                    case 'prediction-train':
+                        folderName = 'Prediction_train_BRCA-LumB-vs-LumA';
+                        execution = "prediction-train";
+                        break;
+                    case 'prediction-test':
+                        folderName = 'Prediction_test_BRCA-LumB-vs-LumA';
+                        execution = "prediction-test";
+                        break;
+                    case 'perturbation-effect':
+                        folderName = 'Perturbation_effect_BRCA';
+                        execution = "perturbation-effect";
+                        break;
+                    case 'variant-interpreter':
+                        folderName = 'VaFI_CustomTissue_FA';
+                        execution = "variant-interpreter";
+                        break;
                 }
+                CbaManager.jobs.example({
+                    query: {
+                        folderName: folderName,
+                        tool: 'hipathia',
+                        execution: execution
+                    },
+                    request: {
+                        method: 'GET',
+                        success: function(response) {
+                            me.$.jobBrowserPanel.show();
+                        },
+                        error: function(response) {
+
+                        }
+                    }
+                });
             },
             //Path act Functions
             loadDrugActions: function() {
