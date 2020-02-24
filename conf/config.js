@@ -14,4 +14,4 @@ CBA_SERVER_HOST ='http://stevia-curso.clinbioinfosspa.es/slurmia01';
 CBA_SHOW_JOB_ERROR_FILES = false;
 UPLOAD_FILES_WITH_ERRORS = false;
 // STEVIA_SHOW_HIDDEN_FILES = false;
-CBA_SHOW_HIDDEN_FILES = true;
+CBA_SHOW_HIDDEN_FILES = false;
