@@ -455,7 +455,7 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
+                        return ['hipathia-course.differential-signaling', 'hipathia-course.prediction-train', 'hipathia-course.prediction-test', 'hipathia-course.perturbation-effect', 'hipathia-course.variant-interpreter'];
                         //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
                 },
@@ -536,12 +536,12 @@
                 }
 
                 this.set('jobUpdateArgs', {
-                    tool: 'hipathia',
+                    tool: 'hipathia-course',
                     execution: 'perturbation-effect-update',
                     executable: 'pathact-update.sh'
                 });
                 this.set('jobClearArgs', {
-                    tool: 'hipathia',
+                    tool: 'hipathia-course',
                     execution: 'perturbation-effect-clear',
                     executable: 'pathact-clear.sh'
                 });
@@ -696,7 +696,7 @@
                 CbaManager.jobs.example({
                     query: {
                         folderName: folderName,
-                        tool: 'hipathia',
+                        tool: 'hipathia-course',
                         execution: execution
                     },
                     request: {
