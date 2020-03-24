@@ -329,7 +329,7 @@
         <!-- Header call cba-elements/src/elm-header.html-->
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div class="icon">
-                <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
+                <img src="images/icon.png" style="height: 44px;margin: 5px 3px 0 0;">
             </div>
             <!--<div class="title" style="margin-left:15px;">
                 <span>hi</span><span style="font-weight:normal">P</span><span>athia</span>
@@ -433,11 +433,11 @@
         <!--Footer call cba-elements/src/elm-footer.html -->
         <elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
             <div style="text-align:center;">
-            hi<b>P</b>athia v<span>{{version}}</span>
+            Co<b>-</b>Pathia v<span>{{version}}</span>
             <br> Created by
             <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain 
-            <br> 2019
+            <br> 2020
             </div>
         </elm-footer>
     </template>
@@ -455,7 +455,7 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia-course.differential-signaling', 'hipathia-course.prediction-train', 'hipathia-course.prediction-test', 'hipathia-course.perturbation-effect', 'hipathia-course.variant-interpreter'];
+                        return ['covid.differential-signaling', 'covid.prediction-train', 'covid.prediction-test', 'covid.perturbation-effect', 'covid.variant-interpreter'];
                         //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
                 },
@@ -536,12 +536,12 @@
                 }
 
                 this.set('jobUpdateArgs', {
-                    tool: 'hipathia-course',
+                    tool: 'covid',
                     execution: 'perturbation-effect-update',
                     executable: 'pathact-update.sh'
                 });
                 this.set('jobClearArgs', {
-                    tool: 'hipathia-course',
+                    tool: 'covid',
                     execution: 'perturbation-effect-clear',
                     executable: 'pathact-clear.sh'
                 });
@@ -696,7 +696,7 @@
                 CbaManager.jobs.example({
                     query: {
                         folderName: folderName,
-                        tool: 'hipathia-course',
+                        tool: 'covid',
                         execution: execution
                     },
                     request: {

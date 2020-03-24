@@ -1,6 +1,6 @@
 {
 	"Viral infections":{
-		"Covid-19 Pathways":{
+		"Covid19 Pathways":{
 			"04010":"MAPK signaling pathway",
 			"04014":"Ras signaling pathway",
 			"04024":"cAMP signaling pathway",
@@ -18,13 +18,30 @@
 			"04350":"TGF-beta signaling pathway",
 			"04510":"Focal adhesion",
 			"04520":"Adherens junction",
+			"04550":"Signaling pathways regulating pluripotency of stem cells",
+			"04610":"Complement and coagulation cascades",
 			"04620":"Toll-like receptor signaling pathway",
 			"04622":"RIG-I-like receptor signaling pathway",
+			"04623":"Cytosolic DNA-sensing pathway",
 			"04660":"T cell receptor signaling pathway",
 			"04668":"TNF signaling pathway",
+			"04720":"Long-term potentiation",
 			"04722":"Neurotrophin signaling pathway",
+			"04750":"Inflammatory mediator regulation of TRP channels",
+			"04810":"Regulation of actin cytoskeleton",
 			"04910":"Insulin signaling pathway",
-			"04920":"Adipocytokine signaling pathway"
+			"04920":"Adipocytokine signaling pathway",
+			"05110":"Vibrio cholerae infection",
+			"05120":"Epithelial cell signaling in Helicobacter pylori infection",
+			"05133":"Pertussis",
+			"05152":"Tuberculosis",
+			"05160":"Hepatitis C",
+			"05161":"Hepatitis B",
+			"05162":"Measles",
+			"05164":"Influenza A",
+			"05166":"HTLV-I infection",
+			"05168":"Herpes simplex infection",
+			"05169":"Epstein-Barr virus infection"			
 		}
 	}
 }

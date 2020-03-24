@@ -7,7 +7,7 @@
             },
             toolId: {
                 type: String,
-                value: 'hipathia-course'
+                value: 'covid'
             },
             execution: {
                 type: String
@@ -173,7 +173,7 @@
             //request.open("GET", './pathway_groupedList.json');
             console.log("hipathia_source : "+hipathia_source);
             if (hipathia_source =="curated") {
-                request.open("GET", './'+sp+'_pathway_list_145.json');
+                request.open("GET", './'+sp+'_pathway_list_all2.json');
             } else {
                 request.open("GET", './'+sp+'_pathway_list.json');
             }
