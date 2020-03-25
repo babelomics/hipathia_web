@@ -1,6 +1,6 @@
 {
-	"Viral infections":{
-		"Covid19 Pathways":{
+	"SARS-CoV viral infections":{
+		"Host-virus interaction":{
 			"04010":"MAPK signaling pathway",
 			"04014":"Ras signaling pathway",
 			"04024":"cAMP signaling pathway",
@@ -12,14 +12,7 @@
 			"04150":"mTOR signaling pathway",
 			"04151":"PI3K-Akt signaling pathway",
 			"04210":"Apoptosis",
-			"04261":"Adrenergic signaling in cardiomyocytes",
-			"04310":"Wnt signaling pathway",
-			"04340":"Hedgehog signaling pathway",
-			"04350":"TGF-beta signaling pathway",
 			"04510":"Focal adhesion",
-			"04520":"Adherens junction",
-			"04550":"Signaling pathways regulating pluripotency of stem cells",
-			"04610":"Complement and coagulation cascades",
 			"04620":"Toll-like receptor signaling pathway",
 			"04622":"RIG-I-like receptor signaling pathway",
 			"04623":"Cytosolic DNA-sensing pathway",
@@ -27,21 +20,64 @@
 			"04668":"TNF signaling pathway",
 			"04720":"Long-term potentiation",
 			"04722":"Neurotrophin signaling pathway",
-			"04750":"Inflammatory mediator regulation of TRP channels",
-			"04810":"Regulation of actin cytoskeleton",
 			"04910":"Insulin signaling pathway",
 			"04920":"Adipocytokine signaling pathway",
-			"05110":"Vibrio cholerae infection",
-			"05120":"Epithelial cell signaling in Helicobacter pylori infection",
 			"05133":"Pertussis",
-			"05152":"Tuberculosis",
 			"05160":"Hepatitis C",
 			"05161":"Hepatitis B",
 			"05162":"Measles",
 			"05164":"Influenza A",
 			"05166":"HTLV-I infection",
 			"05168":"Herpes simplex infection",
-			"05169":"Epstein-Barr virus infection"			
+			"05169":"Epstein-Barr virus infection"	
+		},
+		"Endocytosis":{
+			"04064":"NF-kappa B signaling pathway",
+			"04066":"HIF-1 signaling pathway",
+			"04210":"Apoptosis"
+		},
+		"Antiviral defense":{
+			"04620":"Toll-like receptor signaling pathway",
+			"04622":"RIG-I-like receptor signaling pathway",
+			"04623":"Cytosolic DNA-sensing pathway",
+			"05152":"Tuberculosis",
+			"05160":"Hepatitis C",
+			"05161":"Hepatitis B",
+			"05162":"Measles",
+			"05164":"Influenza A",
+			"05168":"Herpes simplex infection",
+			"05169":"Epstein-Barr virus infection"	
+		},
+		"Inflammatory response":{
+			"04064":"NF-kappa B signaling pathway",
+			"04620":"Toll-like receptor signaling pathway",
+			"05120":"Epithelial cell signaling in Helicobacter pylori infection",
+			"05133":"Pertussis",
+			"05152":"Tuberculosis"
+		},
+		"Immune activity":{
+			"04610":"Complement and coagulation cascades",
+			"04620":"Toll-like receptor signaling pathway",
+			"04622":"RIG-I-like receptor signaling pathway",
+			"04623":"Cytosolic DNA-sensing pathway",
+			"04910":"Insulin signaling pathway",
+			"05133":"Pertussis",
+			"05152":"Tuberculosis",
+			"05160":"Hepatitis C",
+			"05164":"Influenza A",
+			"05168":"Herpes simplex infection",
+			"05169":"Epstein-Barr virus infection"
+		},
+		"Others":{
+			"04261":"Adrenergic signaling in cardiomyocytes",
+			"04310":"Wnt signaling pathway",
+			"04340":"Hedgehog signaling pathway",
+			"04350":"TGF-beta signaling pathway",
+			"04520":"Adherens junction",
+			"04550":"Signaling pathways regulating pluripotency of stem cells",
+			"04750":"Inflammatory mediator regulation of TRP channels",
+			"04810":"Regulation of actin cytoskeleton",
+			"05110":"Vibrio cholerae infection"
 		}
 	}
 }

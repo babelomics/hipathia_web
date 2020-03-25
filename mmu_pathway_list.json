@@ -1,6 +1,6 @@
 {
-	"Viral infections":{
-		"Covid-19 Pathways":{
+	"SARS-CoV viral infections":{
+		"Host-virus interaction":{
 			"04010":"MAPK signaling pathway",
 			"04014":"Ras signaling pathway",
 			"04024":"cAMP signaling pathway",
@@ -12,12 +12,7 @@
 			"04150":"mTOR signaling pathway",
 			"04151":"PI3K-Akt signaling pathway",
 			"04210":"Apoptosis",
-			"04261":"Adrenergic signaling in cardiomyocytes",
-			"04310":"Wnt signaling pathway",
-			"04340":"Hedgehog signaling pathway",
-			"04350":"TGF-beta signaling pathway",
 			"04510":"Focal adhesion",
-			"04520":"Adherens junction",
 			"04620":"Toll-like receptor signaling pathway",
 			"04622":"RIG-I-like receptor signaling pathway",
 			"04660":"T cell receptor signaling pathway",
@@ -25,6 +20,31 @@
 			"04722":"Neurotrophin signaling pathway",
 			"04910":"Insulin signaling pathway",
 			"04920":"Adipocytokine signaling pathway"
+		},
+		"Endocytosis":{
+			"04064":"NF-kappa B signaling pathway",
+			"04066":"HIF-1 signaling pathway",
+			"04210":"Apoptosis"
+		},
+		"Antiviral defense":{
+			"04620":"Toll-like receptor signaling pathway",
+			"04622":"RIG-I-like receptor signaling pathway"
+		},
+		"Inflammatory response":{
+			"04064":"NF-kappa B signaling pathway",
+			"04620":"Toll-like receptor signaling pathway"
+		},
+		"Immune activity":{
+			"04620":"Toll-like receptor signaling pathway",
+			"04622":"RIG-I-like receptor signaling pathway",
+			"04910":"Insulin signaling pathway"
+		},
+		"Others":{
+			"04261":"Adrenergic signaling in cardiomyocytes",
+			"04310":"Wnt signaling pathway",
+			"04340":"Hedgehog signaling pathway",
+			"04350":"TGF-beta signaling pathway",
+			"04520":"Adherens junction"
 		}
 	}
 }
