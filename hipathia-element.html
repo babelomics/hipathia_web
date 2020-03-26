@@ -214,6 +214,8 @@
         hipathia-home {
             height: calc(100vh - 100px);
             overflow-y: auto;
+            color: #20366A;
+            background-color:#FFF;
         }
 
         hipathia-prediction-form,
@@ -433,7 +435,7 @@
         <!--Footer call cba-elements/src/elm-footer.html -->
         <elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
             <div style="text-align:center;">
-            Co<b>-</b>Pathia v<span>{{version}}</span>
+            CoV<b>-</b>Hipathia v<span>{{version}}</span>
             <br> Created by
             <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain 
@@ -685,7 +687,7 @@
                         execution = "prediction-test";
                         break;
                     case 'perturbation-effect':
-                        folderName = 'Perturbation_effect_BRCA';
+                        folderName = 'Perturbation_effect_SARS';
                         execution = "perturbation-effect";
                         break;
                     case 'variant-interpreter':
