@@ -4,7 +4,7 @@ BIOFORMATS = {
         text: 'Data matrix expression',
         validator: 'ExpressionValidator',
         hint: 'Data matrix expression is a Tab-separated values file. This file has two columns if there is only one sample, and more than two columns if there are many samples. First line is a header and must contain the names of the samples. The first column correspond to gene/probe/protein Ids from (Ensembl gene, HGNC symbol, Entrez id, Affy HG U133A probeset, Affy HG U133B probeset, Affy HG U133-PLUS-2 probeset and Affy HTA 2.0), the next columns correspond to gene expression values in numeric format from each sample.',
-        url: 'http://hipathia.babelomics.org/doc/doku.php?id=expression_matrix_file_format'
+        url: 'http://hipathia.babelomics.org/covid19/doc/doku.php?id=expression_matrix_file_format'
     },
     "VARIANT": {
         value: 'VARIANT',
@@ -18,13 +18,13 @@ BIOFORMATS = {
         text: 'Experimental design',
         validator: 'ExperimentalDesignValidator',
         hint: 'Experimental design is Tab-separated values file. This file has two columns, the first is the sample name and the second is the phenotype.',
-        url: 'http://hipathia.babelomics.org/doc/doku.php?id=experimental_design_file_format'
+        url: 'http://hipathia.babelomics.org/covid19/doc/doku.php?id=experimental_design_file_format'
     },
     "GENE_LIST":{
         value: 'GENE_LIST',
         text: 'Gene list',
         validator: 'GeneListValidator',
         hint: 'Gene List is Tab-separated values file. This file has just one column, that is the Entrez ID of genes (1 Entrez ID per line)',
-        url: 'http://hipathia.babelomics.org/doc/doku.php?id=gene_list_file_format'        
+        url: 'http://hipathia.babelomics.org/covid19/doc/doku.php?id=gene_list_file_format'        
     }
 };
