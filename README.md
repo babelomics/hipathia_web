@@ -1,4 +1,4 @@
-# Hipathia-web
+# Cov-Hipathia-web
 
 ## Welcome to Cov-Hipathia
 
@@ -7,5 +7,5 @@
 
 ### Install
 
-    cd hipathia-web
+    cd hipathia_web-copathia
     bower install
