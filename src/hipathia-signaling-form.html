@@ -350,14 +350,14 @@
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
-                    name: 'Differential signaling example',
+                    name: 'Differential signaling example: hipathia2',
                     description: ''
                 };
 
                 var args = {
                     tool: this.toolId,
                     execution: this.execution,
-                    executable: 'differential-signaling.sh',
+                    executable: 'differential-signaling2.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -392,6 +392,12 @@
                             "value": "Control"
                         },
                         "difexp": {
+                            "type": "flag"
+                        },
+                        "go": {
+                            "type": "flag"
+                        },
+                        "uniprot": {
                             "type": "flag"
                         },
                         "pathways_list": {
