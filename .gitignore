@@ -1,5 +1,5 @@
 chrome-ext/
 node_modules/
-build/
+build*/
 bower_components/
 doc*
