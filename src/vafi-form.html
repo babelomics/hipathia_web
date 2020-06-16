@@ -206,6 +206,31 @@
 
                 </div>
             </div>
+
+            <div class="elm-formbox">
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Pathway source</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Here we must choose the source of our networks." href="http://hipathia.babelomics.org/covid19/doc/doku.php"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+                <div class="elm-formcontent ">
+                    <label class="elm-control">
+                        <input type="radio" name="source" value="kegg" checked="true" on-click="handlePathListSource">
+                        <span>KEGG signaling pathways</span>
+                    </label>
+                    <label class="elm-control">
+                        <input type="radio" name="source" value="dm" on-click="handlePathListSource">
+                        <span>Disease maps</span>
+                    </label>
+                    <label class="elm-control">
+                        <input type="radio" name="source" value="signor" on-click="handlePathListSource">
+                        <span>Signor</span>
+                    </label>
+                    <span id="sourceError" class="errmsg"></span>
+                </div>
+            </div>
             <div class="elm-formbox">
 
                 <div class="elm-formtitle horizontal layout" style="padding-left: 0px;">
@@ -371,6 +396,7 @@
                 this.$.form.elements['custom'].checked = false;
                 this.set('selectedTissueSet', this.gtex);
                 this.set('customInputFile', "false");
+                this.$.form.elements['source'].value = 'kegg';
 
                 this.$.jobName.value = 'Variant Functional Interpreter study';
                 this.$.jobDescription.value = '';
@@ -383,6 +409,7 @@
                 this._clearError('tissue');
                 this._clearError('exp_file');
                 this._clearError('output_folder');
+                this._clearError('source');
                 this._clearError('pathways');
 
                 this.$.form.elements['allPW'].checked=true;
@@ -440,7 +467,7 @@
                 var args = {
                     tool: this.toolId,
                     execution: this.execution,
-                    executable: 'vafi.sh',
+                    executable:'vafi-Marina.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -506,6 +533,10 @@
                         value: tissues.join(',')
                     };
                 }
+                args.options['source'] = {
+                    type: 'text',
+                    value: this.$.form.elements['source'].value
+                };
                 var pathways = [];
                 var els = this.$.pathwaysContent.querySelectorAll('input[type=checkbox]');
                 for (var i = 0; i < els.length; i++) {
@@ -568,7 +599,7 @@
                 var args = {
                     tool: this.toolId,
                     execution: this.execution,
-                    executable: 'vafi.sh',
+                    executable: 'vafi-Marina.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -579,6 +610,10 @@
                         "species": {
                             "type": "text",
                             "value": "hsa"
+                        },
+                        "source": {
+                            "type": "text",
+                            "value": "kegg"
                         },
                         "design_type": {
                             "type": "text",

@@ -1,0 +1,12 @@
+{
+	"SARS-CoV-2 viral infection":{
+		"Host-virus interaction":{
+			"03320":	"PPAR signaling pathway",
+			"03460":	"Fanconi anemia pathway",
+			"04010":	"MAPK signaling pathway",
+			"04012":	"ErbB signaling pathway",
+			"Covid19KG":	"COVID19 Disease Map",
+			"Covid19Apoptosis":	"COVID19 apoptosis"
+		}
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"SARS-CoV-2 viral infection":{
+		"Host-virus interaction":{
+			"001" : "complete_pathway",
+			"002" : "inflammatory_response",
+			"003" : "fibrosis",
+			"004" : "apoptosis",
+			"005" : "innate_response",
+			"006" : "mapk_pathway",
+			"007" : "er_stress",
+			"008" : "virus_entry"
+		}
+	}
+}

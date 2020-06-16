@@ -1,5 +1,8 @@
 {
 	"SARS-CoV-2 viral infection":{
+		"COVID19 Disease Map":{
+			"Covid19KG":" Covid-19 Fraunhofer group"
+		},
 		"Host-virus interaction":{
 			"04010":"MAPK signaling pathway",
 			"04014":"Ras signaling pathway",

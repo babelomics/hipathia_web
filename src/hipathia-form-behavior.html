@@ -110,6 +110,14 @@
         handlePathSource: function(e) {
             this._loadPathwaysList(e.currentTarget.value, this.hipathia_source);
         },
+        handlePathListSource: function(e) {
+            this.set('hipathia_source', e.currentTarget.value);
+            var sp = this.$.form.elements['species'];
+            if(sp == null)
+                this._loadPathwaysList("hsa", this.hipathia_source);
+            else
+                this._loadPathwaysList(this.$.form.elements['species'].value, this.hipathia_source);
+        },
         /*_loadPathwaysList: function(sp) {
             var me = this;
             var request = new XMLHttpRequest();
@@ -174,6 +182,8 @@
             console.log("hipathia_source : "+hipathia_source);
             if (hipathia_source =="curated") {
                 request.open("GET", './'+sp+'_pathway_list_all2.json');
+            } if (hipathia_source =="dm" || hipathia_source =="signor") {
+                request.open("GET", './'+sp+'_pathway_list_'+hipathia_source+'.json');
             } else {
                 request.open("GET", './'+sp+'_pathway_list.json');
             }
@@ -258,7 +268,8 @@
             this.errorMessage = "There are errors in the form. Correct them before launching the job.";
         },
         _clearError: function(id) {
-            this.$[id + 'Error'].innerHTML = '';
+            if(this.$[id + 'Error'] != null)
+                this.$[id + 'Error'].innerHTML = '';
         },
 
         handleSelectPW: function(e) {
