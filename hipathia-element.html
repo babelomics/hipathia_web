@@ -41,12 +41,13 @@
             font-size: 13px;
             background-color: var(--default-primary-color);
             height: 100%;
-            width: 100%;
+            width: 100vmax;
         }
 
         elm-header {
             position: absolute;
             top: 0;
+            width: 100%;
         }
 
         elm-footer {
@@ -170,7 +171,16 @@
                                                     #headerTitle{
                                                         display: block;
                                                     }
-                                                
+                                                    @media (max-width: 800px)  {
+                                                        #headerTitle{
+                                                            display: none;
+                                                        }
+                                                        @media (max-width: 595px) {
+                                                            #headerIcon{
+                                                                display: none;
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }
@@ -312,7 +322,7 @@
         </div>
         <!--Signaling form page call src/hipathia-signaling-form.html-->
         <div class="content" menu-option="signaling">
-            <hipathia-signaling-form id="signalingForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-signaling-form>
+            <hipathia-signaling-form id="signalingForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched" ></hipathia-signaling-form>
         </div>
         <!--Precdiction form page call src/hipathia-prediction-form.html-->
         <div class="content" menu-option="prediction">
@@ -328,7 +338,7 @@
         
         <!-- Header call cba-elements/src/elm-header.html-->
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
-            <div class="icon">
+            <div id="headerIcon" class="icon">
                 <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
             </div>
             <!--<div class="title" style="margin-left:15px;">
@@ -437,7 +447,7 @@
             <br> Created by
             <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain 
-            <br> 2020
+            <br> 2021
             </div>
         </elm-footer>
     </template>
@@ -670,39 +680,280 @@
                     this.$.vafiForm.handleLoadExample();
                 }*/
                 var me = this;
-                var folderName;
+                var folderName, description;
+                var attr = {};
                 switch (exname) {
                     case 'differential-signaling':
-                        folderName = 'Differential_signaling_BRCA';
+                        folderName = 'Differential signaling study: Er Pos Vs Neg';
                         execution = "differential-signaling";
+                        description = "Differential signaling study using data with 2 conditions: The oestrogen receptor (ER+) positive group Vs negative group (ER-), each group has 178 samples";
+                        options = {
+                            "output_folder": {
+                                out: true,
+                            },
+                            "verbose": {
+                                type: 'flag'
+                            },
+                            "species": {
+                                "type": "text",
+                                "value": "hsa"
+                            },
+                            "design_type": {
+                                "type": "text",
+                                "value": "categorical"
+                            },
+                            "exp_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "brca_data_example_ERposneg.tsv"
+                            },
+                            "design_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "brca_designmatrix_ERposneg.tsv"
+                            },
+                            "cond1": {
+                                "type": "text",
+                                "value": "Negative"
+                            },
+                            "cond2": {
+                                "type": "text",
+                                "value": "Positive"
+                            },
+                            "difexp": {
+                                "type": "flag"
+                            },
+                            "go": {
+                                "type": "flag"
+                            },
+                            "uniprot": {
+                                "type": "flag"
+                            },
+                            "pathways_list": {
+                                "type": "text",
+                                "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
+                            }
+                        };
                         break;
                     case 'prediction-train':
                         folderName = 'Prediction_train_BRCA-LumB-vs-LumA';
                         execution = "prediction-train";
+                        description= "Build new predictor using the Breast Cancer dataset of 2 classes LumB vs LumA";
+                        options = {
+                            "output_folder": {
+                                out: true,
+                            },
+                            "verbose": {
+                                type: 'flag'
+                            },
+                            "species": {
+                                "type": "text",
+                                "value": "hsa"
+                            },
+                            "design_type": {
+                                "type": "text",
+                                "value": "categorical"
+                            },
+                            "exp_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "brca_sub_class/brca_sub_class_exp_train.txt"
+                            },
+                            "design_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "brca_sub_class/brca_sub_class_des_train.txt"
+                            },
+                            "cond1": {
+                                "type": "text",
+                                "value": "LumB"
+                            },
+                            "cond2": {
+                                "type": "text",
+                                "value": "LumA"
+                            },
+                            "filter_paths":{
+                                type: 'flag'
+                            },
+                            "pathways_list": {
+                                "type": "text",
+                                "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
+                            }
+                        };
                         break;
                     case 'prediction-test':
                         folderName = 'Prediction_test_BRCA-LumB-vs-LumA';
                         execution = "prediction-test";
+                        description= "Use existing predictor in order to predict the LumB (BRCA data)";
+                        options = {
+                            "output_folder": {
+                                out: true,
+                            },
+                            "verbose": {
+                                type: 'flag'
+                            },
+                            "exp_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "brca_sub_class/brca_sub_class_exp_test.txt"
+                            },
+                            "model_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "Prediction_train_BRCA-LumB-vs-LumA/model.RData"
+                            }
+                        };
                         break;
                     case 'perturbation-effect':
-                        folderName = 'Perturbation_effect_BRCA';
+                        folderName = 'PAAD__Perturbation_effect_study-PAAD-TCGA_counts';
                         execution = "perturbation-effect";
+                        description= "This is an example of a perturbation study using the Erlotinib drug  (EGFR) and simulating the KO the raf1 gene.";
+                        geneList = [{
+                            "name": "EGFR", 
+                            "value": 0, 
+                            "manual": true, 
+                            "drugactions": [{
+                                "action": "antagonist",
+                                "drug": "Erlotinib",
+                                "drugid": "DB00530",
+                                "drugvalue": 0.1}]
+                            },{
+                            "name": "RAF1", 
+                            "value": "0", 
+                            "manual": true
+                        }];
+                        drugList = [];
+                        relatedDrugList = [
+                            {i: "DB00002", s: null},
+                            {i: "DB00072", s: null},
+                            {i: "DB00281", s: null},
+                            {i: "DB00317", s: null},
+                            {i: "DB00530", s: true},
+                            {i: "DB01259", s: null},
+                            {i: "DB01269", s: null},
+                            {i: "DB03496", s: null},
+                            {i: "DB04988", s: null},
+                            {i: "DB05101", s: null},
+                            {i: "DB05294", s: null},
+                            {i: "DB05324", s: null},
+                            {i: "DB05374", s: null},
+                            {i: "DB05424", s: null},
+                            {i: "DB05774", s: null},
+                            {i: "DB05900", s: null},
+                            {i: "DB07602", s: null},
+                            {i: "DB07662", s: null},
+                            {i: "DB08916", s: null},
+                            {i: "DB00398", s: null},
+                            {i: "DB04973", s: null},
+                            {i: "DB05190", s: null},
+                            {i: "DB05268", s: null},
+                            {i: "DB08896", s: null},
+                            {i: "DB08912", s: null}
+                        ];
+                        attr.geneList = geneList;
+                        attr.drugList = drugList;
+                        attr.relatedDrugList = relatedDrugList;
+                        options = {
+                            "sample" : {
+                                "value" : "TCGA.IB.AAUS.01A.12R.A38C.07",
+                                "type" : "text"
+                            },
+                            "working_folder": {
+                                out: true,
+                            },
+                            "verbose": {
+                                type: 'flag'
+                            },
+                            "exp_file": {
+                                type: 'file',
+                                mode: 'example',
+                                value: "PAAD-TCGA_counts_log2TMM_Tumor.tsv",
+                            },
+                            "log": {
+                                "type": "flag"
+                            },
+                            "reportXMLattributes": {
+                                "pathwayDrugViewer": attr
+                            }
+                        };
                         break;
                     case 'variant-interpreter':
-                        folderName = 'VaFI_CustomTissue_FA';
+                        folderName = 'Variant_Functional_Interpreter_study__RAP1GAP';
                         execution = "variant-interpreter";
+                        description= "Using the 54 control samples of diabetes with a KO of RAP1GAP";
+                        options = {
+                            "output_folder": {
+                                out: true,
+                            },
+                            "verbose": {
+                                type: 'flag'
+                            },
+                            "species": {
+                                "type": "text",
+                                "value": "hsa"
+                            },
+                            "design_type": {
+                                "type": "text",
+                                "value": "categorical"
+                            },
+                            "difexp": {
+                                "type": "flag"
+                            },
+                            "pathways_list": {
+                                "type": "text",
+                                "value": "04015"
+                            },
+                            "TissueList": {
+                                "type": "text",
+                                "value": "custom"
+                            },
+                            "exp_file": {
+                                "type": "file",
+                                "mode": "example",
+                                "value": "exp_data_onlyControls.tsv"
+                            },
+                            "custom": {
+                                "type": "flag"
+                            },
+                            "Tissue": {
+                                "type": "text",
+                                "value": "custom"
+                            },
+                            "variant_file" :{
+                                "type": "file",
+                                "mode": "example",
+                                "value": "RAP1GAP.tsv"
+                            }
+                        };
                         break;
                 }
                 CbaManager.jobs.example({
                     query: {
                         folderName: folderName,
                         tool: 'hipathia',
-                        execution: execution
+                        execution: execution,
+                        description: description,
+                        options: JSON.stringify(options)
                     },
                     request: {
                         method: 'GET',
                         success: function(response) {
+                            //console.log("the folder id is :"+ response.response[0].results[0].out);
                             me.$.jobBrowserPanel.show();
+                            /*if(exname== 'perturbation-effect'){
+                                reportFolder_id = response.response[0].results[0].out;
+                                CbaManager.getPlainFolderFiles(reportFolder_id, function(files) {
+                                    console.log(files);
+                                    for (var key in files) {
+                                        if (files[key].name == "report.xml" ){ 
+                                            var reportFile_id = files[key]._id;
+                                        }
+                                    }
+                                    CbaManager.updateFileAttributes(reportFile_id, {
+                                        pathwayDrugViewer: attr
+                                    }, function() {});
+                                });
+                            }*/
                         },
                         error: function(response) {
 

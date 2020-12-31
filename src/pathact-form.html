@@ -55,7 +55,7 @@
             <span id="titleDesc">Is an interactive working environment to simulate the effect of different interventions (e.g. knock-out, over-expression, etc.).</span>
             </p>
             <div class="horizontal layout center-justified exampleBtn">
-                <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
+                <div class="elm-btn elm-btn-shdw" on-click="handleCopyExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
             </div>
             <br>
             <div class="elm-formbox">
@@ -201,18 +201,22 @@
                 this.errorMessage = '';
                 this.$.exp_file.reset();
                 this.set('inputSamples', []);
+                this.set('expFileSampleCount', (-1));
+
 
                 this.$.jobName.value = 'Perturbation effect study';
                 this.$.jobDescription.value = '';
-                /*this.$.nameInput.value = '';
-                this.$.fileBrowser.reset();
+                //this.$.nameInput.value = '';
+                //this.$.fileBrowser.reset();
                 this.set('inputFile', null);
                 this.set('inputSamples', []);
                 this.$.sampleSelect.selected = null;
                 this.$.logarithmCheckbox.checked = false;
 
-                this.$.inputFileError.setAttribute('hidden', '');
-                this.$.nameError.setAttribute('hidden', '');*/
+                //this.$.exp_fileError.setAttribute('hidden', '');
+                //this.$.nameError.setAttribute('hidden', '');
+                this._clearError('exp_file');
+                this.scrollTop = 0;
             },
             /*
             handleOpenBrowser: function() {
@@ -375,11 +379,107 @@
                     }
                 });
             },
+            handleCopyExample: function(){
+                var me = this;
+                var exname ='perturbation-effect';
+                var folderName = 'PAAD__Perturbation_effect_study-PAAD-TCGA_counts';
+                var execution = "perturbation-effect";
+                var description= "This is an example of a perturbation study using the Erlotinib drug  (EGFR) and simulating the KO the raf1 gene.";
+                var attr={};
+                geneList = [{
+                    "name": "EGFR", 
+                    "value": 0, 
+                    "manual": true, 
+                    "drugactions": [{
+                        "action": "antagonist",
+                        "drug": "Erlotinib",
+                        "drugid": "DB00530",
+                        "drugvalue": 0.1}]
+                    },{
+                    "name": "RAF1", 
+                    "value": "0", 
+                    "manual": true
+                }];
+                drugList = [];
+                relatedDrugList = [
+                    {i: "DB00002", s: null},
+                    {i: "DB00072", s: null},
+                    {i: "DB00281", s: null},
+                    {i: "DB00317", s: null},
+                    {i: "DB00530", s: true},
+                    {i: "DB01259", s: null},
+                    {i: "DB01269", s: null},
+                    {i: "DB03496", s: null},
+                    {i: "DB04988", s: null},
+                    {i: "DB05101", s: null},
+                    {i: "DB05294", s: null},
+                    {i: "DB05324", s: null},
+                    {i: "DB05374", s: null},
+                    {i: "DB05424", s: null},
+                    {i: "DB05774", s: null},
+                    {i: "DB05900", s: null},
+                    {i: "DB07602", s: null},
+                    {i: "DB07662", s: null},
+                    {i: "DB08916", s: null},
+                    {i: "DB00398", s: null},
+                    {i: "DB04973", s: null},
+                    {i: "DB05190", s: null},
+                    {i: "DB05268", s: null},
+                    {i: "DB08896", s: null},
+                    {i: "DB08912", s: null}
+                ];
+                attr.geneList = geneList;
+                attr.drugList = drugList;
+                attr.relatedDrugList = relatedDrugList;
+                options = {
+                    "working_folder": {
+                        out: true,
+                    },
+                    "verbose": {
+                        type: 'flag'
+                    },
+                    "exp_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "brca_genes_vals_bn.txt"
+                    },
+                    "sample": {
+                        "type": "text",
+                        "value": "TCGA.EW.A1OV.01A.11R.A144.07"
+                    },
+                    "log": {
+                        "type": "flag"
+                    },
+                    "reportXMLattributes": {
+                        "pathwayDrugViewer": attr
+                    }
+                };
+                CbaManager.jobs.example({
+                    query: {
+                        folderName: folderName,
+                        tool: 'hipathia',
+                        execution: execution,
+                        description: description,
+                        options: JSON.stringify(options)
+                    },
+                    request: {
+                        method: 'GET',
+                        success: function(response) {
+                            me.fire('job-launched');
+                            me.clean();
+                            me.fire('need-refresh');
+                        },
+                        error: function(response) {
+                        }
+                    }
+                });
+
+            },
             handleLoadExample: function() {
                 var me = this;
                 var query = {
                     name: 'Perturbation effect example',
-                    description: ''
+                    description: "This is an example of a perturbation study using the Erlotinib drug  (EGFR) and simulating the KO the raf1 gene."
                 };
                 var args = {
                     tool: 'hipathia',

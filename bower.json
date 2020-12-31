@@ -1,18 +1,18 @@
 {
-    "name": "hipathia-web",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "polymer": "Polymer/polymer#1.8.1",
-        "fontawesome": "4.7.0",
-        "cba-elements": "https://github.com/kinzaR/cba-elements.git#v1.7",
-        "network-viewer": "https://github.com/babelomics/network-viewer.git#v1.7",
-        "pathway-viewer": "https://github.com/babelomics/pathway-viewer.git#v1.7"
-    },
-    "private": true
+  "name": "hipathia-web",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.8.1",
+    "fontawesome": "4.7.0",
+    "cba-elements": "https://github.com/kinzaR/cba-elements.git#v1.7.1.2",
+    "network-viewer": "https://github.com/babelomics/network-viewer.git#v1.7.2",
+    "pathway-viewer": "https://github.com/babelomics/pathway-viewer.git#v1.7.2"
+  },
+  "private": true
 }

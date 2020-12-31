@@ -419,14 +419,24 @@
             handleModelJobSelect: function(e) {
                 var me = this;
                 this.modelJob = e.detail;
-
-                CbaManager.getPlainFolderFiles(this.modelJob.options.design_file.value, function(files2) {
-                    me.modelDesignFile = files2[0];
-                    me.modelDesignFileSelected = true;
-                    CbaManager.getPlainFolderFiles(me.modelJob.folder._id, function(files) {
+                if(this.modelJob.options.design_file.mode == "id"){
+                    CbaManager.getPlainFolderFiles(this.modelJob.options.design_file.value, function(files2) {
+                        me.modelDesignFile = files2[0];
+                        me.modelDesignFileSelected = true;
+                        CbaManager.getPlainFolderFiles(me.modelJob.folder._id, function(files) {
+                            me.processResultFiles(files);
+                        });
+                    });
+                }
+                if(this.modelJob.options.design_file.mode == "example"){
+                    this.modelDesignFile = {"name": this.modelJob.options.design_file.value };
+                    this.modelDesignFileSelected = true;
+                    CbaManager.getPlainFolderFiles(this.modelJob.folder._id, function(files) {
                         me.processResultFiles(files);
                     });
-                });
+                }
+
+                
             },
             processResultFiles: function(files) {
                 var me = this;
@@ -465,7 +475,7 @@
                 var query = {
                     sid: Cookies("bioinfo_sid"),
                     name: 'Prediction train example',
-                    description: ''
+                    description: 'Build new predictor using the Breast Cancer dataset of 2 classes LumB vs LumA'
                 };
 
                 var args = {
@@ -522,7 +532,7 @@
                 var query = {
                     sid: Cookies("bioinfo_sid"),
                     name: 'Prediction test example',
-                    description: ''
+                    description: 'Use existing predictor in order to predict the LumB (BRCA data)'
                 };
 
                 var args = {
@@ -554,7 +564,9 @@
             _clean: function() {
                 this.errorMessage = '';
                 this.$.jobBrowser.set('selected', null);
+
                 this.$.exp_file.reset();
+                this.set('expFileSampleCount', (-1));
                 this.$.design_file.reset();
                 this.$.output_folder.reset();
 
@@ -590,6 +602,7 @@
                 this.$.form.elements['allPW'].checked=true;
                 this.$.form.elements['allPW'].indeterminate=false;
                 this.selectAllPw();
+                this.scrollTop = 0;
             },
             launchJob: function(e) {
                 var me = this;

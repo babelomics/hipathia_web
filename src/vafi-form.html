@@ -156,7 +156,7 @@
             <span id="titleDesc">Provides an estimation on the potential impact of genomic variation on cell signaling and ultimately on cell functionality.</span>
             </p>
             <div class="horizontal layout center-justified exampleBtn">
-                <div class="elm-btn elm-btn-shdw" on-click="handleLoadExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
+                <div class="elm-btn elm-btn-shdw" on-click="handleCopyExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
             </div>
             <br>
             <div class="elm-formbox">
@@ -371,6 +371,7 @@
                 this.$.form.elements['custom'].checked = false;
                 this.set('selectedTissueSet', this.gtex);
                 this.set('customInputFile', "false");
+                this.set('expFileSampleCount', (-1));
 
                 this.$.jobName.value = 'Variant Functional Interpreter study';
                 this.$.jobDescription.value = '';
@@ -388,6 +389,7 @@
                 this.$.form.elements['allPW'].checked=true;
                 this.$.form.elements['allPW'].indeterminate=false;
                 this.selectAllPw();
+                this.scrollTop = 0;
 
                 /*
                 this.$.nameError.setAttribute('hidden', '');*/
@@ -558,12 +560,85 @@
                     }
                 });
             },
+            handleCopyExample: function(){
+                var me = this;
+                var exname ='variant-interpreter';
+                var folderName = 'Variant_Functional_Interpreter_study__RAP1GAP';
+                var execution = "variant-interpreter";
+                var description= "Using the 54 control samples of diabetes with a KO of RAP1GAP";
+
+                var attr={};
+                options = {
+                    "output_folder": {
+                        out: true,
+                    },
+                    "verbose": {
+                        type: 'flag'
+                    },
+                    "species": {
+                        "type": "text",
+                        "value": "hsa"
+                    },
+                    "design_type": {
+                        "type": "text",
+                        "value": "categorical"
+                    },
+                    "difexp": {
+                        "type": "flag"
+                    },
+                    "pathways_list": {
+                        "type": "text",
+                        "value": "04015"
+                    },
+                    "TissueList": {
+                        "type": "text",
+                        "value": "custom"
+                    },
+                    "exp_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "exp_data_onlyControls.tsv"
+                    },
+                    "custom": {
+                        "type": "flag"
+                    },
+                    "Tissue": {
+                        "type": "text",
+                        "value": "custom"
+                    },
+                    "variant_file" :{
+                        "type": "file",
+                        "mode": "example",
+                        "value": "RAP1GAP.tsv"
+                    }
+                };
+                CbaManager.jobs.example({
+                    query: {
+                        folderName: folderName,
+                        tool: 'hipathia',
+                        execution: execution,
+                        description: description,
+                        options: JSON.stringify(options)
+                    },
+                    request: {
+                        method: 'GET',
+                        success: function(response) {
+                            me.fire('job-launched');
+                            me.clean();
+                            me.fire('need-refresh');
+                        },
+                        error: function(response) {
+                        }
+                    }
+                });
+
+            },
             handleLoadExample: function() {
                 var me = this;
                 var query = {
                     sid: Cookies("bioinfo_sid"),
                     name: 'VaFI example',
-                    description: ''
+                    description : "Using the 54 control samples of diabetes with a KO of RAP1GAP"
                 };
                 var args = {
                     tool: this.toolId,
@@ -589,7 +664,7 @@
                         },
                         "pathways_list": {
                             "type": "text",
-                            "value": "03460,04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066"
+                            "value": "04015"
                         },
                         "TissueList": {
                             "type": "text",
@@ -598,7 +673,7 @@
                         "exp_file": {
                             "type": "file",
                             "mode": "example",
-                            "value": "onlyCexpreset_hinorm.txt"
+                            "value": "exp_data_onlyControls.tsv"
                         },
                         "custom": {
                             "type": "flag"
@@ -610,7 +685,7 @@
                         "variant_file" :{
                             "type": "file",
                             "mode": "example",
-                            "value": "listagenesKO_FA.txt"
+                            "value": "RAP1GAP.tsv"
                         }
                     }
                 };
