@@ -80,6 +80,9 @@
             overflow-y: auto;
             padding: 5px;
         }
+        .exampleBtn i{
+            color: var(--dark-button-color);
+        }
         ul { 
             list-style: none;
         }
@@ -91,7 +94,12 @@
                 <br>
             <span id="titleDesc">Allows you to train a prediction-test and test it with different data.</span>
             </p>
-
+            <div class="horizontal layout center-justified exampleBtn">
+                <div class="elm-btn elm-btn-shdw" on-click="copyExampleTraining"><i class="fa fa-flask"></i> &nbsp; Run training example </div>
+            <div style="margin:0 10px"> - </div>
+                <div class="elm-btn elm-btn-shdw" on-click="copyExampleTest"><i class="fa fa-flask"></i> &nbsp; Run test example </div>
+            </div>
+            <br>
             <div class="elm-formbox">
                 <div class="elm-formtitle horizontal layout">
                     <span class="flex vertical layout">Type</span>
@@ -470,15 +478,58 @@
                 this.set('modelStats', modelStats);
             },
 
-            runTrainExample: function() {
+            copyExampleTraining: function() {
                 var me = this;
-                var query = {
+                /*var query = {
                     sid: Cookies("bioinfo_sid"),
                     name: 'Prediction train example',
                     description: 'Build new predictor using the Breast Cancer dataset of 2 classes LumB vs LumA'
+                };*/
+                folderName = 'Prediction_train_BRCA-LumB-vs-LumA';
+                execution = "prediction-train";
+                description= "Build new predictor using the Breast Cancer dataset of 2 classes LumB vs LumA";
+                options = {
+                    "output_folder": {
+                        out: true,
+                    },
+                    "verbose": {
+                        type: 'flag'
+                    },
+                    "species": {
+                        "type": "text",
+                        "value": "hsa"
+                    },
+                    "design_type": {
+                        "type": "text",
+                        "value": "categorical"
+                    },
+                    "exp_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "brca_sub_class/brca_sub_class_exp_train.txt"
+                    },
+                    "design_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "brca_sub_class/brca_sub_class_des_train.txt"
+                    },
+                    "cond1": {
+                        "type": "text",
+                        "value": "LumB"
+                    },
+                    "cond2": {
+                        "type": "text",
+                        "value": "LumA"
+                    },
+                    "filter_paths":{
+                        type: 'flag'
+                    },
+                    "pathways_list": {
+                        "type": "text",
+                        "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
+                    }
                 };
-
-                var args = {
+                /*var args = {
                     tool: this.toolId,
                     execution: 'prediction-train',
                     executable: 'prediction-train.sh',
@@ -523,13 +574,53 @@
                             "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
                         }
                     }
-                };
+                };*/
 
-                this._createJob(query, args);
+                //this._createJob(query, args);
+                CbaManager.jobs.example({
+                    query: {
+                        folderName: folderName,
+                        tool: 'hipathia',
+                        execution: execution,
+                        description: description,
+                        options: JSON.stringify(options)
+                    },
+                    request: {
+                        method: 'GET',
+                        success: function(response) {
+                            me.fire('job-launched');
+                            me._clean();
+                            me.fire('need-refresh');
+                        },
+                        error: function(response) {
+                        }
+                    }
+                });
             },
-            runTestExample: function() {
+            copyExampleTest: function() {
                 var me = this;
-                var query = {
+                folderName = 'Prediction_test_BRCA-LumB-vs-LumA';
+                execution = "prediction-test";
+                description= "Use existing predictor in order to predict the LumB (BRCA data)";
+                options = {
+                    "output_folder": {
+                        out: true,
+                    },
+                    "verbose": {
+                        type: 'flag'
+                    },
+                    "exp_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "brca_sub_class/brca_sub_class_exp_test.txt"
+                    },
+                    "model_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "Prediction_train_BRCA-LumB-vs-LumA/model.RData"
+                    }
+                };
+                /*var query = {
                     sid: Cookies("bioinfo_sid"),
                     name: 'Prediction test example',
                     description: 'Use existing predictor in order to predict the LumB (BRCA data)'
@@ -559,7 +650,26 @@
                     }
                 };
 
-                this._createJob(query, args);
+                this._createJob(query, args);*/
+                CbaManager.jobs.example({
+                    query: {
+                        folderName: folderName,
+                        tool: 'hipathia',
+                        execution: execution,
+                        description: description,
+                        options: JSON.stringify(options)
+                    },
+                    request: {
+                        method: 'GET',
+                        success: function(response) {
+                            me.fire('job-launched');
+                            me._clean();
+                            me.fire('need-refresh');
+                        },
+                        error: function(response) {
+                        }
+                    }
+                });
             },
             _clean: function() {
                 this.errorMessage = '';
