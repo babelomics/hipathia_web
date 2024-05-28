@@ -70,7 +70,7 @@
             <br>
             <div class="elm-formbox">
                 <div class="elm-formtitle horizontal layout">
-                    <span class="flex vertical layout">Input data</span>
+                    <span class="flex vertical layout">Input omics data</span>
                     
                     <span class="flex vertical layout right" style="text-align: right">
                     <a title="Use the file browse button to upload an expression matrix file." href="http://hipathia.babelomics.org/doc/doku.php?id=input_data"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
@@ -78,7 +78,7 @@
                 </div>
                 <div class="elm-formcontent">
                     <div class="horizontal layout">
-                        <strong>Expression matrix</strong>
+                        <strong>Gene expression data</strong>
                     </div>
                     <br>
                     <div>Normalized expression matrix file: 
@@ -88,6 +88,66 @@
                         </div>
                         <span id="exp_fileError" class="errmsg"></span>
                     </div>
+                    <br>
+                    <div class="elm-formcontent">
+                        <div class="horizontal layout">
+                            <strong>Metabolites data</strong>
+                        </div>
+                        <br>
+                    <!------- -->
+                    <div class="horizontal layout">
+                        <label class="elm-control">
+                            <input type="radio" name="has_metabolites" value="yes" checked="true" on-click="handleMetabolitesData">
+                            <span>Using metabolomics concentration matrix</span>
+                        </label>
+                        <label class="elm-control">
+                            <input type="radio" name="has_metabolites" value="no" on-click="handleMetabolitesData">
+                            <span>I don't have metabolomics data</span>
+                        </label>
+                    </div>
+                    <br>
+                    <div hidden="{{_checkValue('yes', has_metabolites)}}" >
+                        <div class="horizontal layout">
+                            <strong>Metabolite concentration matrix</strong>
+                        </div>
+                        <span style="color: #F00">### and Here adding families to filter pathways/metabolites family!###</span>
+                        <div>Normalized metabolomics matrix file: 
+                            <elm-file-origin id="met_file" selection-mode="file" bioformats="{{matrixBioformat}}" user-data="{{userData}}" on-ok-click="checkExpFile">
+                            </elm-file-origin>
+                            <div id="numberOfSamples" hidden$="{{!checkSampleCount(metFileSampleCount)}}"> Number of samples: <span style="font-size:1.1em;">{{metFileSampleCount}}</span>
+                            </div>
+                            <span id="met_fileError" class="errmsg"></span>
+                        </div>
+                    </div>
+                    <div hidden="{{_checkValue('no', has_metabolites)}}" style="padding:5px 0 0 30px;">
+                        <div class="vertical layout right">
+                            <label class="elm-control">
+                                <input type="radio" name="metaboSource" value="infer" checked="true" on-click="handleMetaboSource">
+                                <span>Infer production of metabolites from Metabolizer (doi: 10.1038/s41540-019-0087-2)</span>
+                            </label>
+                            <label class="elm-control">
+                                <input type="radio" name="metaboSource" value="binary_effet" on-click="handleMetaboSource">
+                                <span>Study perturbance in metabolite concentration</span>
+                            </label>
+                        
+                            <div hidden="{{_checkValue('binary_effet', metaboSource)}}">
+                                <div class="horizontal layout">
+                                    <strong>Metabolite to KO/to be perturbed</strong>
+                                </div>
+                                <br>
+                                <div>metabolite list file (kegg ids): 
+                                    <elm-file-origin id="met_file" selection-mode="file" bioformats="{{matrixBioformat}}" user-data="{{userData}}" on-ok-click="checkExpFile">
+                                    </elm-file-origin>
+                                    <div id="numberOfSamples" hidden$="{{!checkSampleCount(metFileSampleCount)}}"> Number of samples: <span style="font-size:1.1em;">{{metFileSampleCount}}</span>
+                                    </div>
+                                    <span id="met_fileError" class="errmsg"></span>
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+
+                </div>
+                <!------- -->
                 </div>
             </div>
 
@@ -111,7 +171,7 @@
                         </label>
                     </div>
                     <br>
-                    <div>Experimental design file: &nbsp;
+                    <div>Experimental design file: &nbsp; Both expression and metabolomics data has to have the same experemetal design.
                         <elm-file-origin id="design_file" selection-mode="file" bioformats="{{designBioformat}}" user-data="{{userData}}" on-ok-click="checkDesignFile">
                         </elm-file-origin>
                         <span id="design_fileError" class="errmsg"></span>
@@ -133,6 +193,25 @@
                 </div>
             </div>
 
+            <div class="elm-formbox">
+                <div class="elm-formtitle horizontal layout">
+                    <span class="flex vertical layout">Analysis</span>
+                    
+                    <span class="flex vertical layout right" style="text-align: right">
+                    <a title="Here we must choose the analysis of our experiment." href="http://hipathia.babelomics.org/doc/doku.php"  target="_blank"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+                    </span>
+                </div>
+                <div class="elm-formcontent ">
+                    <label class="elm-control">
+                        <input type="radio" name="analysis" value="overlay" checked="true" on-click="handleAnalysis">
+                        <span>Overlay using metabolomics data</span>
+                    </label>
+                    <label class="elm-control" >
+                        <input type="radio" name="analysis" value="compare" on-click="handleAnalysis">
+                        <span>Data integration analysis</span>
+                    </label>
+                </div>
+            </div>
 
             <div class="elm-formbox">
                 <div class="elm-formtitle horizontal layout">
@@ -147,12 +226,12 @@
                         <input type="radio" name="species" value="hsa" checked="true" on-click="handlePathSource">
                         <span>Human (Homo sapiens)</span>
                     </label>
-                    <label class="elm-control">
-                        <input type="radio" name="species" value="mmu" on-click="handlePathSource">
+                    <label class="elm-control" >
+                        <input type="radio" name="species" value="mmu" on-click="handlePathSource" disabled>
                         <span>Mouse (Mus musculus)</span>
                     </label>
                     <label class="elm-control">
-                        <input type="radio" name="species" value="rno" on-click="handlePathSource">
+                        <input type="radio" name="species" value="rno" on-click="handlePathSource" disabled>
                         <span>Rat (Rattus norvegicus)</span>
                     </label>
                 </div>
@@ -302,6 +381,10 @@
                     type: Number,
                     value: -1
                 },
+                metFileSampleCount: {
+                    type: Number,
+                    value: -1
+                },
                 execution: {
                     type: String,
                     value: 'differential-signaling'
@@ -341,6 +424,33 @@
                     }
                 });
             },
+            checkMetFile: function(e) {
+                var file = e.currentTarget.selectedFile;
+                this._checkSamplesFromMetFile(file._id);
+            },
+            _checkSamplesFromMetFile: function(fileId) {
+                var me = this;
+                CbaManager.files.content({
+                    id: fileId,
+                    query: {
+                        start: 0,
+                        limit: 1
+                    },
+                    request: {
+                        success: function(content, req) {
+                            var line, fields, field, sample, condition;
+                            var lines = content.split('\n');
+                            if (lines.length > 0) {
+                                line = lines[0];
+                                if (line != '') {
+                                    fields = line.split('\t');
+                                    me.set('metFileSampleCount', fields.length - 1);
+                                }
+                            }
+                        }
+                    }
+                });
+            },
             created: function() {
                 //this._loadPathwaysList("hsa","this.hipathia_source");
             },
@@ -368,6 +478,11 @@
                         "value": "categorical"
                     },
                     "exp_file": {
+                        "type": "file",
+                        "mode": "example",
+                        "value": "brca_data_example_ERposneg.tsv"
+                    },
+                    "met_file": {
                         "type": "file",
                         "mode": "example",
                         "value": "brca_data_example_ERposneg.tsv"
@@ -486,13 +601,24 @@
             _clean: function() {
                 this.errorMessage = '';
                 this.$.exp_file.reset();
+                this.$.met_file.reset();
                 this.$.design_file.reset();
                 this.$.output_folder.reset();
                 this.set('expFileSampleCount', (-1));
+                this.set('metFileSampleCount', (-1));
 
                 this.set('designConditions', []);
                 this.$.condition1Select.selectedOptionText = '';
                 this.$.condition2Select.selectedOptionText = '';
+
+                this.has_metabolites = 'yes';
+                this.$.form.elements['has_metabolites'].value = 'yes';
+
+                this.metaboSource = 'infer';
+                this.$.form.elements['metaboSource'].value = 'infer';
+
+                this.analysis = 'infer';
+                this.$.form.elements['analysis'].value = 'infer';
 
                 this.expressionMode = 'matrix';
                 this.design_type = 'categorical';
@@ -511,6 +637,7 @@
 
                 this._clearError('output_folder');
                 this._clearError('exp_file');
+                this._clearError('met_file');
                 this._clearError('design_file');
                 this._clearError('condition1Select');
                 this._clearError('condition2Select');
@@ -539,7 +666,7 @@
                 var args = {
                     tool: this.toolId,
                     execution: this.execution,
-                    executable: 'differential-signaling.sh',
+                    executable: 'differential-signaling_metabopathia.sh',
                     options: {
                         "output_folder": {
                             out: true,
@@ -567,6 +694,16 @@
                         type: 'file',
                         mode: 'id',
                         value: this.$.exp_file.selectedFile._id
+                    };
+                }
+                if (this.$.met_file.selectedFile == null) {
+                    this._setError('met_file', 'No metabolomics matrix file selected');
+                } else {
+                    this._clearError('met_file');
+                    args.options['met_file'] = {
+                        type: 'file',
+                        mode: 'id',
+                        value: this.$.met_file.selectedFile._id
                     };
                 }
                 if (this.$.design_file.selectedFile == null) {

@@ -171,12 +171,8 @@
             };
             //request.open("GET", './pathway_list2.json');
             //request.open("GET", './pathway_groupedList.json');
-            console.log("hipathia_source : "+hipathia_source);
-            if (hipathia_source =="curated") {
-                request.open("GET", './'+sp+'_pathway_list_145.json');
-            } else {
-                request.open("GET", './'+sp+'_pathway_list.json');
-            }
+            console.log("hipathia_source : "+hipathia_source+" and the sp is: "+ sp);
+            request.open("GET", './'+sp+'_pathway_list.json');
             request.send();
         },
         checkNullFile: function(file) {
@@ -184,6 +180,15 @@
         },
         _checkValue: function(val, currentVal) {
             return val !== currentVal;
+        },
+        handleMetabolitesData: function(e) {
+            this.set('has_metabolites', e.currentTarget.value);
+        },
+        handleMetaboSource: function(e) {
+            this.set('metaboSource', e.currentTarget.value);
+        },
+        handleAnalysis: function(){
+            this.set('analysis', e.currentTarget.value);
         },
         handleDesignType: function(e) {
             this.set('design_type', e.currentTarget.value);

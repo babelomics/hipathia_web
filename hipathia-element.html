@@ -325,21 +325,22 @@
             <hipathia-signaling-form id="signalingForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched" ></hipathia-signaling-form>
         </div>
         <!--Precdiction form page call src/hipathia-prediction-form.html-->
-        <div class="content" menu-option="prediction">
+        <div class="content" menu-option="prediction" hidden>
             <hipathia-prediction-form id="predictionForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-job-launched="handleJobLaunched"></hipathia-prediction-form>
         </div>
         <!--pathact form page call src/hipathia-pathact-form.html-->
-        <div class="content" menu-option="pathact">
+        <div class="content" menu-option="pathact" hidden>
             <pathact-form id="pathactForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh" on-job-launched="handleJobLaunched"></pathact-form>
         </div>
-        <div class="content" menu-option="VaFInter">
+        <div class="content" menu-option="VaFInter" hidden>
             <vafi-form id="vafiForm" selectedOption="{{selectedOption}}" bioformats="{{bioformats}}" user-data="{{userData}}" on-jobselect="handleJobSelect" on-need-refresh="handleUserNeedRefresh" on-job-launched="handleJobLaunched"></vafi-form>
         </div>
         
         <!-- Header call cba-elements/src/elm-header.html-->
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div id="headerIcon" class="icon">
-                <img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">
+                <!--<img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">-->
+                <div style="width: 44px; height: 44px;background-color: white; border-radius: 50%;margin: 5px 3px 0 0;"></div>
             </div>
             <!--<div class="title" style="margin-left:15px;">
                 <span>hi</span><span style="font-weight:normal">P</span><span>athia</span>
@@ -348,7 +349,7 @@
                 Pathways analysis suite
             </span>-->
             <div id="headerTitle" class="title">
-                <span>hi</span><span style="font-weight:normal">P</span><span>athia</span>
+                <span>Metabo-hi</span><span style="font-weight:normal">P</span><span>athia</span>
                 
                 <div id="description" class="description">
                     Pathways analysis suite
@@ -367,15 +368,15 @@
                     <i class="fa fa fa-usb fa-flip-vertical"></i>
                     <span class="option-text">Differential signaling</span>
                 </div>
-                <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction">
+                <div title="Open prediction form" class="option" on-click="handleMenuOption" login-required data-option="prediction" hidden>
                     <i class="fa fa-magic"></i>
                     <span class="option-text">Prediction</span>
                 </div>
-                <div title=" Actionable pathway workshop" class="option" on-click="handleMenuOption" login-required data-option="pathact">
+                <div title=" Actionable pathway workshop" class="option" on-click="handleMenuOption" login-required data-option="pathact" hidden>
                     <i class="fa fa-bolt"></i>
                     <span class="option-text">Perturbation effect</span>
                 </div>
-                <div title="Variant functional interpretation" class="option" on-click="handleMenuOption" login-required data-option="VaFInter">
+                <div title="Variant functional interpretation" class="option" on-click="handleMenuOption" login-required data-option="VaFInter" hidden>
                     <i class="fa fa-asterisk"></i>
                     <span class="option-text">Variant interpreter</span>
                 </div>
@@ -407,7 +408,7 @@
                     </a>
                     <a href="http://hipathia.babelomics.org/doc/doku.php?id=how_to_cite_hipathia" target="_blank">
                         <li>
-                            <i class="fa fa-pencil-square-o"></i> &nbsp; How to cite HiPathia
+                            <i class="fa fa-pencil-square-o"></i> &nbsp; How to cite metabo-HiPathia
                         </li>
                     </a>
                     <li data-divider></li>
@@ -417,22 +418,22 @@
                         </div>
                     </li>
                     <li>
-                        <div on-mousedown="handleExample" data-example-name="prediction-train">
+                        <div on-mousedown="handleExample" data-example-name="prediction-train" hidden>
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction train example
                         </div>
                     </li>
                     <li>
-                        <div on-mousedown="handleExample" data-example-name="prediction-test">
+                        <div on-mousedown="handleExample" data-example-name="prediction-test" hidden>
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Prediction test example
                         </div>
                     </li>
                     <li>
-                        <div on-mousedown="handleExample" data-example-name="perturbation-effect">
+                        <div on-mousedown="handleExample" data-example-name="perturbation-effect" hidden>
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Perturbation effect example
                         </div>
                     </li>
                     <li>
-                        <div on-mousedown="handleExample" data-example-name="variant-interpreter">
+                        <div on-mousedown="handleExample" data-example-name="variant-interpreter" hidden>
                             <i class="fa fa-lightbulb-o"></i> &nbsp; Variant interpreter example
                         </div>
                     </li>
@@ -443,11 +444,11 @@
         <!--Footer call cba-elements/src/elm-footer.html -->
         <elm-footer menu-option="home,login,signup,profile,remember" class="horizontal layout center center-justified" style="padding:0 20px;">
             <div style="text-align:center;">
-            hi<b>P</b>athia v<span>{{version}}</span>
+                <b>M</b>etabo-hi<b>P</b>athia v<span>{{version}}</span>
             <br> Created by
-            <span style="font-weight:bold;">Clinical Bioinformatics Area</span>
+            <span style="font-weight:bold;">Andalusian Platform for Computational Medicine</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain 
-            <br> 2021
+            <br> 2023
             </div>
         </elm-footer>
     </template>
@@ -465,7 +466,8 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
+                        return ['hipathia.differential-signaling'];
+                        //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
                         //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
                 },
