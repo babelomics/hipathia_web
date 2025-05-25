@@ -65,7 +65,7 @@
             <span id="titleDesc">Provides an estimation of significant cell signaling activity changes across different conditions.</span>
         </p>
             <div class="horizontal layout center-justified exampleBtn">
-                <div class="elm-btn elm-btn-shdw" on-click="copyExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
+                <div class="elm-btn elm-btn-shdw" on-click="runExample"><i class="fa fa-flask"></i> &nbsp; Run example</div>
             </div>
             <br>
             <div class="elm-formbox">
@@ -469,7 +469,7 @@
                     "verbose": {
                         type: 'flag'
                     },
-                    "species": {
+                    "spe": {
                         "type": "text",
                         "value": "hsa"
                     },
@@ -482,21 +482,20 @@
                         "mode": "example",
                         "value": "brca_data_example_ERposneg.tsv"
                     },
-                    "met_file": {
-                        "type": "file",
-                        "mode": "example",
-                        "value": "brca_data_example_ERposneg.tsv"
+                    "met_type": {
+                        "type": "text",
+                        "value": "inferred"
                     },
                     "design_file": {
                         "type": "file",
                         "mode": "example",
                         "value": "brca_designmatrix_ERposneg.tsv"
                     },
-                    "cond1": {
+                    "group1": {
                         "type": "text",
                         "value": "Negative"
                     },
-                    "cond2": {
+                    "group2": {
                         "type": "text",
                         "value": "Positive"
                     },
@@ -508,10 +507,6 @@
                     },
                     "uniprot": {
                         "type": "flag"
-                    },
-                    "pathways_list": {
-                        "type": "text",
-                        "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
                     }
                 };
                 CbaManager.jobs.example({
@@ -544,16 +539,16 @@
                 var args = {
                     tool: this.toolId,
                     execution: this.execution,
-                    executable: 'differential-signaling.sh',
+                    executable: 'differential-signaling_metabopathia.sh',
                     description : "Differential signaling study using data with 2 conditions: The oestrogen receptor (ER -) negative group Vs positive group (ER %2B), each group has 178 samples",
-                    options: {
+                    options : {
                         "output_folder": {
                             out: true,
                         },
                         "verbose": {
                             type: 'flag'
                         },
-                        "species": {
+                        "spe": {
                             "type": "text",
                             "value": "hsa"
                         },
@@ -566,31 +561,26 @@
                             "mode": "example",
                             "value": "brca_data_example_ERposneg.tsv"
                         },
+                        "met_type": {
+                            "type": "text",
+                            "value": "inferred"
+                        },
                         "design_file": {
                             "type": "file",
                             "mode": "example",
                             "value": "brca_designmatrix_ERposneg.tsv"
                         },
-                        "cond1": {
+                        "analysis": {
+                            "type": "text",
+                            "value": "compare"
+                        },
+                        "group1": {
                             "type": "text",
                             "value": "Negative"
                         },
-                        "cond2": {
+                        "group2": {
                             "type": "text",
                             "value": "Positive"
-                        },
-                        "difexp": {
-                            "type": "flag"
-                        },
-                        "go": {
-                            "type": "flag"
-                        },
-                        "uniprot": {
-                            "type": "flag"
-                        },
-                        "pathways_list": {
-                            "type": "text",
-                            "value": "04014,04015,04010,04012,04310,04330,04340,04350,04390,04370,04630,04064,04668,04066,04068,04020,04071,04024,04022,04151,04152,04150,04110,04114,04210,04115,04510,04520,04530,04540,04611,04620,04621,04622,04650,04660,04662,04664,04666,04670,04062,04910,04922,04920,03320,04912,04915,04914,04921,04919,04916,04261,04270,04722,05200,05231,05202,05205"
                         }
                     }
                 };

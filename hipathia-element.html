@@ -340,7 +340,7 @@
         <elm-header id="elmHeader" hide-jobs hide-browse selected-option="{{selectedOption}}" user-data="{{userData}}" on-login="handleLogin" on-logout="handleLogout">
             <div id="headerIcon" class="icon">
                 <!--<img src="images/icon.svg" style="height: 44px;margin: 5px 3px 0 0;">-->
-                <div style="width: 44px; height: 44px;background-color: white; border-radius: 50%;margin: 5px 3px 0 0;"></div>
+                <img src="images/Metabopathia_logo.png" style="height: 44px;margin: 5px 3px 0 0;">
             </div>
             <!--<div class="title" style="margin-left:15px;">
                 <span>hi</span><span style="font-weight:normal">P</span><span>athia</span>
@@ -448,7 +448,7 @@
             <br> Created by
             <span style="font-weight:bold;">Andalusian Platform for Computational Medicine</span>
             <br> Fundación Progreso y Salud (FPS), Sevilla, Spain 
-            <br> 2023
+            <br> 2025
             </div>
         </elm-footer>
     </template>
@@ -466,7 +466,7 @@
                 allowedTools: {
                     type: Array,
                     value: function() {
-                        return ['hipathia.differential-signaling'];
+                        return ['metabopathia.differential-signaling'];
                         //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.perturbation-effect', 'hipathia.variant-interpreter'];
                         //return ['hipathia.differential-signaling', 'hipathia.prediction-train', 'hipathia.prediction-test', 'hipathia.pathact-init', 'hipathia.vafi-init','utils.report'];
                     }
